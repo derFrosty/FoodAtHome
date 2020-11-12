@@ -5,7 +5,8 @@
                 <!-- Masthead Avatar Image-->
                 <img class="mb-5 mt-5" src="img/food.svg" width="200px" alt="food icon">
                 <!-- Masthead Heading-->
-                <h1 class="welcome-font mb-5">WELCOME</h1>
+                <h3 class="welcome-font mb-2">WELCOME TO</h3>
+                <h1 class="welcome-font mb-5">FOOD@HOME</h1>
             </div>
         </header>
     </div>
@@ -14,7 +15,3 @@
 <script>
 
 </script>
-
-<style>
-
-</style>

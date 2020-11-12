@@ -1,6 +1,6 @@
 <template>
     <div>
-        <router-link class="btn btn-primary" to="/">Welcome Page</router-link>
+        <router-link class="btn btn-primary" to="/">Home Page</router-link>
         <router-view></router-view>
     </div>
 </template>

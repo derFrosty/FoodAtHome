@@ -27,6 +27,12 @@
             </div>
         </nav>
         <router-view></router-view>
+
+        <footer class="footerbottom">
+            <div class="footerstyle py-4">
+                <div class="container"><small>Copyright © ipleiria DAD / Food@Home 2020</small></div>
+            </div>
+        </footer>
     </div>
 </template>
 
@@ -38,4 +44,5 @@ export default {
 </script>
 
 <style scoped>
+
 </style>

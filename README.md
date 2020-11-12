@@ -15,6 +15,9 @@ run the following:
 ``composer install``  
 ``npm install``  
 ``npm run watch``  
-
-
-
+After this:
+``php artisan migrate``
+``php artisan db:seed``
+If there is an error, run:
+``composer dump-autoload``
+``php artisan db:seed``

@@ -2,13 +2,18 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+import {ServerTable, ClientTable, Event} from 'vue-tables-2';
 import VueRouter from "vue-router";
 import App from './App.vue';
 import WelcomeComponent from "./Welcome/Welcome.vue";
+import ProductComponent from "./Product/Product";
+
+Vue.use(ClientTable);
 
 Vue.use(VueRouter);
 const routes = [
     {path: '/', component: WelcomeComponent},
+    {path: '/products', component: ProductComponent}
 ]
 
 const router = new VueRouter({

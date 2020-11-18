@@ -3,8 +3,7 @@
         <div class="jumbotron">
             <h1>{{ title }}</h1>
         </div>
-
-        <prod-list :products="products" :columns="columns"></prod-list>
+        <prod-list :products="products"></prod-list>
     </div>
 </template>
 
@@ -18,8 +17,7 @@ export default {
     data: function () {
         return {
             title: 'List of products',
-            products: [],
-            columns: ['id','name','type','description','photo_url']
+            products: []
         }
     },
     methods: {
@@ -27,6 +25,7 @@ export default {
             axios.get('api/products')
                 .then(response => {
                     this.products = response.data.data
+                    //console.log(this.products)
                 })
         }
     },

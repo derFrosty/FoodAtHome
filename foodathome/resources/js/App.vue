@@ -1,60 +1,60 @@
 <template>
     <div>
-        <div>
-            <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-                <div class="container">
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
-                    </a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
+        <nav class="navbar navbar-expand-lg navbar-light lightbluenavbar">
+<!--            <a class="navbar-brand" href="#">Food@Home</a>-->
+            <router-link class="navbar-brand" to="/">Food@Home</router-link>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <!-- Left Side Of Navbar -->
-                        <ul class="navbar-nav mr-auto">
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+<!--                        <a class="nav-link" href="#">ir para x</a>-->
+                        <!-- apagar o <a...> ou comentar, e substituir pela linha abaixo -->
+                        <router-link class="nav-link" to="/products">Products</router-link>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">ir para y</a>
+                        <!-- apagar o <a...> ou comentar, e substituir pela linha abaixo -->
+                        <!--                        <router-link class="nav-link" to="/">Food@Home</router-link>-->
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">ir para z</a>
+                        <!-- apagar o <a...> ou comentar, e substituir pela linha abaixo -->
+                        <!--                        <router-link class="nav-link" to="/">Food@Home</router-link>-->
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">ir para w</a>
+                        <!-- apagar o <a...> ou comentar, e substituir pela linha abaixo -->
+                        <!--                        <router-link class="nav-link" to="/">Food@Home</router-link>-->
+                    </li>
+                </ul>
+                <ul class="navbar-nav mr-auto">
+                    <!--    mr-auto para que o próximo vá para a direita.      -->
+                </ul>
+                <ul class="navbar-nav mr-5">
+                    <li class="nav-item">
+                        <a class="nav-link " href="#">Login</a>
+                        <!-- apagar o <a...> ou comentar, e substituir pela linha abaixo -->
+                        <!--                        <router-link class="nav-link" to="/">Food@Home</router-link>-->
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Registo</a>
+                        <!-- apagar o <a...> ou comentar, e substituir pela linha abaixo -->
+                        <!--                        <router-link class="nav-link" to="/">Food@Home</router-link>-->
+                    </li>
+                </ul>
+            </div>
+        </nav>
 
-                        </ul>
+        <router-view></router-view>
 
-                        <!-- Right Side Of Navbar -->
-                        <ul class="navbar-nav ml-auto">
-                            <!-- Authentication Links -->
-                            @guest
-                            @if (Route::has('login'))
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            @endif
-
-                            @if (Route::has('register'))
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                            </li>
-                            @endif
-                            @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none"></form>
-                                </div>
-                            </li>
-                            @endguest
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-            <router-link class="btn btn-primary" to="/">Home Page</router-link>
-            <router-view></router-view>
-        </div>
+        <footer class="footerbottom">
+            <div class="footerstyle py-4">
+                <div class="container"><small>Copyright © ipleiria DAD / Food@Home 2020</small></div>
+            </div>
+        </footer>
     </div>
 </template>
 

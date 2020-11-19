@@ -18,12 +18,17 @@ export default {
         return {
             columns: ['id', 'name', 'type', 'description', 'photo_url'],
             options: {
-                filterable: ['type']
+                filterable: ['type'],
+                headings: {
+                    'name': 'Product',
+                    'photo_url': 'Photo'
+                },
+                sortable: []
             }
         }
     },
     methods: {
-        imgSource: function (url){
+        imgSource: function (url) {
             return "storage/products/" + url;
         }
     }

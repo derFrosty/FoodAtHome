@@ -6,8 +6,8 @@ import VueRouter from "vue-router";
 import App from './App.vue';
 import WelcomeComponent from "./Welcome/Welcome.vue";
 
-import LoginComponent from "./auth/login.vue";
-import RegisterComponent from "./auth/register.vue";
+import LoginComponent from "./Auth/Login.vue";
+import RegisterComponent from "./Auth/Register.vue";
 
 Vue.use(VueRouter);
 const routes = [

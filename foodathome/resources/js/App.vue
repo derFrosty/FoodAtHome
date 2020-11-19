@@ -44,9 +44,7 @@
                                         {{ __('Logout') }}
                                     </a>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none"></form>
                                 </div>
                             </li>
                             @endguest
@@ -61,9 +59,14 @@
 </template>
 
 <script>
-
-
 export default {
+    methods: {
+        logout: function () {
+            localStorage.removeItem('tweetr-token')
+
+            this.$router.push('/login')
+        }
+    }
 }
 </script>
 

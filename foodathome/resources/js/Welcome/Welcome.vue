@@ -1,6 +1,6 @@
 <template>
     <div>
-        <header class="masthead bg-primary text-white text-center">
+        <header class="masthead text-white text-center bg-color">
             <div class="container d-flex align-items-center flex-column">
                 <!-- Masthead Avatar Image-->
                 <img class="mb-5 mt-5" src="img/food.svg" width="200px" alt="food icon">

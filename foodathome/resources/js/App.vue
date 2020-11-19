@@ -10,9 +10,9 @@
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">ir para x</a>
+<!--                        <a class="nav-link" href="#">ir para x</a>-->
                         <!-- apagar o <a...> ou comentar, e substituir pela linha abaixo -->
-<!--                        <router-link class="nav-link" to="/">Food@Home</router-link>-->
+                        <router-link class="nav-link" to="/products">Products</router-link>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">ir para y</a>
@@ -32,6 +32,7 @@
                 </ul>
             </div>
         </nav>
+
         <router-view></router-view>
 
         <footer class="footerbottom">

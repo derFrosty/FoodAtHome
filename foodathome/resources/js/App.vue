@@ -30,6 +30,21 @@
                         <!--                        <router-link class="nav-link" to="/">Food@Home</router-link>-->
                     </li>
                 </ul>
+                <ul class="navbar-nav mr-auto">
+                    <!--    mr-auto para que o próximo vá para a direita.      -->
+                </ul>
+                <ul class="navbar-nav mr-5">
+                    <li class="nav-item">
+                        <a class="nav-link " href="#">Login</a>
+                        <!-- apagar o <a...> ou comentar, e substituir pela linha abaixo -->
+                        <!--                        <router-link class="nav-link" to="/">Food@Home</router-link>-->
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Registo</a>
+                        <!-- apagar o <a...> ou comentar, e substituir pela linha abaixo -->
+                        <!--                        <router-link class="nav-link" to="/">Food@Home</router-link>-->
+                    </li>
+                </ul>
             </div>
         </nav>
 

@@ -16,7 +16,11 @@ use App\Http\Controllers\Api\ProductController;
 |
 */
 
-Route::middleware('Auth:api')->get('/user', function (Request $request) {
+//Route::middleware('Auth:api')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
+
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 

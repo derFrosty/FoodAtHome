@@ -15,7 +15,7 @@
                                     </label>
 
                                     <div class="col-md-6">
-                                        <input id="email" type="email" class="form-control" :class="{'is-invalid':hasError('email')}" name="email" required autocomplete="email" autofocus> <!--is-invalid ou isInvalid--> <!--value="{{ old('email') }}"-->
+                                        <input id="email" type="email" class="form-control" v-model="loginInfo.email" :class="{'is-invalid':hasError('email')}" name="email" required autocomplete="email" autofocus> <!--is-invalid ou isInvalid--> <!--value="{{ old('email') }}"-->
 
                                         <span v-if="hasError('email')" class="invalid-feedback" role="alert">
                                             <strong>{{ getErrorMessage('email') }}</strong>
@@ -27,7 +27,7 @@
                                     <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
 
                                     <div class="col-md-6">
-                                        <input id="password" type="password" class="form-control" :class="{'is-invalid':hasError('password')}" name="password" required autocomplete="current-password">
+                                        <input id="password" type="password" v-model="loginInfo.password" class="form-control" :class="{'is-invalid':hasError('password')}" name="password" required autocomplete="current-password">
 
                                         <span v-if="hasError('password')" class="invalid-feedback" role="alert">
                                             <strong>{{ getErrorMessage('password') }}</strong>
@@ -52,6 +52,14 @@
 <script>
 export default {
     name: "login",
+    data() {
+        return{
+            loginInfo: {
+                email: '',
+                password: ''
+            }
+        }
+    },
     methods: {
         hasError: function(error) {
             return false;
@@ -61,10 +69,11 @@ export default {
         },
         login: function () {
             axios.get('/sanctum/csrf-cookie').then(response => {
-                console.log("aqui1")
-                axios.post('/api/login',{email: "cook_1@mail.pt", password: "123"}).then(response=>{
-                    console.log("aqui2")
-                    console.log(response);
+                axios.post('/api/login', this.loginInfo).then(response=>{
+                    axios.get('/api/user').then(response =>{
+                        //console.log(response.data.name);
+                        
+                    });
                 });
             });
         }

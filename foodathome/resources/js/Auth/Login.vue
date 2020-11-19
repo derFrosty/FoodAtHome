@@ -60,7 +60,13 @@ export default {
             return 'yes';
         },
         login: function () {
-
+            axios.get('/sanctum/csrf-cookie').then(response => {
+                console.log("aqui1")
+                axios.post('/api/login',{email: "cook_1@mail.pt", password: "123"}).then(response=>{
+                    console.log("aqui2")
+                    console.log(response);
+                });
+            });
         }
     }
 }

@@ -8,10 +8,10 @@
                     <div class="card-body">
                         <form>
                             <div class="form-group row">
-                                <label for="name" class="col-md-4 col-form-label text-md-right">Name</label>
+                                <label for="fullname" class="col-md-4 col-form-label text-md-right">Fullname</label>
 
                                 <div class="col-md-6">
-                                    <input id="name" type="text" class="form-control" :class="{'is-invalid':hasError('name')}" name="name" required autocomplete="name" autofocus>
+                                    <input id="fullname" v-model="registerForm.fullname" @keydown="preventNumbers" type="text" class="form-control" :class="{'is-invalid':hasError('name')}" name="name" required autocomplete="name" autofocus>
 
                                     <span v-if="hasError('name')" class="invalid-feedback" role="alert">
                                         <strong>{{ getErrorMessage('name') }}</strong>
@@ -35,7 +35,7 @@
                                 <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
 
                                 <div class="col-md-6">
-                                    <input id="password" type="password" class="form-control" :class="{'is-invalid':hasError('password')}" name="password" required autocomplete="new-password">
+                                    <input id="password" type="password" class="form-control" :class="{'is-invalid':hasError('password')}" name="password" required>
 
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ getErrorMessage('password') }}</strong>
@@ -47,7 +47,7 @@
                                 <label for="password-confirm" class="col-md-4 col-form-label text-md-right">Confirm Password</label>
 
                                 <div class="col-md-6">
-                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                                 </div>
                             </div>
 
@@ -67,12 +67,20 @@
 <script>
 export default {
     name: "register",
+    data() {
+        return{
+            registerForm: {
+                fullname: '',
+                password: ''
+            }
+        }
+    },
     methods: {
         hasError: function(error) {
-            return false;
+            return false
         },
         getErrorMessage: function(error) {
-            return 'yes';
+            return 'yes'
         },
         register: function () {
 

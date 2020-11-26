@@ -22,10 +22,7 @@
                 columns: ['id', 'status', 'notes', 'total_price', 'date'],
                 options: {
                     filterable: [],
-                    headings: {
-
-                    },
-                    sortable: []
+                    sortable: ['id', 'status', 'total_price', 'date']
                 }
             }
         },

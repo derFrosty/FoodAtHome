@@ -25,7 +25,7 @@
                 axios.get('api/orders')
                     .then(response => {
                         this.orders = response.data.data
-                        console.log(this.orders)
+                        //console.log(this.orders)
                     })
             }
         },

@@ -7,7 +7,9 @@ import VueRouter from "vue-router";
 import App from './App.vue';
 import WelcomeComponent from "./Welcome/Welcome.vue";
 import ProductComponent from "./Product/Product";
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
+Vue.use(BootstrapVue)
 Vue.use(ClientTable);
 
 Vue.use(VueRouter);

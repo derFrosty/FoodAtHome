@@ -22,12 +22,13 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'photo_url'
+        'photo_url',
+        'type'
     ];
 
     public function customers()
     {
-        return $this->hasMany('App\Models\Customers');
+        return $this->hasOne('App\Models\Customers');
     }
 
 

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 
@@ -43,20 +45,47 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        $registration = $request->only('fullname', 'password', 'email', 'photo_url', 'password_confirmation', 'type');
+        $registration = $request->only('fullname', 'password', 'email', 'photo_url', 'password_confirmation', 'type', 'address', 'phone', 'nif');
 
 
         $validator = User::validator($registration);
 
-
         if ($validator->fails()) {
             return response()->json([
-                'status' => 422,
                 'errors' => $validator->errors()
-            ]);
+            ],422);
         }
 
-        event(new Registered($user = $this->create($registration)));
+        $customer_validaton = Customer::validator($registration);
+
+        if ($customer_validaton->fails()) {
+            return response()->json([
+                'errors' => $customer_validaton->errors()
+
+            ],422);
+        }
+
+        $transation_result = DB::transaction(function () use ($registration) {
+            $user = User::create([
+                'name' => $registration['fullname'],
+                'password' => Hash::make($registration['password']),
+                'email' => $registration['email'],
+                'photo_url' => isset($registration['photo_url']) ? $registration['photo_url'] : null
+            ]);
+
+            $customer = Customer::create([
+                'id' => $user->id,
+                'address' => $registration['address'],
+                'nif' => $registration['nif'],
+                'phone' => $registration['phone']
+            ]);
+
+        });
+
+
+
+
+
 
         //código para tratar depois da foto do utilizador
 
@@ -75,7 +104,7 @@ class AuthController extends Controller
 
         return response()->json(
             ['msg'=>'Registered with success!'],
-            200
+            201
         );
     }
 

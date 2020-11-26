@@ -21,12 +21,17 @@
                 <ul class="navbar-nav mr-auto">
                     <!--    mr-auto para que o próximo vá para a direita.      -->
                 </ul>
-                <ul class="navbar-nav mr-5">
+                <ul v-if="!this.$store.state.user.id" class="navbar-nav mr-5">
                     <li class="nav-item">
                         <router-link class="nav-link" to="/login">Login</router-link>
                     </li>
                     <li class="nav-item">
                         <router-link class="nav-link" to="/register">Register</router-link>
+                    </li>
+                </ul>
+                <ul v-else class="navbar-nav mr-5">
+                    <li class="nav-item">
+                        <a class="nav-link" @click="logout">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -46,10 +51,16 @@
 export default {
     methods: {
         logout: function () {
-            localStorage.removeItem('tweetr-token')
+            localStorage.removeItem('user_id')
+            localStorage.removeItem('name')
+            localStorage.removeItem('email')
+            this.$store.commit('logoutUser')
 
-            this.$router.push('/login')
+            this.$router.push('/welcome')
         }
+    },
+    computed:{
+
     }
 }
 </script>

@@ -50,6 +50,7 @@
 </template>
 
 <script>
+
 export default {
     name: "login",
     data() {
@@ -67,12 +68,17 @@ export default {
         getErrorMessage: function(error) {
             return 'yes';
         },
-        login: function () {
+        login: function (){
             axios.get('/sanctum/csrf-cookie').then(response => {
                 axios.post('/api/login', this.loginInfo).then(response=>{
                     axios.get('/api/user').then(response =>{
-                        //console.log(response.data.name);
-                        
+                        //console.log(response.data);
+                        this.$store.commit('setUser', response.data)
+                        localStorage.setItem('user_id', response.data.id)
+                        localStorage.setItem('user_name', response.data.name)
+                        localStorage.setItem('user_email', response.data.email)
+
+                        this.$router.push('/products')
                     });
                 });
             });

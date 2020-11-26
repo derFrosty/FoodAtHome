@@ -126,9 +126,23 @@ export default {
         },
         register: function () {
             axios.post('/api/register', this.registerForm).then(response => {
-                    console.log(response);
+                //console.log(response);
+                axios.get('/sanctum/csrf-cookie').then(response => {
+                    axios.post('/api/login', {email: this.registerForm.email, password: this.registerForm.password}).then(response=>{
+                        axios.get('/api/user').then(response =>{
+                            //console.log(response.data);
+                            this.$store.commit('setUser', response.data)
+                            localStorage.setItem('user_id', response.data.id)
+                            localStorage.setItem('user_name', response.data.name)
+                            localStorage.setItem('user_email', response.data.email)
+
+                            this.$router.push('/products')
+                        });
+                    });
+                });
+
             }).catch(error => {
-                console.log(error.response.data.errors)
+                //console.log(error.response.data.errors)
                 this.errors = error.response.data.errors
                 //console.dir(error)
             });

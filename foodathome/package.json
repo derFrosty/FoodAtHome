@@ -26,6 +26,7 @@
     },
     "dependencies": {
         "vue": "^2.6.12",
-        "vue-tables-2": "^2.1.46"
+        "vue-tables-2": "^2.1.46",
+        "vuex": "^3.6.0"
     }
 }

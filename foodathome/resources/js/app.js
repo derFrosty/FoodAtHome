@@ -7,13 +7,15 @@ import VueRouter from "vue-router";
 import App from './App.vue';
 import WelcomeComponent from "./Welcome/Welcome.vue";
 import ProductComponent from "./Product/Product";
+import OrderComponent from "./Order/Order";
 
 Vue.use(ClientTable);
 
 Vue.use(VueRouter);
 const routes = [
     {path: '/', component: WelcomeComponent},
-    {path: '/products', component: ProductComponent}
+    {path: '/products', component: ProductComponent},
+    {path: '/orders', component: OrderComponent}
 ]
 
 const router = new VueRouter({

@@ -56,7 +56,7 @@ export default {
             localStorage.removeItem('email')
             this.$store.commit('logoutUser')
 
-            this.$router.push('/welcome')
+            this.$router.push('/')
         }
     },
     computed:{

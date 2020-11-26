@@ -18,8 +18,27 @@ class AuthController extends Controller
     public function authenticate(Request $request)
     {
         $credentials = $request->only('email', 'password');
+
+        $user = User::where('email', $credentials['email'])->first();
+
+        if(!$user){
+            return response()->json(
+                ['error'=>'Email not found!'],
+                404
+            );
+        }
+
         if (Auth::attempt($credentials)) {
             // Authentication passed...
+
+            if($user->blocked){
+                $this->logout();
+
+                return response()->json(
+                    ['error'=>'Your account is blocked.'],
+                    423
+                );
+            }
 
             return response()->json(
                 ['msg'=>'Authenticated with success.'],
@@ -27,7 +46,7 @@ class AuthController extends Controller
             );
         }else{
             return response()->json(
-                ['msg'=>'Could not authenticate.'],
+                ['error'=>'Could not authenticate.'],
                 401
             );
         }

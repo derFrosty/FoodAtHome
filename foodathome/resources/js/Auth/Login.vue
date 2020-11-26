@@ -2,8 +2,12 @@
     <div>
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <div class="card">
+                <div class="col-md-8 mt-5">
+                    <div v-if="error" class="alert alert-danger text-center" role="alert">
+                        <strong>{{ error }}</strong>
+                    </div>
+                    <div class="card mt-1">
+
                         <div class="card-header">Login</div>
 
                         <div class="card-body">
@@ -15,11 +19,7 @@
                                     </label>
 
                                     <div class="col-md-6">
-                                        <input id="email" type="email" class="form-control" v-model="loginInfo.email" :class="{'is-invalid':hasError('email')}" name="email" required autocomplete="email" autofocus> <!--is-invalid ou isInvalid--> <!--value="{{ old('email') }}"-->
-
-                                        <span v-if="hasError('email')" class="invalid-feedback" role="alert">
-                                            <strong>{{ getErrorMessage('email') }}</strong>
-                                        </span>
+                                        <input id="email" type="email" class="form-control" v-model="loginInfo.email" name="email" required autocomplete="email" autofocus> <!--is-invalid ou isInvalid--> <!--value="{{ old('email') }}"-->
                                     </div>
                                 </div>
 
@@ -27,11 +27,7 @@
                                     <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
 
                                     <div class="col-md-6">
-                                        <input id="password" type="password" v-model="loginInfo.password" class="form-control" :class="{'is-invalid':hasError('password')}" name="password" required autocomplete="current-password">
-
-                                        <span v-if="hasError('password')" class="invalid-feedback" role="alert">
-                                            <strong>{{ getErrorMessage('password') }}</strong>
-                                        </span>
+                                        <input id="password" type="password" v-model="loginInfo.password" class="form-control" name="password" required autocomplete="current-password">
                                     </div>
                                 </div>
 
@@ -58,17 +54,13 @@ export default {
             loginInfo: {
                 email: '',
                 password: ''
-            }
+            },
+            error: null
         }
     },
     methods: {
-        hasError: function(error) {
-            return false;
-        },
-        getErrorMessage: function(error) {
-            return 'yes';
-        },
         login: function (){
+            this.error = null
             axios.get('/sanctum/csrf-cookie').then(response => {
                 axios.post('/api/login', this.loginInfo).then(response=>{
                     axios.get('/api/user').then(response =>{
@@ -80,6 +72,8 @@ export default {
 
                         this.$router.push('/products')
                     });
+                }).catch(error => {
+                    this.error = error.response.data.error
                 });
             });
         }

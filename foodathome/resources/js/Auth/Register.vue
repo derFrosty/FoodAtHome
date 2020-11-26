@@ -13,8 +13,8 @@
                                 <div class="col-md-6">
                                     <input id="fullname" v-model="registerForm.fullname" @keydown="" type="text" class="form-control" :class="{'is-invalid':hasError('name')}" name="name" required autocomplete="name" autofocus>
 
-                                    <span v-if="hasError('name')" class="invalid-feedback" role="alert">
-                                        <strong>{{ getErrorMessage('name') }}</strong>
+                                    <span v-for="error in getErrorMessage('name')" class="invalid-feedback" role="alert">
+                                        <strong>{{ error }}</strong>
                                     </span>
                                 </div>
                             </div>
@@ -25,8 +25,8 @@
                                 <div class="col-md-6">
                                     <input id="email" v-model="registerForm.email" type="email" class="form-control" :class="{'is-invalid':hasError('email')}" name="email" required autocomplete="email">
 
-                                    <span v-if="hasError('email')" class="invalid-feedback" role="alert">
-                                        <strong>{{ getErrorMessage('email') }}</strong>
+                                    <span v-for="error in getErrorMessage('email')" class="invalid-feedback" role="alert">
+                                        <strong>{{ error}}</strong>
                                     </span>
                                 </div>
                             </div>
@@ -37,8 +37,8 @@
                                 <div class="col-md-6">
                                     <input id="password" v-model="registerForm.password" type="password" class="form-control" :class="{'is-invalid':hasError('password')}" name="password" required>
 
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ getErrorMessage('password') }}</strong>
+                                    <span v-for="error in getErrorMessage('password')" class="invalid-feedback" role="alert">
+                                        <strong>{{ error }}</strong>
                                     </span>
                                 </div>
                             </div>
@@ -48,9 +48,6 @@
 
                                 <div class="col-md-6">
                                     <input id="password-confirm" v-model="registerForm.password_confirmation" type="password" class="form-control" name="password_confirmation" required>
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ getErrorMessage('password_confirmation') }}</strong>
-                                    </span>
                                 </div>
                             </div>
 
@@ -58,9 +55,9 @@
                                 <label for="address" class="col-md-4 col-form-label text-md-right">Address</label>
 
                                 <div class="col-md-6">
-                                    <input id="address" v-model="registerForm.address" type="text" class="form-control" name="address" required>
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ getErrorMessage('address') }}</strong>
+                                    <input id="address" v-model="registerForm.address" type="text" class="form-control" :class="{'is-invalid':hasError('address')}" name="address" required>
+                                    <span v-for="error in getErrorMessage('address')" class="invalid-feedback" role="alert">
+                                        <strong>{{ error}}</strong>
                                     </span>
                                 </div>
                             </div>
@@ -69,9 +66,9 @@
                                 <label for="phone" class="col-md-4 col-form-label text-md-right">Phone</label>
 
                                 <div class="col-md-6">
-                                    <input id="phone" v-model="registerForm.phone" type="text" class="form-control" name="phone" required>
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ getErrorMessage('phone') }}</strong>
+                                    <input id="phone" v-model="registerForm.phone" type="text" class="form-control" :class="{'is-invalid':hasError('phone')}" name="phone" required>
+                                    <span v-for="error in getErrorMessage('phone')" class="invalid-feedback" role="alert">
+                                        <strong>{{ error }}</strong>
                                     </span>
                                 </div>
                             </div>
@@ -80,9 +77,9 @@
                                 <label for="nif" class="col-md-4 col-form-label text-md-right">NIF</label>
 
                                 <div class="col-md-6">
-                                    <input id="nif" v-model="registerForm.nif" type="text" class="form-control" name="nif" required>
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ getErrorMessage('nif') }}</strong>
+                                    <input id="nif" v-model="registerForm.nif" type="text" class="form-control" :class="{'is-invalid':hasError('nif')}" name="nif" required>
+                                    <span v-for="error in getErrorMessage('nif')" class="invalid-feedback" role="alert">
+                                        <strong>{{ error }}</strong>
                                     </span>
                                 </div>
                             </div>

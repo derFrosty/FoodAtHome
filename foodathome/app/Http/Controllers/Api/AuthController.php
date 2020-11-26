@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RegisterValidationForm;
 use App\Models\Customer;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
@@ -43,27 +44,9 @@ class AuthController extends Controller
 
 	}
 
-    public function register(Request $request)
+    public function register(RegisterValidationForm $request)
     {
         $registration = $request->only('fullname', 'password', 'email', 'photo_url', 'password_confirmation', 'type', 'address', 'phone', 'nif');
-
-
-        $validator = User::validator($registration);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'errors' => $validator->errors()
-            ],422);
-        }
-
-        $customer_validaton = Customer::validator($registration);
-
-        if ($customer_validaton->fails()) {
-            return response()->json([
-                'errors' => $customer_validaton->errors()
-
-            ],422);
-        }
 
         $transation_result = DB::transaction(function () use ($registration) {
             $user = User::create([

@@ -19,6 +19,21 @@ class AuthController extends Controller
                 ['msg'=>'Authenticated with success.'],
                 200
             );
+        }else{
+            return response()->json(
+                ['msg'=>'Could not authenticate.'],
+                401
+            );
         }
     }
+
+    public function logout()
+    {
+        Auth::guard('web')->logout();
+        return response()->json(
+            ['msg' => 'User logged out with success.'],
+            200
+        );
+    }
+
 }

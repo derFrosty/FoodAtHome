@@ -23,6 +23,12 @@ class User extends Authenticatable
         'password',
     ];
 
+    public function customers()
+    {
+        return $this->hasMany('App\Models\Customers');
+    }
+
+
     /**
      * The attributes that should be hidden for arrays.
      *

@@ -26,9 +26,9 @@ class User extends Authenticatable
         'type'
     ];
 
-    public function customers()
+    public function customer()
     {
-        return $this->hasOne('App\Models\Customers');
+        return $this->hasOne('App\Models\Customer', 'id', 'id');
     }
 
 

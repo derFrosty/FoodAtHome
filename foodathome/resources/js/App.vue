@@ -5,14 +5,12 @@
             <router-link class="navbar-brand" to="/">Food@Home</router-link>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse"
-                    data-target="#navbarColor03" aria-controls="navbarColor03"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
-
                 <span class="navbar-toggler-icon"></span>
-
             </button>
 
-            <div class="collapse navbar-collapse">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
                         <router-link class="nav-link" to="/products">Products</router-link>
@@ -29,10 +27,16 @@
                         <router-link class="nav-link" to="/register">Register</router-link>
                     </li>
                 </ul>
-                <ul v-else class="navbar-nav mr-5">
-                    <li class="nav-item">
-                        <a class="nav-link" @click="logout">Logout</a>
-                    </li>
+                <ul v-else class="nav-item dropdown mr-5">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{this.$store.state.user.name}}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <router-link class="dropdown-item" to="/profile">Perfil de utilizador</router-link>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" @click="logout">Logout</a>
+                    </div>
+
                 </ul>
             </div>
         </nav>
@@ -52,11 +56,17 @@ export default {
     methods: {
         logout: function () {
             localStorage.removeItem('user_id')
-            localStorage.removeItem('name')
-            localStorage.removeItem('email')
+            localStorage.removeItem('user_name')
+            localStorage.removeItem('user_email')
+            localStorage.removeItem('user_nif')
+            localStorage.removeItem('user_phone')
+            localStorage.removeItem('user_address')
             this.$store.commit('logoutUser')
 
             this.$router.push('/')
+        },
+        teste: function (){
+            console.log(this.$store.state.user.name);
         }
     },
     computed:{

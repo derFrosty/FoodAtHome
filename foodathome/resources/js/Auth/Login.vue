@@ -66,7 +66,7 @@ export default {
                     axios.get('/api/user').then(response =>{
                         //console.log(response.data.customer.nif);
                         this.$store.commit('setUser', response.data)
-                        localStorage.setItem('user', response.data)
+                        localStorage.setItem('user', JSON.stringify(response.data))
 
                         this.$router.push('/products')
                     });

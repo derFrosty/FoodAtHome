@@ -37,7 +37,7 @@ const store = new Vuex.Store({
     },
     mutations: {
         loadUserIfRemembered(state){
-            state.user = localStorage.getItem('user')
+            state.user = JSON.parse(localStorage.getItem('user'))
         },
         setUser (state, user) {
             state.user = user

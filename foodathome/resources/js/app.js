@@ -33,39 +33,17 @@ const router = new VueRouter({
 
 const store = new Vuex.Store({
     state: {
-        user: {
-            id: null,
-            name: null,
-            email: null,
-            nif: null,
-            address: null,
-            phone: null
-        }
+        user: null
     },
     mutations: {
         loadUserIfRemembered(state){
-            state.user.id = localStorage.getItem('user_id')
-            state.user.name = localStorage.getItem('user_name')
-            state.user.email = localStorage.getItem('user_email')
-            state.user.nif = localStorage.getItem('user_nif')
-            state.user.address = localStorage.getItem('user_address')
-            state.user.phone = localStorage.getItem('user_phone')
+            state.user = localStorage.getItem('user')
         },
         setUser (state, user) {
-            state.user.id = user.id
-            state.user.name = user.name
-            state.user.email = user.email
-            state.user.nif = user.nif
-            state.user.address = user.address
-            state.user.phone = user.phone
+            state.user = user
         },
         logoutUser(state){
-            state.user.id = null
-            state.user.name = null
-            state.user.email = null
-            state.user.nif = null
-            state.user.address = null
-            state.user.phone = null
+            state.user = null
         }
     }
 })

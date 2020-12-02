@@ -19,7 +19,7 @@
                 <ul class="navbar-nav mr-auto">
                     <!--    mr-auto para que o próximo vá para a direita.      -->
                 </ul>
-                <ul v-if="!this.$store.state.user.id" class="navbar-nav mr-5">
+                <ul v-if="!this.$store.state.user" class="navbar-nav mr-5">
                     <li class="nav-item">
                         <router-link class="nav-link" to="/login">Login</router-link>
                     </li>

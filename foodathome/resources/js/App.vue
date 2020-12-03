@@ -31,6 +31,9 @@
                 </ul>
                 <ul v-else class="navbar-nav mr-5">
                     <li class="nav-item">
+                        <router-link class="nav-link" to="/shoppingcart"></router-link>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" @click="logout">Logout</a>
                     </li>
                 </ul>

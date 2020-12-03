@@ -28,7 +28,7 @@ const routes = [
     {path: '/register', component: RegisterComponent},
     {path: '/products', component: ProductComponent},
     {path: '/profile', component: UserProfileComponent},
-    {path: '/profile/changepassword', component: UserChangePasswordComponent}
+    {path: '/profile/changepassword', component: UserChangePasswordComponent},
     {path: '/shoppingcart', component: ShoppingCartComponent}
 ]
 

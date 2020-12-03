@@ -12,7 +12,7 @@ import RegisterComponent from "./Auth/Register.vue";
 import WelcomeComponent from "./Welcome/Welcome.vue";
 import ProductComponent from "./Product/Product";
 import ShoppingCartComponent from "./User/ShoppingCart";
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import {BootstrapVue, IconsPlugin} from 'bootstrap-vue'
 
 Vue.use(BootstrapVue)
 Vue.use(ClientTable);
@@ -38,17 +38,46 @@ const router = new VueRouter({
 
 const store = new Vuex.Store({
     state: {
-        user: null
+        user: null,
+        shoppingCart: []
     },
     mutations: {
-        loadUserIfRemembered(state){
+        loadUserIfRemembered(state) {
             state.user = JSON.parse(localStorage.getItem('user'))
         },
-        setUser (state, user) {
+        setUser(state, user) {
             state.user = user
         },
-        logoutUser(state){
+        logoutUser(state) {
             state.user = null
+        },
+        addProductToShoppingCart(state, product) {
+            let newProduct = {
+                id: null,
+                name: null,
+                photo_url: null,
+                quantity: null
+            }
+
+            newProduct.id = product.id
+            newProduct.name = product.name
+            newProduct.photo_url = product.photo_url
+
+            //returns object if it's successful, returns undefined if not
+            let result = state.shoppingCart.find((value) => value.id === newProduct.id)
+            if (result) {
+                result.quantity++
+            } else {
+                newProduct.quantity = 1
+                state.shoppingCart.push(newProduct)
+            }
+
+        },
+        removeProductFromShoppingCart(state, product) {
+            let result = state.shoppingCart.findIndex((value) => value.id === product.id)
+            if (result != -1) {
+                state.shoppingCart.splice(result, 1)
+            }
         }
     }
 })
@@ -57,5 +86,7 @@ new Vue({
     render: h => h(App),
     router,
     store,
-    beforeCreate() {this.$store.commit('loadUserIfRemembered')}
+    beforeCreate() {
+        this.$store.commit('loadUserIfRemembered')
+    }
 }).$mount('#app');

@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterValidationForm;
+use App\Http\Requests\UpdatePasswordValidationForm;
 use App\Http\Requests\UpdateUserValidationForm;
+use App\Models\User;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -18,17 +20,19 @@ class UserApiController extends Controller
         //
     }
 
+    public function remove_avatar(Request $request){
+        $user = User::with('customer')->where('id', $request->user()->id)->first();
+        $user->photo_url = null;
+        $user->save();
+
+        return response()->json(
+            ['msg' => 'User updated with success.',
+                'user' => $user],
+            200
+        );
+    }
+
     public function update_user(UpdateUserValidationForm $request){
-
-        // Handle the user upload of avatar
-
-        if (!Hash::check($request->password, Auth::user()->password)) {
-            return response()->json(
-                ['error' => 'Password did not match user password'],
-                401
-            );
-        }
-
 
         $avatar = $request->file('photo');
 
@@ -60,6 +64,19 @@ class UserApiController extends Controller
         return response()->json(
             ['msg' => 'User updated with success.',
              'user' => $user],
+            200
+        );
+    }
+
+    public function update_password(UpdatePasswordValidationForm $request){
+        $user = Auth::user();
+
+        $user->password = Hash::make($request->password);
+
+        $user->save();
+
+        return response()->json(
+            ['msg' => 'User updated with success.'],
             200
         );
     }

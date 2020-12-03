@@ -28,6 +28,9 @@
                     </li>
                 </ul>
                 <ul v-else class="nav-item dropdown mr-5">
+                    <li class="nav-item">
+                        <router-link class="nav-link" to="/shoppingcart">Shopping Cart</router-link>
+                    </li>
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         {{this.$store.state.user.name}}
                     </a>

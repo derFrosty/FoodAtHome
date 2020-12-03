@@ -12,6 +12,7 @@
                     <h5 class="card-title">{{ item.name }}</h5>
                     <p class="card-text">{{ typeDish(item.type) }}</p>
                     <p class="card-text">{{ item.description }}</p>
+                    <p class="card-text">{{ item.price }}€</p>
                     <a href="#" class="btn btn-primary">Add to cart</a>
                 </div>
             </div>

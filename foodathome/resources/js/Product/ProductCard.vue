@@ -13,7 +13,7 @@
                     <p class="card-text">{{ typeDish(item.type) }}</p>
                     <p class="card-text">{{ item.description }}</p>
                     <p class="card-text">{{ item.price }}€</p>
-                    <a href="#" class="btn btn-primary">Add to cart</a>
+                    <a v-if="isLoggedIn" href="#" class="btn btn-primary">Add to cart</a>
                 </div>
             </div>
         </div>
@@ -33,7 +33,8 @@ export default {
                 {value: 'dessert', text: 'Dessert'},
             ],
             typeSelected: 'all products',
-            textFilter: ''
+            textFilter: '',
+            isLoggedIn: false
         };
     },
     methods: {
@@ -70,6 +71,11 @@ export default {
                 return false
             })
 
+        }
+    },
+    mounted() {
+        if(this.$store.state.user){
+            this.isLoggedIn = true
         }
     }
 }

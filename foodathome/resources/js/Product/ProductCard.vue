@@ -7,7 +7,7 @@
                style="width: 400px; margin-bottom: 10px">
         <div class="row float-left">
             <div v-for="item in filteredProducts" :key="item.id" class="card col-3">
-                <img class="card-img-top" :src="imgSource(item.photo_url)" alt="Card image cap" style="height: 20%">
+                <img class="card-img-top" :src="imgSource(item.photo_url)" alt="Card image cap" style="max-height: 100px">
                 <div class="card-body">
                     <h5 class="card-title">{{ item.name }}</h5>
                     <p class="card-text">{{ typeDish(item.type) }}</p>

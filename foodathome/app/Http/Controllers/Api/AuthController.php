@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 
 
 class AuthController extends Controller
@@ -87,24 +86,22 @@ class AuthController extends Controller
 
 
 
-        $user = User::where('email', $registration['email'])->first();
-
-        $avatar = $request->file('photo');
-
-        if($avatar != null){
-
-            $filename = Storage::putFileAs('public/fotos', $request->photo, $user->id . time() . '.' . $avatar->getClientOriginalExtension());
-
-            //devolvia não só o nome mas também o caminho, então removemos...
-            $filename = substr($filename, strrpos($filename, '/')+1, strlen($filename));
-
-            $user->photo_url = $filename;
-
-            $user->save();
-        }
 
 
 
+        //código para tratar depois da foto do utilizador
+
+
+//        if ($request->foto_perfil != null) {
+//            $filename = Storage::putFile('public/fotos_utilizador', $request->foto_perfil);
+//
+//            //devolvia não só o nome mas também o caminho, então removemos...
+//            $filename = substr($filename, strrpos($filename, '/')+1, strlen($filename));
+//
+//            $user->foto_perfil = $filename;
+//            //fim guardar imagem
+//            $user->save();
+//        }
 
 
         return response()->json(

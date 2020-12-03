@@ -27,20 +27,15 @@ export default {
     },
     data() {
         return {
-            errors: []
+            errors: {}
         }
     },
     methods: {
         register: function (inputForm) {
-            var form_email = inputForm.get('email')
-            var form_password = inputForm.get('password')
-
-            this.errors = []
-
             axios.post('/api/register', inputForm).then(response => {
                 //console.log(response);
                 axios.get('/sanctum/csrf-cookie').then(response => {
-                    axios.post('/api/login', {email: form_email, password: form_password}).then(response=>{
+                    axios.post('/api/login', {email: inputForm.email, password: inputForm.password}).then(response=>{
                         axios.get('/api/user').then(response =>{
                             //console.log(response.data);
                             this.$store.commit('setUser', response.data)
@@ -52,7 +47,6 @@ export default {
                 });
 
             }).catch(error => {
-                console.dir(error)
                 this.errors = error.response.data.errors
             });
         }

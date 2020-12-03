@@ -30,10 +30,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('logout', [AuthController::class, 'logout']);
 
     Route::post('updateuser', [UserApiController::class, 'update_user']);
-
-    Route::put('changepassword', [UserApiController::class, 'update_password']);
-
-    Route::put('removeavatar', [UserApiController::class, 'remove_avatar']);
 });
 
 Route::post('login', [AuthController::class, 'authenticate']);

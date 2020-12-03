@@ -13,14 +13,10 @@ import WelcomeComponent from "./Welcome/Welcome.vue";
 import ProductComponent from "./Product/Product";
 import UserProfileComponent from "./User/Profile";
 import UserChangePasswordComponent from "./User/ChangePassword"
-import ShoppingCartComponent from "./User/ShoppingCart";
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
-
-Vue.use(BootstrapVue)
-Vue.use(ClientTable);
 
 Vue.use(Vuex)
 Vue.use(VueRouter);
+Vue.use(ClientTable);
 
 const routes = [
     {path: '/', component: WelcomeComponent},
@@ -28,8 +24,7 @@ const routes = [
     {path: '/register', component: RegisterComponent},
     {path: '/products', component: ProductComponent},
     {path: '/profile', component: UserProfileComponent},
-    {path: '/profile/changepassword', component: UserChangePasswordComponent},
-    {path: '/shoppingcart', component: ShoppingCartComponent}
+    {path: '/profile/changepassword', component: UserChangePasswordComponent}
 ]
 
 const router = new VueRouter({

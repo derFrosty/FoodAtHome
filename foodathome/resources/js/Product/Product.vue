@@ -3,23 +3,20 @@
         <div class="jumbotron">
             <h1>{{ title }}</h1>
         </div>
-<!--        <prod-list :products="products"></prod-list>-->
-        <prod-card :products="products"></prod-card>
+        <prod-list :products="products"></prod-list>
     </div>
 </template>
 
 <script>
-import ProductListComponent from "./ProductList"
-import ProductCardComponent from "./ProductCard"
+import ProductListComponent from "./ProductList";
 
 export default {
     components:{
-        'prod-list': ProductListComponent,
-        'prod-card': ProductCardComponent
+        'prod-list': ProductListComponent
     },
     data: function () {
         return {
-            title: 'Menu',
+            title: 'List of products',
             products: []
         }
     },
@@ -28,6 +25,7 @@ export default {
             axios.get('api/products')
                 .then(response => {
                     this.products = response.data.data
+                    //console.log(this.products)
                 })
         }
     },

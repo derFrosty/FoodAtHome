@@ -36,13 +36,12 @@
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" @click="logout">Logout</a>
                     </div>
+
                 </ul>
             </div>
         </nav>
-        <div class="container">
-            <router-view></router-view>
-        </div>
 
+        <router-view></router-view>
 
         <footer class="footerbottom">
             <div class="footerstyle py-4">

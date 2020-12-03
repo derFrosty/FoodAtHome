@@ -16,16 +16,20 @@ import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
 Vue.use(BootstrapVue)
 Vue.use(ClientTable);
+import UserProfileComponent from "./User/Profile";
+import UserChangePasswordComponent from "./User/ChangePassword"
 
 Vue.use(Vuex)
 Vue.use(VueRouter);
+Vue.use(ClientTable);
 
 const routes = [
     {path: '/', component: WelcomeComponent},
     {path: '/login', component: LoginComponent},
     {path: '/register', component: RegisterComponent},
     {path: '/products', component: ProductComponent},
-    {path: '/shoppingcart', component: ShoppingCartComponent}
+    {path: '/profile', component: UserProfileComponent},
+    {path: '/profile/changepassword', component: UserChangePasswordComponent}
 ]
 
 const router = new VueRouter({
@@ -34,27 +38,17 @@ const router = new VueRouter({
 
 const store = new Vuex.Store({
     state: {
-        user: {
-            id: null,
-            name: null,
-            email: null
-        }
+        user: null
     },
     mutations: {
         loadUserIfRemembered(state){
-            state.user.id = localStorage.getItem('user_id')
-            state.user.name = localStorage.getItem('name')
-            state.user.email = localStorage.getItem('email')
+            state.user = JSON.parse(localStorage.getItem('user'))
         },
         setUser (state, user) {
-            state.user.id = user.id
-            state.user.name = user.name
-            state.user.email = user.email
+            state.user = user
         },
         logoutUser(state){
-            state.user.id = null
-            state.user.name = null
-            state.user.email = null
+            state.user = null
         }
     }
 })

@@ -11,16 +11,21 @@ import LoginComponent from "./Auth/Login.vue";
 import RegisterComponent from "./Auth/Register.vue";
 import WelcomeComponent from "./Welcome/Welcome.vue";
 import ProductComponent from "./Product/Product";
+import ShoppingCartComponent from "./User/ShoppingCart";
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+
+Vue.use(BootstrapVue)
+Vue.use(ClientTable);
 
 Vue.use(Vuex)
 Vue.use(VueRouter);
-Vue.use(ClientTable);
 
 const routes = [
     {path: '/', component: WelcomeComponent},
     {path: '/login', component: LoginComponent},
     {path: '/register', component: RegisterComponent},
-    {path: '/products', component: ProductComponent}
+    {path: '/products', component: ProductComponent},
+    {path: '/shoppingcart', component: ShoppingCartComponent}
 ]
 
 const router = new VueRouter({

@@ -22,10 +22,9 @@
         },
         methods: {
             getOrders: function () {
-                axios.get('api/orders')
+                axios.get('api/my_orders')
                     .then(response => {
                         this.orders = response.data.data
-                        //console.log(this.orders)
                     })
             }
         },

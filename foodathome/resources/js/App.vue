@@ -14,10 +14,13 @@
                         <!-- apagar o <a...> ou comentar, e substituir pela linha abaixo -->
                         <router-link class="nav-link" to="/products">Products</router-link>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">ir para y</a>
-                        <!-- apagar o <a...> ou comentar, e substituir pela linha abaixo -->
-                        <!--                        <router-link class="nav-link" to="/">Food@Home</router-link>-->
+                    <li class="nav-item dropdown">
+
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown">Orders</a>
+                        <div class="dropdown-menu">
+                            <router-link class="dropdown-item" to="/my_orders">My Orders</router-link>
+                            <router-link class="dropdown-item" to="/order_history">Order History</router-link>
+                        </div>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">ir para z</a>

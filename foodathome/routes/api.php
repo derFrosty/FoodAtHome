@@ -21,4 +21,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('products', [ProductController::class, 'index']);
+
+//Orders
 Route::get('orders', [OrderController::class, 'index']);
+Route::get('my_orders', [OrderController::class, 'myOrders']);
+Route::get('order_history', [OrderController::class, 'orderHistory']);

@@ -2,18 +2,8 @@
 
     <form>
 
-        <div v-if="this.$store.state.user" class="form-group row">
-            <img v-if="this.$store.state.user.photo_url" :src="'storage/fotos/' + this.$store.state.user.photo_url" style="width:150px; height:150px; float:left; border-radius:50%; margin-right:25px;">
-            <img v-else :src="'storage/fotos/template.png'" style="width:150px; height:150px; float:left; border-radius:50%; margin-right:25px;">
-
-
-            <form enctype="multipart/form-data">
-                <label>Update Profile Image</label>
-                <br>
-                <input type="file" name="avatar">
-                <br>
-                <input type="submit" class="pull-right btn btn-sm btn-primary mt-4" v-on:click.prevent="updateProfilePicture">
-            </form>
+        <div v-if="$store.state.user" class="form-group row">
+            <img class="mx-auto d-block" :src="$store.state.user.photo_url ? 'storage/fotos/' + $store.state.user.photo_url : 'storage/fotos/template.png'" style="width:150px; height:150px; float:left; border-radius:50%; margin-right:25px;" alt="profile picture">
         </div>
 
         <div class="form-group row">
@@ -85,7 +75,7 @@
             </div>
         </div>
 
-        <div v-if="!this.$store.state.user" class="form-group row">
+        <div v-if="!$store.state.user" class="form-group row">
             <label for="password-confirm" class="col-md-4 col-form-label text-md-right">Confirm Password</label>
 
             <div class="col-md-6">
@@ -93,11 +83,20 @@
             </div>
         </div>
 
+        <div class="form-group row">
+            <label for="user-photo" class="col-md-4 col-form-label text-md-right">Avatar</label>
+
+            <div class="col-md-6">
+                <input id="user-photo" class="" type="file" @change="pictureChanged" accept="image/x-png,image/jpg,image/jpeg">
+            </div>
+
+        </div>
+
         <div class="form-group row mb-0">
             <div class="col-md-6 offset-md-4">
-                <router-link v-if="this.$store.state.user" class="btn btn-secondary" to="/profile/changepassword">Change password</router-link>
+                <router-link v-if="$store.state.user" class="btn btn-secondary" to="/profile/changepassword">Change password</router-link>
                 <button type="submit" class="btn btn-primary" v-on:click.prevent="returnData">
-                    <div v-if="!this.$store.state.user">Register</div>
+                    <div v-if="!$store.state.user">Register</div>
                     <div v-else>Update Information</div>
                 </button>
 
@@ -122,8 +121,10 @@ export default {
                 type: 'C',
                 address: '',
                 phone: '',
-                nif: ''
-            }
+                nif: '',
+                photo: null
+            },
+
         }
     },
     methods: {
@@ -136,9 +137,16 @@ export default {
         returnData: function (){
             this.$emit('user-done', this.inputForm)
         },
-        updateProfilePicture: function (){
-            console.log("update!")
+        pictureChanged: function (event){
+            this.inputForm.photo = event.target.files[0]
         }
+    },
+    mounted() {
+        this.inputForm.fullname = this.$store.state.user.name;
+        this.inputForm.email = this.$store.state.user.email;
+        this.inputForm.address = this.$store.state.user.customer.address;
+        this.inputForm.phone = this.$store.state.user.customer.phone;
+        this.inputForm.nif = this.$store.state.user.customer.nif;
     }
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container">
         <div class="jumbotron">
             <h1>{{ title }}</h1>
         </div>

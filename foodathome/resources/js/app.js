@@ -11,6 +11,8 @@ import LoginComponent from "./Auth/Login.vue";
 import RegisterComponent from "./Auth/Register.vue";
 import WelcomeComponent from "./Welcome/Welcome.vue";
 import ProductComponent from "./Product/Product";
+import UserProfileComponent from "./User/Profile";
+import UserChangePasswordComponent from "./User/ChangePassword"
 import ShoppingCartComponent from "./User/ShoppingCart";
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
@@ -25,6 +27,8 @@ const routes = [
     {path: '/login', component: LoginComponent},
     {path: '/register', component: RegisterComponent},
     {path: '/products', component: ProductComponent},
+    {path: '/profile', component: UserProfileComponent},
+    {path: '/profile/changepassword', component: UserChangePasswordComponent}
     {path: '/shoppingcart', component: ShoppingCartComponent}
 ]
 
@@ -34,27 +38,17 @@ const router = new VueRouter({
 
 const store = new Vuex.Store({
     state: {
-        user: {
-            id: null,
-            name: null,
-            email: null
-        }
+        user: null
     },
     mutations: {
         loadUserIfRemembered(state){
-            state.user.id = localStorage.getItem('user_id')
-            state.user.name = localStorage.getItem('name')
-            state.user.email = localStorage.getItem('email')
+            state.user = JSON.parse(localStorage.getItem('user'))
         },
         setUser (state, user) {
-            state.user.id = user.id
-            state.user.name = user.name
-            state.user.email = user.email
+            state.user = user
         },
         logoutUser(state){
-            state.user.id = null
-            state.user.name = null
-            state.user.email = null
+            state.user = null
         }
     }
 })

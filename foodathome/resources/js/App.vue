@@ -27,7 +27,7 @@
                         <router-link class="nav-link" to="/register">Register</router-link>
                     </li>
                 </ul>
-                <ul v-else class="nav-item dropdown mr-5">
+                <ul v-else class="navbar-nav dropdown mr-5">
                     <li class="nav-item">
                         <router-link class="nav-link" to="/shoppingcart">Shopping Cart</router-link>
                     </li>

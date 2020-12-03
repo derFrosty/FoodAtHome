@@ -13,7 +13,7 @@
                     <p class="card-text">{{ typeDish(item.type) }}</p>
                     <p class="card-text">{{ item.description }}</p>
                     <p class="card-text">{{ item.price }}€</p>
-                    <a v-if="isLoggedIn" href="#" class="btn btn-primary">Add to cart</a>
+                    <a v-if="isLoggedIn" @click="$store.commit('addProductToShoppingCart', item)" class="btn btn-primary">Add to cart</a>
                 </div>
             </div>
         </div>

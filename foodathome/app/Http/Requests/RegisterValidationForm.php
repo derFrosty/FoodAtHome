@@ -16,8 +16,7 @@ class RegisterValidationForm extends FormRequest
             'password' => ['required', 'string', 'min:3', 'confirmed'],
             'address' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'string', 'digits_between:9,20'],
-            'nif' => ['required', 'string', 'digits:9'],
-            'photo' => ['file']
+            'nif' => ['required', 'string', 'digits:9']
         ]);
 
         return $rules;

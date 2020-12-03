@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\UserApiController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,15 +21,11 @@ use App\Http\Controllers\Api\ProductController;
 //    return $request->user();
 //});
 
-Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/user', function (Request $request) {
-        return User::with('customer')->where('id', $request->user()->id)->first();
-    });
-
-    Route::post('logout', [AuthController::class, 'logout']);
-
-    Route::post('updateuser', [UserApiController::class, 'update_user']);
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return User::with('customer')->where('id', $request->user()->id)->first();
 });
+
+Route::middleware('auth:sanctum')->post('logout', [AuthController::class, 'logout']);
 
 Route::post('login', [AuthController::class, 'authenticate']);
 

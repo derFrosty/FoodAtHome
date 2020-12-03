@@ -3,7 +3,6 @@
 
         <v-client-table :data="products" :columns="columns" :options="options">
             <template v-slot:photo_url="data">
-                <!--                <a>{{ data.row.photo_url }}</a>-->
                 <img style="display:block;" width="auto" height="65" :src="imgSource(data.row.photo_url)">
             </template>
         </v-client-table>
@@ -18,7 +17,7 @@ export default {
         return {
             columns: ['id', 'name', 'type', 'description', 'photo_url'],
             options: {
-                filterable: ['type'],
+                filterable: ['name','type'],
                 headings: {
                     'name': 'Product',
                     'photo_url': 'Photo'

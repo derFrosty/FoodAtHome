@@ -57,12 +57,14 @@ const store = new Vuex.Store({
                 id: null,
                 name: null,
                 photo_url: null,
-                quantity: null
+                quantity: null,
+                unit_price: null
             }
 
             newProduct.id = product.id
             newProduct.name = product.name
             newProduct.photo_url = product.photo_url
+            newProduct.unit_price = product.price
 
             //returns object if it's successful, returns undefined if not
             let result = state.shoppingCart.find((value) => value.id === newProduct.id)

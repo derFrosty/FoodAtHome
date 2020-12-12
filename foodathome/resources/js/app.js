@@ -82,6 +82,18 @@ const store = new Vuex.Store({
             if (result != -1) {
                 state.shoppingCart.splice(result, 1)
             }
+        },
+        changeQuantityOfProductInShoppingCart(state, payload){
+            let result = state.shoppingCart.findIndex((value) => value.id === payload.product.id)
+            if (result != -1) {
+                if(Math.round(payload.quantity) <= 0){
+                    //delete product from shopping cart if quantity less or equal than 0
+                    state.shoppingCart.splice(result, 1)
+                }else{
+                    state.shoppingCart[result].quantity = Math.round(payload.quantity)
+                }
+
+            }
         }
     }
 })

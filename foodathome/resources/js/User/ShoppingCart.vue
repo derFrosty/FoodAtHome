@@ -9,18 +9,23 @@
                     <img style="display:block;" width="auto" height="65" :src="imgSource(data.row.photo_url)">
                 </template>
                 <template v-slot:unit_price="data">
-                    <p>{{data.row.unit_price}}€</p>
+                    <p>{{ data.row.unit_price }}€</p>
                 </template>
                 <template v-slot:total_price="data">
-                    <p>{{total_price_per_product(data.row)}}€</p>
+                    <p>{{ total_price_per_product(data.row) }}€</p>
                 </template>
                 <template v-slot:options="data">
-                    <b-button variant="transparent">
-                        <b-icon icon="trash" variant="danger rounded" @click="deleteProductFromCart(data.row)"></b-icon>
-                    </b-button>
+                    <div>
+                        <b-input class="d-inline" type="number" style="width: 80px" step="1"
+                                 :value="data.row.quantity" @change="quantityChange(data.row, $event)"></b-input>
+                        <b-button variant="transparent" class="d-inline">
+                            <b-icon icon="trash" variant="danger rounded"
+                                    @click="deleteProductFromCart(data.row)"></b-icon>
+                        </b-button>
+                    </div>
                 </template>
             </v-client-table>
-            <p align="right">Total: {{calculate_total_price}}€</p>
+            <p align="right">Total: {{ calculate_total_price }}€</p>
         </div>
         <div v-else>
             <p class="text-xl-center">There are no items on you shopping cart</p>
@@ -52,13 +57,17 @@ export default {
         imgSource: function (url) {
             return "storage/products/" + url;
         },
-        total_price_per_product: function (product){
+        total_price_per_product: function (product) {
             let total = product.unit_price * product.quantity
             return total.toFixed(2)
         },
-        deleteProductFromCart: function (product){
-            this.$store.commit('removeProductFromShoppingCart',product)
+        deleteProductFromCart: function (product) {
+            this.$store.commit('removeProductFromShoppingCart', product)
+        },
+        quantityChange: function (product, newQuantity) {
+            this.$store.commit('changeQuantityOfProductInShoppingCart', {product: product, quantity: newQuantity})
         }
+
     },
     mounted() {
         if (this.$store.state.shoppingCart.length != 0) {
@@ -66,7 +75,7 @@ export default {
         }
     },
     computed: {
-        calculate_total_price(){
+        calculate_total_price() {
             let total_sum = 0
 
             this.products.forEach(value => {

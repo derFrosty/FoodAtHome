@@ -30,8 +30,15 @@ export default {
     },
     methods: {
         update: function (inputForm){
-            console.log(inputForm)
             //update user
+            this.errors = []
+
+            axios.put('/api/changepassword', inputForm).then(response =>{
+                this.$router.push('/profile')
+            }).catch(error => {
+                this.errors = error.response.data.errors
+            });
+
         }
     }
 }

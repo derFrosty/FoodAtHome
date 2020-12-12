@@ -6,23 +6,22 @@ import {ServerTable, ClientTable, Event} from 'vue-tables-2';
 import VueRouter from "vue-router";
 import App from './App.vue';
 import Vuex from 'vuex'
-import {BootstrapVue, IconsPlugin} from 'bootstrap-vue'
 
 import LoginComponent from "./Auth/Login.vue";
 import RegisterComponent from "./Auth/Register.vue";
 import WelcomeComponent from "./Welcome/Welcome.vue";
 import ProductComponent from "./Product/Product";
+import UserProfileComponent from "./User/Profile";
+import UserChangePasswordComponent from "./User/ChangePassword"
 import ShoppingCartComponent from "./User/ShoppingCart";
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 Vue.use(ClientTable);
-import UserProfileComponent from "./User/Profile";
-import UserChangePasswordComponent from "./User/ChangePassword"
 
 Vue.use(Vuex)
 Vue.use(VueRouter);
-Vue.use(ClientTable);
 
 const routes = [
     {path: '/', component: WelcomeComponent},

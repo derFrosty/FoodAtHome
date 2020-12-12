@@ -1,6 +1,11 @@
 <template>
 
     <form>
+
+        <div v-if="$store.state.user" class="form-group row">
+            <img class="mx-auto d-block" :src="$store.state.user.photo_url ? 'storage/fotos/' + $store.state.user.photo_url : 'storage/fotos/template.png'" style="width:150px; height:150px; float:left; border-radius:50%; margin-right:25px;" alt="profile picture">
+        </div>
+
         <div class="form-group row">
             <label for="fullname" class="col-md-4 col-form-label text-md-right">Fullname</label>
 
@@ -58,7 +63,7 @@
             </div>
         </div>
 
-        <div v-if="!this.$store.state.user.id" class="form-group row">
+        <div class="form-group row">
             <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
 
             <div class="col-md-6">
@@ -70,7 +75,7 @@
             </div>
         </div>
 
-        <div v-if="!this.$store.state.user.id" class="form-group row">
+        <div v-if="!$store.state.user" class="form-group row">
             <label for="password-confirm" class="col-md-4 col-form-label text-md-right">Confirm Password</label>
 
             <div class="col-md-6">
@@ -78,12 +83,23 @@
             </div>
         </div>
 
+        <div class="form-group row">
+            <label for="user-photo" class="col-md-4 col-form-label text-md-right">Avatar</label>
+
+            <div v-if="!$store.state.user.photo_url" class="col-md-6">
+                <input id="user-photo" class="" type="file" @change="pictureChanged" accept="image/x-png,image/jpg,image/jpeg">
+            </div>
+            <div v-else class="col-md-6">
+                <button type="button" class="btn btn-danger btn-sm" @click="removePic">X</button>Remove avatar
+            </div>
+
+        </div>
+
         <div class="form-group row mb-0">
             <div class="col-md-6 offset-md-4">
-                <router-link v-if="this.$store.state.user.id" class="btn btn-secondary" to="/profile/changepassword">Change password</router-link>
+                <router-link v-if="$store.state.user" class="btn btn-secondary" to="/profile/changepassword">Change password</router-link>
                 <button type="submit" class="btn btn-primary" v-on:click.prevent="returnData">
-                    <div v-if="!this.$store.state.user.id">Register</div>
-                    <div v-else>Update Information</div>
+                    <div>{{ $store.state.user ? 'Update Information': 'Register'}}</div>
                 </button>
 
             </div>
@@ -107,8 +123,10 @@ export default {
                 type: 'C',
                 address: '',
                 phone: '',
-                nif: ''
-            }
+                nif: '',
+                photo: null
+            },
+
         }
     },
     methods: {
@@ -119,7 +137,42 @@ export default {
             return this.errors[fieldName]
         },
         returnData: function (){
-            this.$emit('user-done', this.inputForm)
+
+            const data = new FormData()
+            if(this.inputForm.photo != null){
+                data.append('photo', this.inputForm.photo)
+            }
+            data.append('email', this.inputForm.email)
+            data.append('fullname', this.inputForm.fullname)
+            data.append('password', this.inputForm.password)
+            if(!this.$store.state.user){
+                data.append('password_confirmation', this.inputForm.password_confirmation)
+            }
+            data.append('address', this.inputForm.address)
+            data.append('phone', this.inputForm.phone)
+            data.append('nif', this.inputForm.nif)
+
+            this.$emit('user-done', data)
+        },
+        pictureChanged: function (event){
+            this.inputForm.photo = event.target.files[0]
+        },
+        removePic: function (){
+            axios.put('/api/removeavatar').then(response => {
+                this.inputForm.photo = null
+                this.$store.commit('setUser', response.data.user)
+                localStorage.setItem('user', JSON.stringify(response.data.user))
+                console.log(response)
+            })
+        }
+    },
+    mounted() {
+        if(this.$store.state.user){
+            this.inputForm.fullname = this.$store.state.user.name;
+            this.inputForm.email = this.$store.state.user.email;
+            this.inputForm.address = this.$store.state.user.customer.address;
+            this.inputForm.phone = this.$store.state.user.customer.phone;
+            this.inputForm.nif = this.$store.state.user.customer.nif;
         }
     }
 }

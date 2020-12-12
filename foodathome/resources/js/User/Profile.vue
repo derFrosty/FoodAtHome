@@ -34,7 +34,18 @@ export default {
     },
     methods: {
         update: function (inputForm){
+            this.errors = []
             //update user
+            axios.post("/api/updateuser", inputForm).then(response => {
+                axios.get('/api/user').then(response =>{
+
+                    this.$store.commit('setUser', response.data)
+                    localStorage.setItem('user', JSON.stringify(response.data))
+                });
+            }).catch(error => {
+                this.errors = error.response.data.errors
+            })
+
         }
     }
 }

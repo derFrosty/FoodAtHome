@@ -30,8 +30,10 @@
                 <ul v-else class="navbar-nav dropdown mr-5">
                     <li class="nav-item">
                         <router-link class="nav-link" to="/shoppingcart">
-                            <b-icon icon="cart4"></b-icon>
-                            {{ shoppingCartItemNumber }}
+                            <p class="h4 mb-2 d-inline">
+                                <b-icon icon="cart4"></b-icon>
+                            </p>
+                            <p class="h8 d-inline">{{ shoppingCartItemNumber }}</p>
                         </router-link>
                     </li>
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

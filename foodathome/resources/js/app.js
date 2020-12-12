@@ -94,6 +94,9 @@ const store = new Vuex.Store({
                 }
 
             }
+        },
+        clearShoppingCart(state){
+            state.shoppingCart = []
         }
     }
 })

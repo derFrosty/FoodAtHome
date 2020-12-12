@@ -4,6 +4,7 @@
             <h1>{{ title }}</h1>
         </div>
         <div v-if="products.length != 0">
+            <b-button variant="danger" @click="clearShoppingCart">Clear Shopping Cart</b-button>
             <v-client-table :data="products" :columns="columns" :options="options">
                 <template v-slot:photo_url="data">
                     <img style="display:block;" width="auto" height="65" :src="imgSource(data.row.photo_url)">
@@ -18,7 +19,7 @@
                     <div>
                         <b-input class="d-inline" type="number" style="width: 80px" step="1"
                                  :value="data.row.quantity" @change="quantityChange(data.row, $event)"></b-input>
-                        <b-button variant="transparent" class="d-inline">
+                        <b-button variant="transparent" class="d-inline" style="margin-left: 10px">
                             <b-icon icon="trash" variant="danger rounded"
                                     @click="deleteProductFromCart(data.row)"></b-icon>
                         </b-button>
@@ -71,6 +72,11 @@ export default {
         },
         quantityChange: function (product, newQuantity) {
             this.$store.commit('changeQuantityOfProductInShoppingCart', {product: product, quantity: newQuantity})
+        },
+        clearShoppingCart: function (){
+            this.$store.commit('clearShoppingCart');
+
+            this.products = this.$store.state.shoppingCart
         }
 
     },

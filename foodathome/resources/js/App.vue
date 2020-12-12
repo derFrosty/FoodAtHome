@@ -29,7 +29,10 @@
                 </ul>
                 <ul v-else class="navbar-nav dropdown mr-5">
                     <li class="nav-item">
-                        <router-link class="nav-link" to="/shoppingcart">Shopping Cart</router-link>
+                        <router-link class="nav-link" to="/shoppingcart">
+                            <b-icon icon="cart4"></b-icon>
+                            {{ shoppingCartItemNumber }}
+                        </router-link>
                     </li>
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         {{this.$store.state.user.name}}
@@ -70,7 +73,20 @@ export default {
         }
     },
     computed:{
+        shoppingCartItemNumber: function (){
+            if (this.$store.state.shoppingCart !== undefined && this.$store.state.shoppingCart.length > 0){
 
+                let sum = 0
+
+                this.$store.state.shoppingCart.forEach(value => {
+                    sum += value.quantity
+                })
+
+                return sum
+            }
+
+            return ''
+        }
     }
 }
 </script>

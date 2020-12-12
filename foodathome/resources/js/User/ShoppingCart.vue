@@ -16,7 +16,7 @@
                 </template>
                 <template v-slot:options="data">
                     <b-button variant="transparent">
-                        <b-icon icon="trash" variant="danger rounded" @click=""></b-icon>
+                        <b-icon icon="trash" variant="danger rounded" @click="deleteProductFromCart(data.row)"></b-icon>
                     </b-button>
                 </template>
             </v-client-table>
@@ -57,7 +57,7 @@ export default {
             return total.toFixed(2)
         },
         deleteProductFromCart: function (product){
-
+            this.$store.commit('removeProductFromShoppingCart',product)
         }
     },
     mounted() {

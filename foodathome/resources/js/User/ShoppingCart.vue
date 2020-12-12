@@ -25,7 +25,12 @@
                     </div>
                 </template>
             </v-client-table>
-            <p align="right">Total: {{ calculate_total_price }}€</p>
+            <div align="right">
+                <p >Total: {{ calculate_total_price }}€</p>
+                <button type="button" class="btn btn-success">Confirm Order</button>
+            </div>
+
+
         </div>
         <div v-else>
             <p class="text-xl-center">There are no items on you shopping cart</p>

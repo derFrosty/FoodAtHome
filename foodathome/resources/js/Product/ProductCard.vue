@@ -12,7 +12,9 @@
                     <h5 class="card-title">{{ item.name }}</h5>
                     <p class="card-text">{{ typeDish(item.type) }}</p>
                     <p class="card-text">{{ item.description }}</p>
-                    <p class="card-text">{{ item.price }}€</p>
+                    <p class="card-text d-inline">{{ item.price }}€</p>
+                    <p class="card-text d-inline" style="margin-left: 10px" v-if="checkQuantityInShoppingCart(item) !== -1">x{{checkQuantityInShoppingCart(item)}}</p>
+                    <br>
                     <a v-if="isLoggedIn" @click="$store.commit('addProductToShoppingCart', item)" class="btn btn-primary">Add to cart</a>
                 </div>
             </div>
@@ -49,6 +51,17 @@ export default {
                 }
             })
             return typeToReturn
+        },
+        checkQuantityInShoppingCart: function (product){
+            let result = this.$store.state.shoppingCart.findIndex(value => value.id === product.id)
+
+            if(result == -1){
+                //if it's -1 that product isn't on the shopping cart
+                return result
+            }
+
+            return this.$store.state.shoppingCart[result].quantity
+
         }
     },
     computed: {
@@ -70,8 +83,7 @@ export default {
                 }
                 return false
             })
-
-        }
+        },
     },
     mounted() {
         if(this.$store.state.user){

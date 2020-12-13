@@ -27,15 +27,25 @@
                         <router-link class="nav-link" to="/register">Register</router-link>
                     </li>
                 </ul>
-                <ul v-else class="nav-item dropdown mr-5">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{this.$store.state.user.name}}
+                <ul v-else class="navbar-nav dropdown mr-5">
+                    <li class="nav-item">
+                        <router-link class="nav-link" to="/shoppingcart">
+                            <p class="h4 mb-2 d-inline">
+                                <b-icon icon="cart4"></b-icon>
+                            </p>
+                            <p class="h8 d-inline">{{ shoppingCartItemNumber }}</p>
+                        </router-link>
+                    </li>
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ this.$store.state.user.name }}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <router-link class="dropdown-item" to="/profile">Perfil de utilizador</router-link>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" @click="logout">Logout</a>
                     </div>
+
                 </ul>
             </div>
         </nav>
@@ -60,12 +70,25 @@ export default {
 
             this.$router.push('/')
         },
-        teste: function (){
+        teste: function () {
             console.log(this.$store.state.user.name);
         }
     },
-    computed:{
+    computed: {
+        shoppingCartItemNumber: function () {
+            if (this.$store.state.shoppingCart !== undefined && this.$store.state.shoppingCart.length > 0) {
 
+                let sum = 0
+
+                this.$store.state.shoppingCart.forEach(value => {
+                    sum += value.quantity
+                })
+
+                return sum
+            }
+
+            return ''
+        }
     }
 }
 </script>

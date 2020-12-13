@@ -17,6 +17,7 @@ import ShoppingCartComponent from "./User/ShoppingCart";
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
 Vue.use(BootstrapVue)
+Vue.use(IconsPlugin)
 Vue.use(ClientTable);
 
 Vue.use(Vuex)
@@ -38,17 +39,63 @@ const router = new VueRouter({
 
 const store = new Vuex.Store({
     state: {
-        user: null
+        user: null,
+        shoppingCart: []
     },
     mutations: {
-        loadUserIfRemembered(state){
+        loadUserIfRemembered(state) {
             state.user = JSON.parse(localStorage.getItem('user'))
         },
-        setUser (state, user) {
+        setUser(state, user) {
             state.user = user
         },
-        logoutUser(state){
+        logoutUser(state) {
             state.user = null
+        },
+        addProductToShoppingCart(state, product) {
+            let newProduct = {
+                id: null,
+                name: null,
+                photo_url: null,
+                quantity: null,
+                unit_price: null
+            }
+
+            newProduct.id = product.id
+            newProduct.name = product.name
+            newProduct.photo_url = product.photo_url
+            newProduct.unit_price = product.price
+
+            //returns object if it's successful, returns undefined if not
+            let result = state.shoppingCart.find((value) => value.id === newProduct.id)
+            if (result) {
+                result.quantity++
+            } else {
+                newProduct.quantity = 1
+                state.shoppingCart.push(newProduct)
+            }
+
+        },
+        removeProductFromShoppingCart(state, product) {
+            let result = state.shoppingCart.findIndex((value) => value.id === product.id)
+            if (result != -1) {
+                state.shoppingCart.splice(result, 1)
+            }
+        },
+        changeQuantityOfProductInShoppingCart(state, payload){
+            let result = state.shoppingCart.findIndex((value) => value.id === payload.product.id)
+            if (result != -1) {
+                if(Math.round(payload.quantity) <= 0){
+                    //delete product from shopping cart if quantity less or equal than 0
+                    state.shoppingCart.splice(result, 1)
+                }else{
+                    state.shoppingCart[result].quantity = Math.round(payload.quantity)
+                }
+
+            }
+        },
+        clearShoppingCart(state){
+            state.shoppingCart = []
         }
     }
 })
@@ -57,5 +104,7 @@ new Vue({
     render: h => h(App),
     router,
     store,
-    beforeCreate() {this.$store.commit('loadUserIfRemembered')}
+    beforeCreate() {
+        this.$store.commit('loadUserIfRemembered')
+    }
 }).$mount('#app');

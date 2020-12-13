@@ -36,8 +36,9 @@
                             <p class="h8 d-inline">{{ shoppingCartItemNumber }}</p>
                         </router-link>
                     </li>
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{this.$store.state.user.name}}
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ this.$store.state.user.name }}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <router-link class="dropdown-item" to="/profile">Perfil de utilizador</router-link>
@@ -48,9 +49,8 @@
                 </ul>
             </div>
         </nav>
-        <div class="container">
-            <router-view></router-view>
-        </div>
+
+        <router-view></router-view>
 
 
         <footer class="footerbottom">
@@ -70,13 +70,13 @@ export default {
 
             this.$router.push('/')
         },
-        teste: function (){
+        teste: function () {
             console.log(this.$store.state.user.name);
         }
     },
-    computed:{
-        shoppingCartItemNumber: function (){
-            if (this.$store.state.shoppingCart !== undefined && this.$store.state.shoppingCart.length > 0){
+    computed: {
+        shoppingCartItemNumber: function () {
+            if (this.$store.state.shoppingCart !== undefined && this.$store.state.shoppingCart.length > 0) {
 
                 let sum = 0
 

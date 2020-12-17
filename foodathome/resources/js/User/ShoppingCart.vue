@@ -26,11 +26,20 @@
                     </div>
                 </template>
             </v-client-table>
+
+            <div>
+                <p>Order notes:</p>
+                <b-form-textarea
+                    id="textarea-small"
+                    size="sm"
+                    placeholder="Please specify any specific changes to your order..."
+                ></b-form-textarea>
+            </div>
+
             <div align="right">
                 <p >Total: {{ calculate_total_price }}€</p>
                 <button type="button" class="btn btn-success">Confirm Order</button>
             </div>
-
 
         </div>
         <div v-else>

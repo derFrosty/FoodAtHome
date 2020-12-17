@@ -40,7 +40,8 @@ const router = new VueRouter({
 const store = new Vuex.Store({
     state: {
         user: null,
-        shoppingCart: []
+        shoppingCart: [],
+        orderNotes: ''
     },
     mutations: {
         loadUserIfRemembered(state) {
@@ -80,6 +81,9 @@ const store = new Vuex.Store({
             let result = state.shoppingCart.findIndex((value) => value.id === product.id)
             if (result != -1) {
                 state.shoppingCart.splice(result, 1)
+                if (state.shoppingCart.length == 0){
+                    state.orderNotes = ''
+                }
             }
         },
         changeQuantityOfProductInShoppingCart(state, payload){
@@ -96,6 +100,10 @@ const store = new Vuex.Store({
         },
         clearShoppingCart(state){
             state.shoppingCart = []
+            state.orderNotes = ''
+        },
+        changeOrderNotes(state, orderNotes){
+            state.orderNotes = orderNotes
         }
     }
 })

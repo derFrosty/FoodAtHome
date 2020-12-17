@@ -33,6 +33,8 @@
                     id="textarea-small"
                     size="sm"
                     placeholder="Please specify any specific changes to your order..."
+                    v-model="orderNotes"
+                    @update="changeOrderNotes(orderNotes)"
                 ></b-form-textarea>
             </div>
 
@@ -55,6 +57,7 @@ export default {
         return {
             title: 'Shopping Cart',
             products: [],
+            orderNotes: '',
             columns: ['photo_url', 'name', 'quantity', 'unit_price', 'total_price', 'options'],
             options: {
                 filterable: ['name'],
@@ -65,7 +68,6 @@ export default {
                 },
                 sortable: []
             },
-
         }
     },
     methods: {
@@ -86,12 +88,19 @@ export default {
             this.$store.commit('clearShoppingCart');
 
             this.products = this.$store.state.shoppingCart
+        },
+        changeOrderNotes: function (notes){
+            this.$store.commit('changeOrderNotes',notes)
         }
 
     },
     mounted() {
         if (this.$store.state.shoppingCart.length != 0) {
             this.products = this.$store.state.shoppingCart
+        }
+
+        if (this.$store.state.orderNotes != ''){
+            this.orderNotes = this.$store.state.orderNotes
         }
     },
     computed: {

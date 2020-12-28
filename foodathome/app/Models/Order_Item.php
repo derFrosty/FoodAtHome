@@ -7,6 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Order_Item extends Model
 {
     protected $table = 'order_items';
+
+    /**
+     *  Indicates if the model should be timestamped
+     *
+     * @var bool
+     */
     public $timestamps = false;
 
     protected $fillable = [

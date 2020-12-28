@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\NewOrderRequest;
 use App\Models\Order;
+use App\Models\Order_Item;
 use App\Models\Product;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -25,9 +26,9 @@ class ShoppingCartController extends Controller
             foreach ($products as $product) {
 
                 //verify if product id really exists in DB, if it doesn't client should receive an exception
-                $product = Product::findOrFail($product['id']);
+                $p = Product::findOrFail($product['id']);
 
-                $total_sum += $product['price'];
+                $total_sum += $p['price'] * $p['quantity'];
 
             }
 
@@ -51,8 +52,30 @@ class ShoppingCartController extends Controller
             $order->total_time = null;
 
             $order->save();
+
+            foreach ($products as $product){
+
+                $order_item = new Order_Item;
+
+                $order_item->order_id = $order->id;
+                $order_item->product_id = $product['id'];
+                $order_item->quantity = $product['quantity'];
+
+                $unit_price = Product::find($product['id'])['price'];
+
+                $order_item->unit_price = $unit_price;
+                $order_item->sub_total_price = $unit_price * $product['quantity'];
+
+                $order_item->save();
+
+            }
+
+
         });
 
-        return $request->validated();
+        return response()->json(
+            ['msg' => 'Order was completed'],
+            200
+        );
     }
 }

@@ -50,11 +50,7 @@ class ShoppingCartController extends Controller
             $order->delivery_time = null;
             $order->total_time = null;
 
-            //$order->save();
-
-            dd($order);
-
-
+            $order->save();
         });
 
         return $request->validated();

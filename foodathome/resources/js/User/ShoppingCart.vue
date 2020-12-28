@@ -40,7 +40,7 @@
 
             <div align="right">
                 <p >Total: {{ calculate_total_price }}€</p>
-                <button type="button" class="btn btn-success">Confirm Order</button>
+                <button type="button" class="btn btn-success" @click="confirmOrder">Confirm Order</button>
             </div>
 
         </div>
@@ -91,6 +91,17 @@ export default {
         },
         changeOrderNotes: function (notes){
             this.$store.commit('changeOrderNotes',notes)
+        },
+        confirmOrder: function (products, orderNotes){
+            let order = {
+                products: this.products,
+                orderNotes : this.orderNotes
+            }
+
+            axios.post('/api/confirmorder', order)
+            .then( response => {
+                console.log(response)
+            })
         }
 
     },

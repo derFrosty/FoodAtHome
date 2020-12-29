@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterValidationForm;
 use App\Models\Customer;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,6 +17,18 @@ use Illuminate\Support\Facades\Storage;
 
 class AuthController extends Controller
 {
+
+    public function updateAvailability($user_id, $availability)
+    {
+        $user = User::findOrFail($user_id);
+
+        if($availability == 0){
+            $user->available_at = null;
+        }else{
+            $user->available_at = Carbon::now();
+        }
+    }
+
     public function authenticate(Request $request)
     {
         $credentials = $request->only('email', 'password');

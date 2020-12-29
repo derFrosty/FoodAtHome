@@ -69,6 +69,8 @@ export default {
                         localStorage.setItem('user', JSON.stringify(response.data))
 
                         this.$router.push('/products')
+
+                        axios.put('/api/updateAvailability', {user_id:})
                     });
                 }).catch(error => {
                     this.error = error.response.data.error

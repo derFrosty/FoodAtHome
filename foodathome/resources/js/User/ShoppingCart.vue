@@ -100,8 +100,19 @@ export default {
 
             axios.post('/api/confirmorder', order)
             .then( response => {
-                console.log(response)
+                if (response.status === 200){
+                    this.$store.commit('changeOrderNotes','');
+                    this.$store.commit('clearShoppingCart');
+                    this.$toasted.success('Order completed',
+                        {
+                            duration: 2000,
+                            position: 'bottom-center'
+                        });
+                    this.$forceUpdate();
+                    this.products = []
+                }
             })
+
         }
 
     },

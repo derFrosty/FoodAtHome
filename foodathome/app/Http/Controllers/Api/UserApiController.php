@@ -8,6 +8,7 @@ use App\Http\Requests\UpdatePasswordValidationForm;
 use App\Http\Requests\UpdateUserValidationForm;
 use App\Models\User;
 use Auth;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -18,6 +19,32 @@ class UserApiController extends Controller
     public function index()
     {
         //
+    }
+
+    public function updateAvailability(Request $request)
+    {
+
+        $request_filter = $request->only('user_id', 'availability');
+
+        $user_id = $request_filter["user_id"];
+        $availability = $request_filter["availability"];
+
+
+
+        $user = User::findOrFail($user_id);
+
+        if($availability == 0){
+            $user->available_at = null;
+        }else{
+            $user->available_at = Carbon::now();
+        }
+
+        $user->save();
+
+        return response()->json(
+            ['msg' => 'availability updated with success.'],
+            200
+        );
     }
 
     public function remove_avatar(Request $request){

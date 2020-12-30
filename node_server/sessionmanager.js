@@ -48,10 +48,11 @@ class SessionManager {
             if (userSession.socketID === socketToRemove) {
                 let cloneUserSession = Object.assign({}, userSession)
                 this.users.delete(cloneUserSession.user.id)
-                return cloneUserSession
+                return cloneUserSession.user
             }
         }
         return null
     }
+
 }
 module.exports = SessionManager

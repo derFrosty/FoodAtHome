@@ -9,6 +9,7 @@
   "author": "João Ferreira, Frederico Gomes, Ivan Silva",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.21.1",
     "socket.io": "^2.3.0"
   }
 }

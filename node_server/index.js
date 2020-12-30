@@ -2,7 +2,9 @@ let httpServer = require('http').createServer()
 let io = require('socket.io')(httpServer)
 let SessionManager = require("./SessionManager.js")
 
-let https = require('https')
+// var http = require('http');
+// var net = require('net');
+const axios = require('axios')
 
 
 
@@ -13,33 +15,24 @@ httpServer.listen(8080, function () {
 let sessions = new SessionManager()
 
 io.on('connection', function (socket) {
-    console.log('Client has connected. Socket ID = ' + socket.id)
-        // socket.on('global_message', (payload) => {
-    //     switch (payload.type) {
-    //         //manager
-    //         case 'EM':
-    //             break;
-    //         //cook
-    //         case 'EC':
-    //             break;
-    //         //delivery
-    //         case 'ED':
-    //             break;
-    //         //customer
-    //         case 'C':
-    //             break;
-    //         default:
-    //
-    //             break;
-    //     }
-    // })
+//    console.log('Client has connected. Socket ID = ' + socket.id)
+
 
     socket.on('user_logged', (user) => {
         if (user) {
             sessions.addUserSession(user, socket.id)
             socket.join(user.type)
-            console.log('User Logged: UserID= ' + user.id + ' Socket ID= ' + socket.id)
+            console.log('User ' + user.id + ' reconnected. Socket ID= ' + socket.id)
             console.log(' -> Total Sessions= ' + sessions.users.size)
+
+            //updated user availability
+
+            axios.put('http://projeto.test/api/updateAvailability', {"user_id": user.id, "availability": 1}).then(response =>{
+                console.log("ok! user is now available");
+            }).catch(error => {
+                console.log("Error! user availability not updated!");
+            });
+
         }
     })
 
@@ -62,39 +55,13 @@ io.on('connection', function (socket) {
     socket.on('disconnect', (reason) => {
         let x = sessions.removeSocketIDSessionAndGetId(socket.id)
 
-        let data = JSON.stringify({
-            user_id: x.user.id,
-            availability: 0
-        })
+        axios.put('http://projeto.test/api/updateAvailability', {"user_id": x.id, "availability": 0}).then(response =>{
+            console.log("ok! user is not longer available");
+        }).catch(error => {
+            console.log("Error! user availability not updated!");
+        });
 
-        let options = {
-            hostname: 'http://projeto.test/api',
-            port: 443,
-            path: '/updateAvailability',
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Content-Length': data.length
-            }
-        }
-
-        let req = https.request(options, res => {
-            console.log(`statusCode: ${res.statusCode}`)
-
-            res.on('data', d => {
-                process.stdout.write(d)
-            })
-        })
-
-        req.on('error', error => {
-            console.error(error)
-        })
-
-        req.write(data)
-        req.end()
-
-
-        console.log('Disconnect user' + x.user.id)
+        console.log('Disconnect user' + x.id)
 
         console.log('Disconnect Socket ID= ' + socket.id)
         console.log(' -> Total Sessions= ' + sessions.users.size)

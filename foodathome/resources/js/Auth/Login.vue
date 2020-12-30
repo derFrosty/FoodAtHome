@@ -70,7 +70,7 @@ export default {
 
                         this.$router.push('/products')
 
-                        axios.put('/api/updateAvailability', {user_id:})
+                        axios.put('/api/updateAvailability', {"user_id": this.$store.state.user.id, "availability": 1})
                     });
                 }).catch(error => {
                     this.error = error.response.data.error

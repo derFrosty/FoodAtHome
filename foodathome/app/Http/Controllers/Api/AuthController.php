@@ -18,17 +18,6 @@ use Illuminate\Support\Facades\Storage;
 class AuthController extends Controller
 {
 
-    public function updateAvailability($user_id, $availability)
-    {
-        $user = User::findOrFail($user_id);
-
-        if($availability == 0){
-            $user->available_at = null;
-        }else{
-            $user->available_at = Carbon::now();
-        }
-    }
-
     public function authenticate(Request $request)
     {
         $credentials = $request->only('email', 'password');

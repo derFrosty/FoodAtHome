@@ -34,6 +34,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('changepassword', [UserApiController::class, 'update_password']);
 
     Route::put('removeavatar', [UserApiController::class, 'remove_avatar']);
+
 });
 
 Route::post('login', [AuthController::class, 'authenticate']);
@@ -42,5 +43,5 @@ Route::get('products', [ProductController::class, 'index']);
 
 Route::post('register', [AuthController::class, 'register']);
 
-Route::put('updateAvailability', [AuthController::class, 'updateAvailability']);
+Route::put('updateAvailability', [UserApiController::class, 'updateAvailability']);
 

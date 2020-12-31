@@ -69,6 +69,10 @@ export default {
                         localStorage.setItem('user', JSON.stringify(response.data))
 
                         this.$router.push('/products')
+
+                        axios.put('/api/updateLoggedAt', {"user_id": this.$store.state.user.id, "logged": 1}).then(resp => {
+                            axios.put('/api/updateAvailability', {"user_id": this.$store.state.user.id, "availability": 1})
+                        })
                     });
                 }).catch(error => {
                     this.error = error.response.data.error

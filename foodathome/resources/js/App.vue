@@ -51,6 +51,7 @@
         </nav>
 
         <router-view></router-view>
+        <notifications position="bottom right" />
 
 <!--        <footer class="footerbottom">
             <div class="footerstyle py-4">

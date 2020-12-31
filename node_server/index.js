@@ -2,10 +2,8 @@ let httpServer = require('http').createServer()
 let io = require('socket.io')(httpServer)
 let SessionManager = require("./SessionManager.js")
 
-// var http = require('http');
-// var net = require('net');
-const axios = require('axios')
 
+const axios = require('axios')
 
 
 httpServer.listen(8080, function () {

@@ -52,7 +52,17 @@
             },
 
             moreDetails: function (order) {
+                order.preparation_time != null ?
+                    this.$toasted.show("Preparation time: " + order.preparation_time, {duration: 2000})
+                    : this.$toasted.show("Preparation time: Sem valor", {duration: 2000})
 
+                order.delivery_time != null ?
+                    this.$toasted.show("Delivery time: " + order.delivery_time, {duration: 2000})
+                    : this.$toasted.show("Delivery time: Sem valor", {duration: 2000})
+
+                order.total_time != null ?
+                    this.$toasted.show("Total time: " + order.total_time, {duration: 2000})
+                    : this.$toasted.show("Total time: Sem valor", {duration: 2000})
             },
         }
     };

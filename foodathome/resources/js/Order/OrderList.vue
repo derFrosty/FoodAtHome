@@ -10,6 +10,9 @@
             <template v-slot:total_price="data">
                 <a>{{ totalPriceSource(data.row.total_price) }}</a>
             </template>
+            <template v-slot:detail="data">
+                <a class="btn btn-xs btn-info" v-on:click="moreDetails(data.row)">MoreDetails</a>
+            </template>
         </v-client-table>
     </div>
 </template>
@@ -19,7 +22,8 @@
         props: ['orders'],
         data: function () {
             return {
-                columns: ['id', 'status', 'notes', 'total_price', 'date'],
+                showDialog: false,
+                columns: ['id', 'status', 'notes', 'total_price', 'date', 'detail'],
                 options: {
                     filterable: [],
                     sortable: ['id', 'status', 'total_price', 'date']
@@ -45,9 +49,12 @@
 
             totalPriceSource: function (totalPrice) {
                 return totalPrice + "€";
-            }
-        }
+            },
 
+            moreDetails: function (order) {
+
+            },
+        }
     };
 </script>
 

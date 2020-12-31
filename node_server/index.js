@@ -6,6 +6,8 @@ let SessionManager = require("./SessionManager.js")
 // var net = require('net');
 const axios = require('axios')
 
+const myModule = require('./env.js');
+let url = myModule.env().url;
 
 
 httpServer.listen(8080, function () {
@@ -27,9 +29,9 @@ io.on('connection', function (socket) {
 
             //updated user availability
 
-            axios.put('http://projeto.test/api/updateLoggedAt', {"user_id": user.id, "logged": 1}).then(response =>{
+            axios.put(url + '/api/updateLoggedAt', {"user_id": user.id, "logged": 1}).then(response =>{
                 console.log("ok! user is now logged-in");
-                axios.put('http://projeto.test/api/updateAvailability', {"user_id": user.id, "availability": 1}).then(response =>{
+                axios.put(url + '/api/updateAvailability', {"user_id": user.id, "availability": 1}).then(response =>{
                     console.log("ok! user is now available");
                 }).catch(error => {
                     console.log("Error! user availability not updated!");
@@ -60,9 +62,9 @@ io.on('connection', function (socket) {
     socket.on('disconnect', (reason) => {
         let x = sessions.removeSocketIDSessionAndGetId(socket.id)
 
-        axios.put('http://projeto.test/api/updateLoggedAt', {"user_id": x.id, "logged": 0}).then(response =>{
+        axios.put(url + '/api/updateLoggedAt', {"user_id": x.id, "logged": 0}).then(response =>{
             console.log("ok! user is no longer logged-in");
-            axios.put('http://projeto.test/api/updateAvailability', {"user_id": x.id, "availability": 0}).then(response =>{
+            axios.put(url + '/api/updateAvailability', {"user_id": x.id, "availability": 0}).then(response =>{
                 console.log("ok! user is no longer now available");
             }).catch(error => {
                 console.log("Error! user availability not updated!");

@@ -39,6 +39,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('confirmorder', [ShoppingCartController::class, 'confirmOrder']);
 
+    Route::get('checkorder/{order_id}', [ShoppingCartController::class, 'checkOrderCook']);
+
 });
 
 Route::post('login', [AuthController::class, 'authenticate']);

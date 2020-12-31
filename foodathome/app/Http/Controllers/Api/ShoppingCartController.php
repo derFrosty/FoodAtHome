@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\Order_Item;
 use App\Models\Product;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -77,8 +78,19 @@ class ShoppingCartController extends Controller
 
         });
 
+        $order = Order::Where('customer_id', Auth::id())->orderByDesc('id')->first();
+
         return response()->json(
-            ['msg' => 'Order was completed'],
+            ['msg' => 'Order was completed',
+             'order_id' => $order->id],
+            200
+        );
+    }
+
+    public function checkOrderCook(Request $request){
+        $order = Order::findOrFail($request['order_id']);
+        return response()->json(
+            ['order_cook_id' => $order->prepared_by],
             200
         );
     }

@@ -138,5 +138,10 @@ new Vue({
     store,
     beforeCreate() {
         this.$store.commit('loadUserIfRemembered')
+    },
+    sockets:{
+        connect(){
+            console.log("Connected!")
+        }
     }
 }).$mount('#app');

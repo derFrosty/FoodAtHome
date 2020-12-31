@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterValidationForm;
 use App\Http\Requests\UpdatePasswordValidationForm;
 use App\Http\Requests\UpdateUserValidationForm;
+use App\Models\Order;
 use App\Models\User;
 use Auth;
 use Carbon\Carbon;
@@ -29,9 +30,37 @@ class UserApiController extends Controller
         $user_id = $request_filter["user_id"];
         $availability = $request_filter["availability"];
 
-
-
         $user = User::findOrFail($user_id);
+
+        switch ($user->type){
+            case 'C':{
+                return response()->json(
+                    ['msg' => 'User is not worker.'],
+                    200
+                );
+            }
+            case 'EC': {
+                $preparing = Order::Where('prepared_by', $user_id)->Where('status', 'P')->count();
+                if($preparing > 0){ //user not available
+                    return response()->json(
+                        ['msg' => 'User is cooking cannot be updated!'],
+                        200
+                    );
+                }
+                break;
+            }
+            case 'ED': {
+                $preparing = Order::Where('delivered_by', $user_id)->Where('status', 'T')->count();
+                if($preparing > 0){ //user not available
+                    return response()->json(
+                        ['msg' => 'User is in transit cannot be updated!'],
+                        200
+                    );
+                }
+                break;
+            }
+        }
+
 
         if($availability == 0){
             $user->available_at = null;

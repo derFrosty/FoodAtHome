@@ -103,7 +103,7 @@ export default {
                 if (response.status === 200){
                     this.$store.commit('changeOrderNotes','');
                     this.$store.commit('clearShoppingCart');
-                    this.$toasted.success('Order completed',
+                    this.$toasted.success('Order placed',
                         {
                             duration: 2000,
                             position: 'bottom-center'

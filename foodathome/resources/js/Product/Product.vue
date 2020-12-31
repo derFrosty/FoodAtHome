@@ -3,8 +3,8 @@
         <div class="jumbotron">
             <h1>{{ title }}</h1>
         </div>
-<!--        <prod-list :products="products"></prod-list>-->
-        <prod-card :products="products"></prod-card>
+        <prod-list v-if="isManager" :products="products"></prod-list>
+        <prod-card v-if="isCustomer" :products="products"></prod-card>
     </div>
 </template>
 
@@ -13,7 +13,7 @@ import ProductListComponent from "./ProductList"
 import ProductCardComponent from "./ProductCard"
 
 export default {
-    components:{
+    components: {
         'prod-list': ProductListComponent,
         'prod-card': ProductCardComponent
     },
@@ -29,6 +29,14 @@ export default {
                 .then(response => {
                     this.products = response.data.data
                 })
+        }
+    },
+    computed: {
+        isCustomer: function () {
+            return this.$store.state.user.type == 'C'
+        },
+        isManager: function () {
+            return this.$store.state.user.type == 'EM'
         }
     },
     mounted() {

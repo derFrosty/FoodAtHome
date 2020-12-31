@@ -23,7 +23,9 @@ class User extends Authenticatable
         'email',
         'password',
         'photo_url',
-        'type'
+        'type',
+        'logged_at',
+        'available_at'
     ];
 
     public function customer()

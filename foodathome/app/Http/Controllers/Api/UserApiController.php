@@ -47,6 +47,32 @@ class UserApiController extends Controller
         );
     }
 
+    public function updateLoggedAt(Request $request)
+    {
+
+        $request_filter = $request->only('user_id', 'logged');
+
+        $user_id = $request_filter["user_id"];
+        $logged = $request_filter["logged"];
+
+
+
+        $user = User::findOrFail($user_id);
+
+        if($logged == 0){
+            $user->logged_at = null;
+        }else{
+            $user->logged_at = Carbon::now();
+        }
+
+        $user->save();
+
+        return response()->json(
+            ['msg' => 'logged_at updated with success.'],
+            200
+        );
+    }
+
     public function remove_avatar(Request $request){
         $user = User::with('customer')->where('id', $request->user()->id)->first();
         $user->photo_url = null;

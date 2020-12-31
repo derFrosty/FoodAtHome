@@ -66,7 +66,9 @@ export default {
     methods: {
         logout: function () {
             //remove user availability
-            axios.put('/api/updateAvailability', {"user_id": this.$store.state.user.id, "availability": 0})
+            axios.put('/api/updateLoggedAt', {"user_id": this.$store.state.user.id, "logged": 0}).then(resp => {
+                axios.put('/api/updateAvailability', {"user_id": this.$store.state.user.id, "availability": 0})
+            })
             //remove from local storage
             localStorage.removeItem('user')
             //remove from vuex

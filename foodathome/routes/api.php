@@ -45,3 +45,5 @@ Route::post('register', [AuthController::class, 'register']);
 
 Route::put('updateAvailability', [UserApiController::class, 'updateAvailability']);
 
+Route::put('updateLoggedAt', [UserApiController::class, 'updateLoggedAt']);
+

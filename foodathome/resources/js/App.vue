@@ -28,7 +28,7 @@
                     </li>
                 </ul>
                 <ul v-else class="navbar-nav dropdown mr-5">
-                    <li class="nav-item">
+                    <li v-if="isCustomer" class="nav-item">
                         <router-link class="nav-link" to="/shoppingcart">
                             <p class="h4 mb-2 d-inline">
                                 <b-icon icon="cart4"></b-icon>
@@ -52,12 +52,11 @@
 
         <router-view></router-view>
 
-
-        <footer class="footerbottom">
+<!--        <footer class="footerbottom">
             <div class="footerstyle py-4">
                 <div class="container"><small>Copyright © ipleiria DAD / Food@Home 2020</small></div>
             </div>
-        </footer>
+        </footer>-->
     </div>
 </template>
 
@@ -94,6 +93,9 @@ export default {
             }
 
             return ''
+        },
+        isCustomer: function (){
+            return this.$store.state.user.type === 'C'
         }
     },
     sockets: {

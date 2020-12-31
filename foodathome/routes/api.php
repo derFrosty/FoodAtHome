@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\ShoppingCartController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +37,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::put('removeavatar', [UserApiController::class, 'remove_avatar']);
 
+    Route::post('confirmorder', [ShoppingCartController::class, 'confirmOrder']);
+
 });
 
 Route::post('login', [AuthController::class, 'authenticate']);
@@ -46,4 +50,5 @@ Route::post('register', [AuthController::class, 'register']);
 Route::put('updateAvailability', [UserApiController::class, 'updateAvailability']);
 
 Route::put('updateLoggedAt', [UserApiController::class, 'updateLoggedAt']);
+
 

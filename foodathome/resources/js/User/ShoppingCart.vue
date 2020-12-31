@@ -26,11 +26,22 @@
                     </div>
                 </template>
             </v-client-table>
-            <div align="right">
-                <p >Total: {{ calculate_total_price }}€</p>
-                <button type="button" class="btn btn-success">Confirm Order</button>
+
+            <div>
+                <p>Order notes:</p>
+                <b-form-textarea
+                    id="textarea-small"
+                    size="sm"
+                    placeholder="Please specify any specific changes to your order..."
+                    v-model="orderNotes"
+                    @update="changeOrderNotes(orderNotes)"
+                ></b-form-textarea>
             </div>
 
+            <div align="right">
+                <p >Total: {{ calculate_total_price }}€</p>
+                <button type="button" class="btn btn-success" @click="confirmOrder">Confirm Order</button>
+            </div>
 
         </div>
         <div v-else>
@@ -46,6 +57,7 @@ export default {
         return {
             title: 'Shopping Cart',
             products: [],
+            orderNotes: '',
             columns: ['photo_url', 'name', 'quantity', 'unit_price', 'total_price', 'options'],
             options: {
                 filterable: ['name'],
@@ -56,7 +68,6 @@ export default {
                 },
                 sortable: []
             },
-
         }
     },
     methods: {
@@ -77,12 +88,48 @@ export default {
             this.$store.commit('clearShoppingCart');
 
             this.products = this.$store.state.shoppingCart
+        },
+        changeOrderNotes: function (notes){
+            this.$store.commit('changeOrderNotes',notes)
+        },
+        confirmOrder: function (products, orderNotes){
+            let order = {
+                products: this.products,
+                orderNotes : this.orderNotes
+            }
+
+            axios.post('/api/confirmorder', order)
+            .then( response => {
+                if (response.status === 200){
+                    this.$store.commit('changeOrderNotes','');
+                    this.$store.commit('clearShoppingCart');
+                    this.$toasted.success('Order placed',
+                        {
+                            duration: 2000,
+                            position: 'bottom-center'
+                        });
+                    this.$forceUpdate();
+                    this.products = []
+                }
+            })
+            .catch( resposnse => {
+                this.$toasted.error('Forbidden',
+                    {
+                        duration: 2000,
+                        position: 'bottom-center'
+                    })
+            })
+
         }
 
     },
     mounted() {
         if (this.$store.state.shoppingCart.length != 0) {
             this.products = this.$store.state.shoppingCart
+        }
+
+        if (this.$store.state.orderNotes != ''){
+            this.orderNotes = this.$store.state.orderNotes
         }
     },
     computed: {

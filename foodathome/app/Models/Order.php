@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
+
     use HasFactory;
 
     /**
@@ -19,8 +20,14 @@ class Order extends Model
         'customer_id',
         'notes',
         'total_price',
-        't',
-        'logged_at',
-        'available_at'
+        'date',
+        'prepared_by',
+        'delivered_by',
+        'opened_at',
+        'current_status_at',
+        'closed_at',
+        'preparation_time',
+        'delivery_time',
+        'total_time'
     ];
 }

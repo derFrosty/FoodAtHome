@@ -14,6 +14,7 @@ import {ServerTable, ClientTable, Event} from 'vue-tables-2';
 import VueRouter from "vue-router";
 import App from './App.vue';
 import Vuex from 'vuex'
+import Toasted from 'vue-toasted';
 
 import LoginComponent from "./Auth/Login.vue";
 import RegisterComponent from "./Auth/Register.vue";
@@ -22,7 +23,7 @@ import ProductComponent from "./Product/Product";
 import UserProfileComponent from "./User/Profile";
 import UserChangePasswordComponent from "./User/ChangePassword"
 import ShoppingCartComponent from "./User/ShoppingCart";
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
@@ -30,6 +31,7 @@ Vue.use(ClientTable);
 
 Vue.use(Vuex)
 Vue.use(VueRouter);
+Vue.use(Toasted)
 
 const routes = [
     {path: '/', component: WelcomeComponent},
@@ -48,7 +50,8 @@ const router = new VueRouter({
 const store = new Vuex.Store({
     state: {
         user: null,
-        shoppingCart: []
+        shoppingCart: [],
+        orderNotes: ''
     },
     mutations: {
         loadUserIfRemembered(state) {
@@ -100,6 +103,9 @@ const store = new Vuex.Store({
             let result = state.shoppingCart.findIndex((value) => value.id === product.id)
             if (result != -1) {
                 state.shoppingCart.splice(result, 1)
+                if (state.shoppingCart.length == 0){
+                    state.orderNotes = ''
+                }
             }
         },
         changeQuantityOfProductInShoppingCart(state, payload){
@@ -116,6 +122,10 @@ const store = new Vuex.Store({
         },
         clearShoppingCart(state){
             state.shoppingCart = []
+            state.orderNotes = ''
+        },
+        changeOrderNotes(state, orderNotes){
+            state.orderNotes = orderNotes
         }
     }
 })

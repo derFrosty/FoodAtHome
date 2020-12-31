@@ -2,6 +2,14 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+import VueSocketIO from "vue-socket.io"
+Vue.use(
+    new VueSocketIO({
+        debug: true,
+        connection: "http://127.0.0.1:8080"
+    })
+)
+
 import {ServerTable, ClientTable, Event} from 'vue-tables-2';
 import VueRouter from "vue-router";
 import App from './App.vue';
@@ -48,11 +56,23 @@ const store = new Vuex.Store({
     mutations: {
         loadUserIfRemembered(state) {
             state.user = JSON.parse(localStorage.getItem('user'))
+            if (state.user) {
+                this._vm.$socket.emit('user_logged', state.user)
+            }
         },
-        setUser(state, user) {
-            state.user = user
+
+        setUser (state, user) {
+            if (state.user !== user) {
+                state.user = user
+                if (state.user) {
+                    this._vm.$socket.emit('user_logged', state.user)
+                }
+            }
         },
-        logoutUser(state) {
+        logoutUser(state){
+            if (state.user) {
+                this._vm.$socket.emit('user_logged_out', state.user)
+            }
             state.user = null
         },
         addProductToShoppingCart(state, product) {

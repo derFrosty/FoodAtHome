@@ -112,6 +112,13 @@ export default {
                     this.products = []
                 }
             })
+            .catch( resposnse => {
+                this.$toasted.error('Forbidden',
+                    {
+                        duration: 2000,
+                        position: 'bottom-center'
+                    })
+            })
 
         }
 

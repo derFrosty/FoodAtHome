@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\ShoppingCartController;
 
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -35,12 +36,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('changepassword', [UserApiController::class, 'update_password']);
 
     Route::put('removeavatar', [UserApiController::class, 'remove_avatar']);
-
-    /*
-    Route::middleware('auth:sanctum')->group(function () {
-
-    });
-    */
 
     Route::post('confirmorder', [ShoppingCartController::class, 'confirmOrder']);
 

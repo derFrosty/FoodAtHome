@@ -15,6 +15,10 @@ class ShoppingCartController extends Controller
 {
     public function confirmOrder(NewOrderRequest $request)
     {
+        if (Auth::user()->type != 'C'){
+            abort(403);
+        }
+
         $products = $request['products'];
         $orderNotes = $request['orderNotes'];
 

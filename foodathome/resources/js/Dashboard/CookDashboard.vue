@@ -5,7 +5,7 @@
         </div>
 
         <div>
-            <p class="text-xl-center">There are no items on you shopping cart</p>
+            <p class="text-xl-center">You are not preparing any order.</p>
         </div>
     </div>
 </template>

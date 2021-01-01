@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CheckUserPasswordValidationForm;
 use App\Http\Requests\RegisterValidationForm;
 use App\Http\Requests\UpdatePasswordValidationForm;
 use App\Http\Requests\UpdateUserValidationForm;
@@ -102,7 +103,7 @@ class UserApiController extends Controller
         );
     }
 
-    public function remove_avatar(Request $request){
+    public function remove_avatar(CheckUserPasswordValidationForm $request){
         $user = User::with('customer')->where('id', $request->user()->id)->first();
         $user->photo_url = null;
         $user->save();
@@ -135,11 +136,16 @@ class UserApiController extends Controller
 
         $user->name = $request->fullname;
 
-        $user->customer->address = $request->address;
+        if($user->type == 'C'){
 
-        $user->customer->phone = $request->phone;
+            $user->customer->address = $request->address;
 
-        $user->customer->nif = $request->nif;
+            $user->customer->phone = $request->phone;
+
+            $user->customer->nif = $request->nif;
+
+        }
+
 
         $user->save();
 

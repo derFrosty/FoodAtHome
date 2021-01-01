@@ -2,9 +2,9 @@ let httpServer = require('http').createServer()
 let io = require('socket.io')(httpServer)
 let SessionManager = require("./SessionManager.js")
 
-
 const axios = require('axios')
-
+const myModule = require('./env.js');
+let url = myModule.env().url;
 
 httpServer.listen(8080, function () {
     console.log('listening on *:8080')
@@ -31,9 +31,9 @@ io.on('connection', function (socket) {
 
             //updated user availability
 
-            axios.put('http://projeto.test/api/updateLoggedAt', {"user_id": user.id, "logged": 1}).then(response =>{
+            axios.put(url + '/api/updateLoggedAt', {"user_id": user.id, "logged": 1}).then(response =>{
                 // console.log("ok! user is now logged-in");
-                axios.put('http://projeto.test/api/updateAvailability', {"user_id": user.id, "availability": 1}).then(response =>{
+                axios.put(url + '/api/updateAvailability', {"user_id": user.id, "availability": 1}).then(response =>{
                     // console.log("ok! user is now available");
                 }).catch(error => {
                     console.dir(error)
@@ -64,15 +64,15 @@ io.on('connection', function (socket) {
 
     socket.on('disconnect', (reason) => {
         let x = sessions.removeSocketIDSessionAndGetId(socket.id)
-
         if(x == null){
             return; // user fez logout antes de fechar a página.
         }
 
-        axios.put('http://projeto.test/api/updateLoggedAt', {"user_id": x.id, "logged": 0}).then(response =>{
+        axios.put(url + '/api/updateLoggedAt', {"user_id": x.id, "logged": 0}).then(response =>{
             // console.log("ok! user is no longer logged-in");
-            axios.put('http://projeto.test/api/updateAvailability', {"user_id": x.id, "availability": 0}).then(response =>{
+            axios.put(url + '/api/updateAvailability', {"user_id": x.id, "availability": 0}).then(response =>{
                 // console.log("ok! user is no longer available");
+
             }).catch(error => {
                 console.log("DC1 - Error: " + error.data.msg);
             });

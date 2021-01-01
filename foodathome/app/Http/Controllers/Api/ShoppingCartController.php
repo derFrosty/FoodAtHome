@@ -33,7 +33,7 @@ class ShoppingCartController extends Controller
                 //verify if product id really exists in DB, if it doesn't client should receive an exception
                 $p = Product::findOrFail($product['id']);
 
-                $total_sum += $p['price'] * $p['quantity'];
+                $total_sum += $p['price'] * $product['quantity'];
 
             }
 

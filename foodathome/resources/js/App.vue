@@ -15,8 +15,7 @@
                     <li class="nav-item">
                         <router-link class="nav-link" to="/products">Products</router-link>
                     </li>
-                    <li class="nav-item dropdown">
-
+                    <li v-if="isCustomer" class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown">Orders</a>
                         <div class="dropdown-menu">
                             <router-link class="dropdown-item" to="/my_orders">My Orders</router-link>

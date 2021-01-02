@@ -18,7 +18,10 @@ export default {
         }
     },
     mounted() {
-
+        axios.get('api/cookdashboard')
+        .then(response => {
+            console.log(response)
+        })
     }
 }
 </script>

@@ -27,7 +27,8 @@
                 options: {
                     filterable: [],
                     sortable: ['id', 'status', 'total_price', 'date']
-                }
+                },
+                products: []
             }
         },
         methods: {
@@ -52,17 +53,14 @@
             },
 
             moreDetails: function (order) {
-                order.preparation_time != null ?
-                    this.$toasted.show("Preparation time: " + order.preparation_time, {duration: 2000})
-                    : this.$toasted.show("Preparation time: Sem valor", {duration: 2000})
 
-                order.delivery_time != null ?
-                    this.$toasted.show("Delivery time: " + order.delivery_time, {duration: 2000})
-                    : this.$toasted.show("Delivery time: Sem valor", {duration: 2000})
-
-                order.total_time != null ?
-                    this.$toasted.show("Total time: " + order.total_time, {duration: 2000})
-                    : this.$toasted.show("Total time: Sem valor", {duration: 2000})
+                axios.get('api/getproducts/' + order.id)
+                    .then(response => {
+                        this.products = response.data
+                        console.log("aqui");
+                        console.dir(response.data);
+                        this.products.forEach(product => this.$toasted.show(product.name, {duration: 2000}));
+                    })
             },
         }
     };

@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\OrderResource;
+use App\Http\Resources\ProductResource;
 use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -51,13 +53,25 @@ class OrderController extends Controller
         if ($request->has('page')) {
             return OrderResource::collection(
                 Order::whereIn('status', ['D', 'C'])
-                ->where('customer_id', '=', Auth::user()->id)
+                ->where('customer_id', '=', Auth::id())
                 ->paginate(5));
         } else {
             return OrderResource::collection(
                 Order::whereIn('status', ['D', 'C'])
-                ->where('customer_id', '=', Auth::user()->id)
+                ->where('customer_id', '=', Auth::id())
                 ->get());
         }
+    }
+
+    public function getProducts($idOrder)
+    {
+        $order_items = Order::findOrFail($idOrder)->order_items;
+        $products = [];
+
+        foreach ($order_items as $order_item) {
+            array_push($products, Product::findOrFail($order_item->product_id));
+        }
+
+        return $products;
     }
 }

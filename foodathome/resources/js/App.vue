@@ -15,6 +15,23 @@
                     <li class="nav-item">
                         <router-link class="nav-link" to="/products">Products</router-link>
                     </li>
+                    <li v-if="isCustomer" class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown">Orders</a>
+                        <div class="dropdown-menu">
+                            <router-link class="dropdown-item" to="/my_orders">My Orders</router-link>
+                            <router-link class="dropdown-item" to="/order_history">Order History</router-link>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">ir para z</a>
+                        <!-- apagar o <a...> ou comentar, e substituir pela linha abaixo -->
+                        <!--                        <router-link class="nav-link" to="/">Food@Home</router-link>-->
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">ir para w</a>
+                        <!-- apagar o <a...> ou comentar, e substituir pela linha abaixo -->
+                        <!--                        <router-link class="nav-link" to="/">Food@Home</router-link>-->
+                    </li>
                 </ul>
                 <ul class="navbar-nav mr-auto">
                     <!--    mr-auto para que o próximo vá para a direita.      -->
@@ -94,7 +111,10 @@ export default {
             return ''
         },
         isCustomer: function (){
-            return this.$store.state.user.type === 'C'
+            if (this.$store.state.user)
+                return this.$store.state.user.type === 'C'
+
+            return false
         }
     },
     sockets: {

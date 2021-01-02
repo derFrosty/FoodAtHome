@@ -6,7 +6,7 @@ import VueSocketIO from "vue-socket.io"
 Vue.use(
     new VueSocketIO({
         debug: true,
-        connection: "http://127.0.0.1:8080"
+        connection: "http://localhost:8080"
     })
 )
 
@@ -21,8 +21,10 @@ import LoginComponent from "./Auth/Login.vue";
 import RegisterComponent from "./Auth/Register.vue";
 import WelcomeComponent from "./Welcome/Welcome.vue";
 import ProductComponent from "./Product/Product";
+import MyOrdersComponent from "./Order/MyOrders";
+import OrderHistoryComponent from "./Order/OrderHistory";
 import UserProfileComponent from "./User/Profile";
-import UserChangePasswordComponent from "./User/ChangePassword"
+import UserChangePasswordComponent from "./User/ChangePassword";
 import ShoppingCartComponent from "./User/ShoppingCart";
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 
@@ -37,6 +39,9 @@ Vue.use(Toasted)
 
 const routes = [
     {path: '/', component: WelcomeComponent},
+    {path: '/products', component: ProductComponent},
+    {path: '/my_orders', component: MyOrdersComponent},
+    {path: '/order_history', component: OrderHistoryComponent},
     {path: '/login', component: LoginComponent},
     {path: '/register', component: RegisterComponent},
     {path: '/products', component: ProductComponent},

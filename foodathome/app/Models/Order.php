@@ -35,5 +35,4 @@ class Order extends Model
     {
         return $this->hasMany('App\Models\Order_Item', 'order_id', 'id');
     }
-
 }

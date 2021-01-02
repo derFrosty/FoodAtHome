@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserApiController;
 use App\Models\User;
@@ -39,9 +40,16 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('confirmorder', [ShoppingCartController::class, 'confirmOrder']);
 
-    Route::get('checkorder/{order_id}', [ShoppingCartController::class, 'checkOrderCook']);
+    Route::get('orders', [OrderController::class, 'index']);
 
+    Route::get('my_orders', [OrderController::class, 'myOrders']);
+
+    Route::get('order_history', [OrderController::class, 'orderHistory']);
+
+    Route::get('checkorder/{order_id}', [ShoppingCartController::class, 'checkOrderCook']);
 });
+
+Route::get('getproducts/{order_id}', [OrderController::class, 'getProducts']);
 
 Route::post('login', [AuthController::class, 'authenticate']);
 

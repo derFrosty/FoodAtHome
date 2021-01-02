@@ -33,6 +33,16 @@ class User extends Authenticatable
         return $this->hasOne('App\Models\Customer', 'id', 'id');
     }
 
+    public function cook_orders()
+    {
+        return $this->hasMany('App\Models\Order', 'prepared_by', 'id');
+    }
+
+    public function delivery_orders()
+    {
+        return $this->hasOne('App\Models\Order', 'delivered_by', 'id');
+    }
+
 
     /**
      * The attributes that should be hidden for arrays.

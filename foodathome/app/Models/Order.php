@@ -30,4 +30,10 @@ class Order extends Model
         'delivery_time',
         'total_time'
     ];
+
+    public function order_items()
+    {
+        return $this->hasMany('App\Models\Order_Item', 'order_id', 'id');
+    }
+
 }

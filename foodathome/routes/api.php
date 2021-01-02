@@ -40,12 +40,13 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('confirmorder', [ShoppingCartController::class, 'confirmOrder']);
 
-
     Route::get('orders', [OrderController::class, 'index']);
 
     Route::get('my_orders', [OrderController::class, 'myOrders']);
 
     Route::get('order_history', [OrderController::class, 'orderHistory']);
+  
+    Route::get('checkorder/{order_id}', [ShoppingCartController::class, 'checkOrderCook']);
 
 });
 

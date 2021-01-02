@@ -15,6 +15,7 @@ import VueRouter from "vue-router";
 import App from './App.vue';
 import Vuex from 'vuex'
 import Toasted from 'vue-toasted';
+import Notifications from 'vue-notification'
 
 import LoginComponent from "./Auth/Login.vue";
 import RegisterComponent from "./Auth/Register.vue";
@@ -30,6 +31,7 @@ import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 Vue.use(ClientTable);
+Vue.use(Notifications)
 
 Vue.use(Vuex)
 Vue.use(VueRouter);
@@ -141,5 +143,10 @@ new Vue({
     store,
     beforeCreate() {
         this.$store.commit('loadUserIfRemembered')
+    },
+    sockets:{
+        connect(){
+            console.log("Connected!")
+        }
     }
 }).$mount('#app');

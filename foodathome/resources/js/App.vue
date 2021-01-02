@@ -69,6 +69,7 @@
         </nav>
 
         <router-view></router-view>
+        <notifications position="bottom right" />
 
 <!--        <footer class="footerbottom">
             <div class="footerstyle py-4">
@@ -82,9 +83,10 @@
 export default {
     methods: {
         logout: function () {
+            let user_id = this.$store.state.user.id
             //remove user availability
-            axios.put('/api/updateLoggedAt', {"user_id": this.$store.state.user.id, "logged": 0}).then(resp => {
-                axios.put('/api/updateAvailability', {"user_id": this.$store.state.user.id, "availability": 0})
+            axios.put('/api/updateLoggedAt', {"user_id": user_id, "logged": 0}).then(resp => {
+                axios.put('/api/updateAvailability', {"user_id": user_id, "availability": 0})
             })
             //remove from local storage
             localStorage.removeItem('user')
@@ -92,9 +94,6 @@ export default {
             this.$store.commit('logoutUser')
             //show front page
             this.$router.push('/')
-        },
-        teste: function () {
-            console.log(this.$store.state.user.name);
         }
     },
     computed: {
@@ -122,7 +121,19 @@ export default {
             if (this.$store.state.user) {
                 this.$socket.emit('user_logged', this.$store.state.user)
             }
+        },
+        new_order(payload){
+            //nova order recebida para este cook!
+            console.log("nova order!")
+            this.$notify({
+                title: 'New order!',
+                type: 'success',
+                text: 'You have something to cook!',
+                duration: 7500,
+                speed: 500
+            });
         }
+
     }
 }
 </script>

@@ -49,9 +49,15 @@ class OrderController extends Controller
         }
 
         if ($request->has('page')) {
-            return OrderResource::collection(Order::whereIn('status', ['D', 'C'])->paginate(5));
+            return OrderResource::collection(
+                Order::whereIn('status', ['D', 'C'])
+                ->where('customer_id', '=', Auth::user()->id)
+                ->paginate(5));
         } else {
-            return OrderResource::collection(Order::whereIn('status', ['D', 'C'])->get());
+            return OrderResource::collection(
+                Order::whereIn('status', ['D', 'C'])
+                ->where('customer_id', '=', Auth::user()->id)
+                ->get());
         }
     }
 }

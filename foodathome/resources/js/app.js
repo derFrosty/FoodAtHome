@@ -3,6 +3,7 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 import VueSocketIO from "vue-socket.io"
+
 Vue.use(
     new VueSocketIO({
         debug: true,
@@ -14,6 +15,8 @@ import {ServerTable, ClientTable, Event} from 'vue-tables-2';
 import VueRouter from "vue-router";
 import App from './App.vue';
 import Vuex from 'vuex'
+import Vuetify from 'vuetify'
+import 'vuetify/dist/vuetify.css'
 import Toasted from 'vue-toasted';
 import Notifications from 'vue-notification'
 
@@ -26,6 +29,7 @@ import OrderHistoryComponent from "./Order/OrderHistory";
 import UserProfileComponent from "./User/Profile";
 import UserChangePasswordComponent from "./User/ChangePassword";
 import ShoppingCartComponent from "./User/ShoppingCart";
+import DeliveryManDashboardComponent from "./deliveryman/DeliveryManDashboard";
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 
 Vue.use(BootstrapVue)
@@ -36,6 +40,11 @@ Vue.use(Notifications)
 Vue.use(Vuex)
 Vue.use(VueRouter);
 Vue.use(Toasted)
+Vue.use(Vuetify)
+
+const opts = {}
+
+export default new Vuetify(opts)
 
 const routes = [
     {path: '/', component: WelcomeComponent},
@@ -47,7 +56,8 @@ const routes = [
     {path: '/products', component: ProductComponent},
     {path: '/profile', component: UserProfileComponent},
     {path: '/profile/changepassword', component: UserChangePasswordComponent},
-    {path: '/shoppingcart', component: ShoppingCartComponent}
+    {path: '/shoppingcart', component: ShoppingCartComponent},
+    {path: '/dashboard/deliveries', component: DeliveryManDashboardComponent}
 ]
 
 const router = new VueRouter({
@@ -141,6 +151,7 @@ new Vue({
     render: h => h(App),
     router,
     store,
+    vuetify: new Vuetify(),
     beforeCreate() {
         this.$store.commit('loadUserIfRemembered')
     },

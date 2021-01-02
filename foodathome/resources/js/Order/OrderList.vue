@@ -57,8 +57,6 @@
                 axios.get('api/getproducts/' + order.id)
                     .then(response => {
                         this.products = response.data
-                        console.log("aqui");
-                        console.dir(response.data);
                         this.products.forEach(product => this.$toasted.show(product.name, {duration: 2000}));
                     })
             },

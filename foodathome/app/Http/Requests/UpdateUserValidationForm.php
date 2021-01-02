@@ -14,9 +14,9 @@ class UpdateUserValidationForm extends FormRequest
             'fullname' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255'],
             'password' => ['required', 'string', 'password'],
-            'address' => ['required', 'string', 'max:255'],
-            'phone' => ['required', 'string', 'between:9,20'],
-            'nif' => ['required', 'string', 'digits:9'],
+            'address' => ['string', 'max:255'],
+            'phone' => ['string', 'between:9,20'],
+            'nif' => ['string', 'digits:9'],
             'photo' => ['nullable', 'image', 'max:5000']
         ]);
 

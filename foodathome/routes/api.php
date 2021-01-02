@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\CookApiController;
 use App\Http\Controllers\Api\UserApiController;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -41,6 +40,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('confirmorder', [ShoppingCartController::class, 'confirmOrder']);
 
     Route::get('cookdashboard', [CookApiController::class, 'index']);
+
+    Route::get('checkorder/{order_id}', [ShoppingCartController::class, 'checkOrderCook']);
 
 });
 

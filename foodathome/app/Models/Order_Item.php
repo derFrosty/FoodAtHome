@@ -22,4 +22,9 @@ class Order_Item extends Model
         'unit_price',
         'sub_total_price'
     ];
+
+    public function product()
+    {
+        return $this->hasOne('App\Models\Product', 'id', 'product_id');
+    }
 }

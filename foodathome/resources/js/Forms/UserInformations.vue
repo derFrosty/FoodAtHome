@@ -30,7 +30,7 @@
             </div>
         </div>
 
-        <div class="form-group row">
+        <div v-if="inputForm.type == 'C'" class="form-group row">
             <label for="address" class="col-md-4 col-form-label text-md-right">Address</label>
 
             <div class="col-md-6">
@@ -41,7 +41,7 @@
             </div>
         </div>
 
-        <div class="form-group row">
+        <div v-if="inputForm.type == 'C'" class="form-group row">
             <label for="phone" class="col-md-4 col-form-label text-md-right">Phone</label>
 
             <div class="col-md-6">
@@ -52,7 +52,7 @@
             </div>
         </div>
 
-        <div class="form-group row">
+        <div v-if="inputForm.type == 'C'" class="form-group row">
             <label for="nif" class="col-md-4 col-form-label text-md-right">NIF</label>
 
             <div class="col-md-6">
@@ -145,34 +145,50 @@ export default {
             data.append('email', this.inputForm.email)
             data.append('fullname', this.inputForm.fullname)
             data.append('password', this.inputForm.password)
+            data.append('type', this.inputForm.type)
             if(!this.$store.state.user){
                 data.append('password_confirmation', this.inputForm.password_confirmation)
             }
-            data.append('address', this.inputForm.address)
-            data.append('phone', this.inputForm.phone)
-            data.append('nif', this.inputForm.nif)
+            if(this.inputForm.type == 'C'){
+                data.append('address', this.inputForm.address)
+                data.append('phone', this.inputForm.phone)
+                data.append('nif', this.inputForm.nif)
+            }
 
             this.$emit('user-done', data)
+
+            this.inputForm.password = '';
+            this.inputForm.password_confirmation = '';
         },
         pictureChanged: function (event){
             this.inputForm.photo = event.target.files[0]
         },
         removePic: function (){
-            axios.put('/api/removeavatar').then(response => {
+            axios.put('/api/removeavatar', {'password': this.inputForm.password}).then(response => {
                 this.inputForm.photo = null
                 this.$store.commit('setUser', response.data.user)
                 localStorage.setItem('user', JSON.stringify(response.data.user))
                 console.log(response)
+                this.errors = []
+            }).catch(error=>{
+                this.errors = error.response.data.errors
             })
+
+            this.inputForm.password = '';
+            this.inputForm.password_confirmation = '';
         }
     },
     mounted() {
         if(this.$store.state.user){
             this.inputForm.fullname = this.$store.state.user.name;
             this.inputForm.email = this.$store.state.user.email;
-            this.inputForm.address = this.$store.state.user.customer.address;
-            this.inputForm.phone = this.$store.state.user.customer.phone;
-            this.inputForm.nif = this.$store.state.user.customer.nif;
+            this.inputForm.type = this.$store.state.user.type;
+
+            if(this.inputForm.type == 'C'){
+                this.inputForm.address = this.$store.state.user.customer.address;
+                this.inputForm.phone = this.$store.state.user.customer.phone;
+                this.inputForm.nif = this.$store.state.user.customer.nif;
+            }
         }
     }
 }

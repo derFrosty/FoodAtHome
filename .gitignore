@@ -2,3 +2,4 @@
 .idea/
 foodathome/public/css/app.css
 foodathome/public/mix-manifest.json
+node_server/env.js

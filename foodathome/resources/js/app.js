@@ -23,6 +23,7 @@ import ProductComponent from "./Product/Product";
 import UserProfileComponent from "./User/Profile";
 import UserChangePasswordComponent from "./User/ChangePassword"
 import ShoppingCartComponent from "./User/ShoppingCart";
+import DeliveryManDashboardComponent from "./deliveryman/DeliveryManDashboard";
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 
 Vue.use(BootstrapVue)
@@ -40,7 +41,8 @@ const routes = [
     {path: '/products', component: ProductComponent},
     {path: '/profile', component: UserProfileComponent},
     {path: '/profile/changepassword', component: UserChangePasswordComponent},
-    {path: '/shoppingcart', component: ShoppingCartComponent}
+    {path: '/shoppingcart', component: ShoppingCartComponent},
+    {path: '/dashboard/deliveries', component: DeliveryManDashboardComponent}
 ]
 
 const router = new VueRouter({

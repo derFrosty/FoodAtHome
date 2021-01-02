@@ -25,6 +25,7 @@ class OrderObserver
             $cook->save();
             $order->prepared_by = $cook->id;
             $order->status = 'P';
+            $order->current_status_at = Carbon::now()->toDateTimeString();
             $order->save();
         }
 
@@ -86,6 +87,9 @@ class OrderObserver
             }
         }
 
+        $order->current_status_at = Carbon::now()->toDateTimeString();
+        $order->save();
+
         //Acabado é sempre libertado ou um deliveryman ou um cook...
         //há orders onhold?
         $ordersOnHold = Order::Where('status', 'H')->first();
@@ -99,6 +103,7 @@ class OrderObserver
                 $cook->save();
                 $ordersOnHold->prepared_by = $cook->id;
                 $ordersOnHold->status = 'P';
+                $ordersOnHold->current_status_at = Carbon::now()->toDateTimeString();
                 $ordersOnHold->save();
             }
         }
@@ -114,6 +119,7 @@ class OrderObserver
                 $delivery_man->save();
                 $orderReady->delivered_by = $delivery_man->id;
                 $orderReady->status = 'T';
+                $orderReady->current_status_at = Carbon::now()->toDateTimeString();
                 $orderReady->save();
             }
         }

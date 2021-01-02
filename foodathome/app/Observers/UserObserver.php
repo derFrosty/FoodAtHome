@@ -42,7 +42,6 @@ class UserObserver
                         $cook->save();
                         $ordersOnHold->prepared_by = $cook->id;
                         $ordersOnHold->status = 'P';
-                        $ordersOnHold->current_status_at = Carbon::now()->toDateTimeString();
                         $ordersOnHold->save();
                     }
                 }

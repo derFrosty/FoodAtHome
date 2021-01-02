@@ -32,12 +32,12 @@ class OrderController extends Controller
         if ($request->has('page')) {
             return OrderResource::collection(
                 Order::whereIn('status', ['H', 'P', 'R', 'T'])
-                ->where('customer_id', '=', Auth::user()->id)
+                ->where('customer_id', Auth::id())
                 ->paginate(5));
         } else {
             return OrderResource::collection(
                 Order::whereIn('status', ['H', 'P', 'R', 'T'])
-                ->where('customer_id', '=', Auth::user()->id)
+                ->where('customer_id', Auth::id())
                 ->get());
         }
     }

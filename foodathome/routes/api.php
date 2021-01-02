@@ -42,7 +42,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
     Route::get('orders', [OrderController::class, 'index']);
+
     Route::get('my_orders', [OrderController::class, 'myOrders']);
+
     Route::get('order_history', [OrderController::class, 'orderHistory']);
 
 });

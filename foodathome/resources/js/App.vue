@@ -12,7 +12,7 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <li v-if="isCustomer || isManager" class="nav-item">
+                    <li v-if="isCustomer || isGuest " class="nav-item">
                         <router-link class="nav-link" to="/products">Products</router-link>
                     </li>
                 </ul>
@@ -98,6 +98,9 @@ export default {
         },
         isManager: function (){
             return this.$store.state.user && this.$store.state.user.type === 'EM'
+        },
+        isGuest: function (){
+            return this.$store.state.user == null
         }
     },
     sockets: {

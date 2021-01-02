@@ -47,6 +47,16 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('order_history', [OrderController::class, 'orderHistory']);
 
     Route::get('checkorder/{order_id}', [ShoppingCartController::class, 'checkOrderCook']);
+
+    Route::get('getReadyOrders', [OrderController::class, 'getReadyOrders']);
+
+    Route::get('currently_delivering', [OrderController::class, 'getOrderCurrentlyDelivering']);
+
+    Route::get('availability', [UserApiController::class, 'getDeliverAvailability']);
+
+    Route::put('deliverorder', [OrderController::class, 'assignOrderToDeliver']);
+
+    Route::put('orderDelivered', [OrderController::class, 'orderDelivered']);
 });
 
 Route::get('getproducts/{order_id}', [OrderController::class, 'getProducts']);

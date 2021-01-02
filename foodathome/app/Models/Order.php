@@ -35,4 +35,12 @@ class Order extends Model
     {
         return $this->hasMany('App\Models\Order_Item', 'order_id', 'id');
     }
+
+    public function customer(){
+        return $this->belongsTo('App\Models\User', 'customer_id', 'id');
+    }
+
+    public function cook(){
+        return $this->belongsTo('App\Models\User', 'prepared_by', 'id');
+    }
 }

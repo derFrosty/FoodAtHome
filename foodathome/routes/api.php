@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CookApiController;
 use App\Http\Controllers\Api\UserApiController;
 use App\Models\User;
 use Illuminate\Http\Request;

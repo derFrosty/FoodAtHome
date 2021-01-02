@@ -4,7 +4,7 @@
             <h1>{{ title }}</h1>
         </div>
         <prod-list v-if="isManager" :products="products"></prod-list>
-        <prod-card v-if="isCustomer" :products="products"></prod-card>
+        <prod-card v-if="isCustomer || isGuest" :products="products"></prod-card>
     </div>
 </template>
 
@@ -33,10 +33,13 @@ export default {
     },
     computed: {
         isCustomer: function () {
-            return this.$store.state.user.type == 'C'
+            return this.$store.state.user && this.$store.state.user.type == 'C'
         },
         isManager: function () {
-            return this.$store.state.user.type == 'EM'
+            return this.$store.state.user && this.$store.state.user.type == 'EM'
+        },
+        isGuest: function (){
+            return this.$store.state.user == null;
         }
     },
     mounted() {

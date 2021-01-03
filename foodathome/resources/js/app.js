@@ -1,3 +1,5 @@
+import ManagerDashboard from "./Dashboard/ManagerDashboard";
+
 require('./bootstrap');
 
 window.Vue = require('vue');
@@ -61,12 +63,11 @@ const routes = [
     {path: '/profile', component: UserProfileComponent},
     {path: '/profile/changepassword', component: UserChangePasswordComponent},
     {path: '/shoppingcart', component: ShoppingCartComponent},
-
     {path: '/create/product', component: CreateProduct},
-
     {path: '/dashboard/cook', component: CookDashboardComponent},
     {path: '/shoppingcart', component: ShoppingCartComponent},
-    {path: '/dashboard/deliveries', component: DeliveryManDashboardComponent}
+    {path: '/dashboard/deliveries', component: DeliveryManDashboardComponent},
+    {path: '/manager/dashboard', component: ManagerDashboard}
 
 ]
 

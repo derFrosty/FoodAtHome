@@ -68,6 +68,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('updateProduct', [ProductController::class, 'updateProduct']);
 
     Route::delete('deleteProduct/{product_id}', [ProductController::class, 'deleteProduct']);
+
+    Route::get('getworkers', [UserApiController::class, 'getWorkers']);
+
+    Route::get('activeorders', [OrderController::class, 'getactiveorders']);
+
 });
 
 Route::get('types', [ProductController::class, 'getTypes']);

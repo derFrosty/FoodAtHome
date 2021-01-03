@@ -83,6 +83,7 @@ export default {
                     }
 
                     this.$forceUpdate();
+                    this.$socket.emit('order_ready');
 
                 })
         }

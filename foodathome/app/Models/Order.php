@@ -43,4 +43,8 @@ class Order extends Model
     public function cook(){
         return $this->belongsTo('App\Models\User', 'prepared_by', 'id');
     }
+
+    public function deliverer(){
+        return $this->belongsTo('App\Models\User', 'delivered_by', 'id');
+    }
 }

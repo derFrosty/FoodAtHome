@@ -7,8 +7,8 @@
                 item-key="id"
                 single-expand
                 :items-per-page="5"
-                @click:row="(item, slot) => slot.expand(!slot.isExpanded)"
-            >
+                @click:row="(item, slot) => slot.expand(!slot.isExpanded)">
+
                 <template v-slot:expanded-item="{ headers, item }">
                     <td :colspan="headers.length" class="container">
                         <div class="row">

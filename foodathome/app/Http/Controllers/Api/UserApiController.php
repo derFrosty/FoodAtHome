@@ -7,6 +7,7 @@ use App\Http\Requests\CheckUserPasswordValidationForm;
 use App\Http\Requests\RegisterValidationForm;
 use App\Http\Requests\UpdatePasswordValidationForm;
 use App\Http\Requests\UpdateUserValidationForm;
+use App\Http\Resources\WorkersResource;
 use App\Models\Order;
 use App\Models\User;
 use Auth;
@@ -43,6 +44,8 @@ class UserApiController extends Controller
             case 'EC': {
                 $preparing = Order::Where('prepared_by', $user_id)->Where('status', 'P')->count();
                 if($preparing > 0){ //user not available
+                    $user->available_at = null;
+                    $user->save();
                     return response()->json(
                         ['msg' => 'User is cooking cannot be updated!'],
                         200
@@ -53,6 +56,8 @@ class UserApiController extends Controller
             case 'ED': {
                 $preparing = Order::Where('delivered_by', $user_id)->Where('status', 'T')->count();
                 if($preparing > 0){ //user not available
+                    $user->available_at = null;
+                    $user->save();
                     return response()->json(
                         ['msg' => 'User is in transit cannot be updated!'],
                         200
@@ -174,5 +179,9 @@ class UserApiController extends Controller
         $order = Order::Where('status', 'T')->Where('delivered_by', Auth::id())->first();
 
         return $order != null? 'Not available': 'Available';
+    }
+
+    public function getWorkers(){ // except managers and customers
+        return WorkersResource::collection(User::WhereNotIn('type', ['C', 'EM'])->get());
     }
 }

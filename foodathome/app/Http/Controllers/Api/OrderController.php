@@ -136,5 +136,9 @@ class OrderController extends Controller
             200
         );
     }
+
+    public function getactiveorders(){
+        return OrderResourceWithRelations::collection(Order::WhereNotIn('status', ['D','C'])->get());
+    }
 }
 

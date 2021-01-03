@@ -39,6 +39,10 @@
                             @click:row="(item, slot) => slot.expand(!slot.isExpanded)"
                         >
 
+                            <template v-slot:item.cancel_order="{item}">
+                                <button type="button" class="btn btn-secondary" @click.prevent="cancelOrder(item)">Cancel Order</button>
+                            </template>
+
                             <template v-slot:expanded-item="{ headers, item }">
                                 <td :colspan="headers.length" class="container">
                                     <div class="row">
@@ -92,7 +96,8 @@ export default {
                 },
                 { text: 'Status', value: 'status' },
                 { text: 'Currently handled by', value: 'handler' },
-                { text: 'Waiting for since', value: 'current_status_at'}
+                { text: 'Waiting for since', value: 'current_status_at'},
+                { text: '', value: 'cancel_order' }
             ]
         }
     },
@@ -106,16 +111,29 @@ export default {
             axios.get('/api/activeorders').then(resp=>{
                 this.activeOrders = resp.data.data
             })
+        },
+        cancelOrder(order) {
+            axios.put('api/cancelOrder/' + order.id)
+                .then(response => {
+                    this.reload();
+                    this.$toasted.success('Order canceled',
+                        {
+                            duration: 2000,
+                            position: 'bottom-center'
+                        });
+                })
+        },
+        reload(){
+            this.getOnlineUsers();
+            this.getActiveOrders();
         }
     },
     created() {
-        this.getOnlineUsers();
-        this.getActiveOrders();
+        this.reload();
     },
     sockets: {
         update_incoming(payload) {
-            this.getOnlineUsers();
-            this.getActiveOrders();
+            this.reload();
         }
     }
 }

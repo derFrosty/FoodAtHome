@@ -73,6 +73,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('activeorders', [OrderController::class, 'getactiveorders']);
 
+    Route::put('cancelOrder/{order_id}', [OrderController::class, 'orderCancel']);
+
 });
 
 Route::get('types', [ProductController::class, 'getTypes']);

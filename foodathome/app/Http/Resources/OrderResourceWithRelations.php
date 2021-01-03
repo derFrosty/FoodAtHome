@@ -65,9 +65,9 @@ class OrderResourceWithRelations extends JsonResource
     {
         switch ($status) {
             case "H" : return "No one";
-            case "P" : return $cook->name;
+            case "P" : return "(".$cook->id.") " . $cook->name;
             case "R" : return "Waiting for deliveryman";
-            case "T" : return $deliverer->name;
+            case "T" : return "(".$deliverer->id.") ".$deliverer->name;
             case "D" : return $customer->name;
             case "C" : return "Unknown";
             default : return "Unknown status";

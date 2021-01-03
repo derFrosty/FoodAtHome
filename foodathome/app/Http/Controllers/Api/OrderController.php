@@ -140,5 +140,17 @@ class OrderController extends Controller
     public function getactiveorders(){
         return OrderResourceWithRelations::collection(Order::WhereNotIn('status', ['D','C'])->get());
     }
+
+    public function orderCancel($idOrder){
+        if (Auth::user()->type != 'EM') {
+            abort(403);
+        }
+
+        $order = Order::findOrFail($idOrder);
+
+        $order->status = 'C';
+
+        $order->save();
+    }
 }
 

@@ -57,7 +57,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('deliverorder', [OrderController::class, 'assignOrderToDeliver']);
 
     Route::put('orderDelivered', [OrderController::class, 'orderDelivered']);
+
+    Route::post('addProduct', [ProductController::class, 'addProduct']);
+
 });
+
+Route::get('types', [ProductController::class, 'getTypes']);
 
 Route::get('getproducts/{order_id}', [OrderController::class, 'getProducts']);
 

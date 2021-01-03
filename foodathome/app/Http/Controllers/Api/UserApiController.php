@@ -7,6 +7,7 @@ use App\Http\Requests\CheckUserPasswordValidationForm;
 use App\Http\Requests\RegisterValidationForm;
 use App\Http\Requests\UpdatePasswordValidationForm;
 use App\Http\Requests\UpdateUserValidationForm;
+use App\Http\Requests\UserToBlockUnblockRequest;
 use App\Http\Resources\UserResource;
 use App\Models\Order;
 use App\Models\User;
@@ -181,5 +182,25 @@ class UserApiController extends Controller
         $order = Order::Where('status', 'T')->Where('delivered_by', Auth::id())->first();
 
         return $order != null? 'Not available': 'Available';
+    }
+
+    public function blockOrUnblockUser(UserToBlockUnblockRequest $request){
+
+        $user = Auth::user();
+
+        if(!$user || $user['type'] != 'EM' || $request['id'] == $user['id'] || $user['deleted_at']){
+            abort(403);
+        }
+
+        $userToBeChanged = User::find($request['id']);
+
+        $userToBeChanged['blocked'] = $userToBeChanged['blocked'] == 1 ? 0 : 1;
+        $userToBeChanged->save();
+
+        return response()->json(
+          ['msg' => 'Blocked status changed successfully'],
+          200
+        );
+
     }
 }

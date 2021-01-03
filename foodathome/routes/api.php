@@ -70,6 +70,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('updateProduct', [ProductController::class, 'updateProduct']);
 
     Route::delete('deleteProduct/{product_id}', [ProductController::class, 'deleteProduct']);
+
+    Route::post('changeBlockStatus', [UserApiController::class, 'blockOrUnblockUser']);
 });
 
 Route::get('types', [ProductController::class, 'getTypes']);

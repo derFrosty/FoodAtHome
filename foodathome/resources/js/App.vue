@@ -15,6 +15,16 @@
                     <li v-if="isCustomer || isGuest " class="nav-item">
                         <router-link class="nav-link" to="/products">Products</router-link>
                     </li>
+                    <li v-if="isDeliveryMan" class="nav-item">
+                        <router-link class="nav-link" to="/dashboard/deliveries">Dashboard</router-link>
+                    </li>
+                    <li v-if="isCustomer" class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown">Orders</a>
+                        <div class="dropdown-menu">
+                            <router-link class="dropdown-item" to="/my_orders">My Orders</router-link>
+                            <router-link class="dropdown-item" to="/order_history">Order History</router-link>
+                        </div>
+                    </li>
                 </ul>
                 <ul class="navbar-nav mr-auto">
                     <!--    mr-auto para que o próximo vá para a direita.      -->
@@ -94,7 +104,16 @@ export default {
             return ''
         },
         isCustomer: function (){
-            return this.$store.state.user && this.$store.state.user.type === 'C'
+            if (this.$store.state.user)
+                return this.$store.state.user.type === 'C'
+
+            return false
+        },
+        isDeliveryMan: function (){
+            if (this.$store.state.user)
+                return this.$store.state.user.type === 'ED'
+
+            return false
         },
         isManager: function (){
             return this.$store.state.user && this.$store.state.user.type === 'EM'
@@ -112,7 +131,6 @@ export default {
         },
         new_order(payload){
             //nova order recebida para este cook!
-            console.log("nova order!")
             this.$notify({
                 title: 'New order!',
                 type: 'success',

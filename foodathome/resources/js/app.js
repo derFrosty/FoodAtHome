@@ -3,10 +3,11 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 import VueSocketIO from "vue-socket.io"
+
 Vue.use(
     new VueSocketIO({
         debug: true,
-        connection: "http://127.0.0.1:8080"
+        connection: "http://localhost:8080"
     })
 )
 
@@ -14,6 +15,8 @@ import {ServerTable, ClientTable, Event} from 'vue-tables-2';
 import VueRouter from "vue-router";
 import App from './App.vue';
 import Vuex from 'vuex'
+import Vuetify from 'vuetify'
+import 'vuetify/dist/vuetify.css'
 import Toasted from 'vue-toasted';
 import Notifications from 'vue-notification'
 
@@ -21,11 +24,13 @@ import LoginComponent from "./Auth/Login.vue";
 import RegisterComponent from "./Auth/Register.vue";
 import WelcomeComponent from "./Welcome/Welcome.vue";
 import ProductComponent from "./Product/Product";
+import MyOrdersComponent from "./Order/MyOrders";
+import OrderHistoryComponent from "./Order/OrderHistory";
 import UserProfileComponent from "./User/Profile";
-import UserChangePasswordComponent from "./User/ChangePassword"
+import UserChangePasswordComponent from "./User/ChangePassword";
 import ShoppingCartComponent from "./User/ShoppingCart";
+import DeliveryManDashboardComponent from "./deliveryman/DeliveryManDashboard";
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
-import CookDashboardComponent from "./Dashboard/CookDashboard";
 
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
@@ -35,16 +40,26 @@ Vue.use(Notifications)
 Vue.use(Vuex)
 Vue.use(VueRouter);
 Vue.use(Toasted)
+Vue.use(Vuetify)
+
+const opts = {}
+
+export default new Vuetify(opts)
 
 const routes = [
     {path: '/', component: WelcomeComponent},
+    {path: '/products', component: ProductComponent},
+    {path: '/my_orders', component: MyOrdersComponent},
+    {path: '/order_history', component: OrderHistoryComponent},
     {path: '/login', component: LoginComponent},
     {path: '/register', component: RegisterComponent},
     {path: '/products', component: ProductComponent},
     {path: '/profile', component: UserProfileComponent},
     {path: '/profile/changepassword', component: UserChangePasswordComponent},
     {path: '/shoppingcart', component: ShoppingCartComponent},
-    {path: '/cookdashboard', component: CookDashboardComponent}
+    {path: '/dashboard/cook', component: CookDashboardComponent},
+    {path: '/shoppingcart', component: ShoppingCartComponent},
+    {path: '/dashboard/deliveries', component: DeliveryManDashboardComponent}
 ]
 
 const router = new VueRouter({

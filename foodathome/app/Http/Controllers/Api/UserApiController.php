@@ -168,4 +168,11 @@ class UserApiController extends Controller
             200
         );
     }
+
+    public function getDeliverAvailability(){
+
+        $order = Order::Where('status', 'T')->Where('delivered_by', Auth::id())->first();
+
+        return $order != null? 'Not available': 'Available';
+    }
 }

@@ -55,8 +55,6 @@ export default {
                     if (response.data.msg == "true") {
                         this.isPreparingOrder = true;
                         this.preparingOrder = response.data.preparing_order;
-
-                        console.log(this.preparingOrder)
                     }
                 })
         },

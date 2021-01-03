@@ -34,12 +34,12 @@ class OrderController extends Controller
         }
 
         if ($request->has('page')) {
-            return OrderResource::collection(
+            return OrderResourceWithRelations::collection(
                 Order::whereIn('status', ['H', 'P', 'R', 'T'])
                     ->where('customer_id', Auth::id())
                     ->paginate(5));
         } else {
-            return OrderResource::collection(
+            return OrderResourceWithRelations::collection(
                 Order::whereIn('status', ['H', 'P', 'R', 'T'])
                     ->where('customer_id', Auth::id())
                     ->get());
@@ -53,12 +53,12 @@ class OrderController extends Controller
         }
 
         if ($request->has('page')) {
-            return OrderResource::collection(
+            return OrderResourceWithRelations::collection(
                 Order::whereIn('status', ['D', 'C'])
                     ->where('customer_id', Auth::id())
                     ->paginate(5));
         } else {
-            return OrderResource::collection(
+            return OrderResourceWithRelations::collection(
                 Order::whereIn('status', ['D', 'C'])
                     ->where('customer_id', Auth::id())
                     ->get());

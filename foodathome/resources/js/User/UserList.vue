@@ -10,6 +10,11 @@
             <template v-slot:blocked="data">
                 <p>{{isBlocked(data.row.blocked)}}</p>
             </template>
+            <template v-slot:options="data">
+                <b-button variant="success">Update</b-button>
+                <b-button variant="warning">Block</b-button>
+                <b-button variant="danger">Delete</b-button>
+            </template>
         </v-client-table>
     </div>
 </template>

@@ -66,6 +66,11 @@ export default {
     },
     mounted() {
         this.checkAndGetPreparingOrders();
+    },
+    sockets: {
+        new_order(payload){
+            this.checkAndGetPreparingOrders();
+        }
     }
 }
 </script>

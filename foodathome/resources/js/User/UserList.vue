@@ -12,7 +12,8 @@
             </template>
             <template v-slot:options="data">
                 <b-button variant="success">Update</b-button>
-                <b-button variant="warning">{{ data.row.blocked == 0 ? 'Block' : 'Unblock' }}</b-button>
+                <b-button v-if="$store.state.user && data.row.id != $store.state.user.id"
+                          variant="warning">{{ data.row.blocked == 0 ? 'Block' : 'Unblock' }}</b-button>
                 <b-button variant="danger">Delete</b-button>
             </template>
         </v-client-table>

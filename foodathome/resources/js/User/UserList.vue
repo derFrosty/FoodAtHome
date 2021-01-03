@@ -13,7 +13,7 @@
             <template v-slot:options="data">
                 <b-button variant="success">Update</b-button>
                 <b-button v-if="$store.state.user && data.row.id != $store.state.user.id"
-                          variant="warning" @click="changeBlockStatus(data.row.id)">{{ data.row.blocked == 0 ? 'Block' : 'Unblock' }}</b-button>
+                          variant="warning" @click="changeBlockStatus(data)">{{ data.row.blocked == 0 ? 'Block' : 'Unblock' }}</b-button>
                 <b-button variant="danger">Delete</b-button>
             </template>
         </v-client-table>
@@ -56,10 +56,11 @@ export default {
         imgSource: function (url) {
             return url != null ? "storage/fotos/" + url : "storage/fotos/template.png";
         },
-        changeBlockStatus: function (userId){
-            axios.post('api/changeBlockStatus', {'id': userId})
+        changeBlockStatus: function (rowData){
+
+            axios.post('api/changeBlockStatus', {'id': rowData.row.id})
             .then(response => {
-                console.log(response)
+                this.users[rowData.index-1].blocked = response.data.blocked
             })
         }
     },

@@ -198,7 +198,7 @@ class UserApiController extends Controller
         $userToBeChanged->save();
 
         return response()->json(
-          ['msg' => 'Blocked status changed successfully'],
+          ['msg' => 'Blocked status changed successfully', 'blocked' => $userToBeChanged['blocked']],
           200
         );
 

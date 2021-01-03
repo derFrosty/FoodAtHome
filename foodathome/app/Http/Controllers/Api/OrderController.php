@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PrepareOrderRequest;
 use App\Http\Resources\OrderResource;
 use App\Http\Resources\OrderResourceWithRelations;
 use App\Http\Resources\ProductResource;
@@ -115,6 +116,25 @@ class OrderController extends Controller
 
         $order->save();
 
+    }
+
+    public function orderPrepared(PrepareOrderRequest $request){
+        $user = Auth::user();
+
+        if(!$user || $user->type != 'EC'){
+            abort(403);
+        }
+
+        $order = Order::find($request['id']);
+        $order->status = 'R';
+        $order->save();
+
+        $checkIfHasOrder = Order::Where('prepared_by', $user['id'])->where('status','P')->count();
+
+        return response()->json(
+            ['msg' => 'Successfully prepared order.', 'order' => $order['id'], 'hasOrder' => $checkIfHasOrder],
+            200
+        );
     }
 }
 

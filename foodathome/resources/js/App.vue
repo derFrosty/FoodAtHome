@@ -15,6 +15,9 @@
                     <li v-if="isCustomer || isGuest || isManager " class="nav-item">
                         <router-link class="nav-link" to="/products">Products</router-link>
                     </li>
+                    <li v-if="isManager" class="nav-item">
+                        <router-link class="nav-link" to="/users">Users</router-link>
+                    </li>
                     <li v-if="isDeliveryMan" class="nav-item">
                         <router-link class="nav-link" to="/dashboard/deliveries">Dashboard</router-link>
                     </li>

@@ -65,6 +65,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::put('orderPrepared', [OrderController::class, 'orderPrepared']);
 
+    Route::get('users', [UserApiController::class, 'index']);
+
     Route::post('updateProduct', [ProductController::class, 'updateProduct']);
 
     Route::delete('deleteProduct/{product_id}', [ProductController::class, 'deleteProduct']);
@@ -88,3 +90,5 @@ Route::get('products', [ProductController::class, 'index']);
 Route::post('register', [AuthController::class, 'register']);
 
 Route::put('updateLoggedAt', [UserApiController::class, 'updateLoggedAt']);
+
+

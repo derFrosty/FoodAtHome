@@ -7,7 +7,11 @@ use App\Http\Requests\CheckUserPasswordValidationForm;
 use App\Http\Requests\RegisterValidationForm;
 use App\Http\Requests\UpdatePasswordValidationForm;
 use App\Http\Requests\UpdateUserValidationForm;
+
 use App\Http\Resources\WorkersResource;
+
+use App\Http\Resources\UserResource;
+
 use App\Models\Order;
 use App\Models\User;
 use Auth;
@@ -21,7 +25,13 @@ class UserApiController extends Controller
 {
     public function index()
     {
-        //
+        $user = Auth::user();
+
+        if(!$user || $user['type'] != 'EM'){
+            abort(403);
+        }
+
+        return UserResource::Collection(User::all());
     }
 
 

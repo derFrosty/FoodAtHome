@@ -86,6 +86,16 @@ io.on('connection', function (socket) {
         // console.log(' -> Total Sessions= ' + sessions.users.size)
     })
 
+    socket.on('changeBlockedStatus', (user) => {
+
+        //verficar se user está logado
+        let session = sessions.getUserSession(user.id)
+
+        if (session && user.blocked == 1){
+            io.to(`${session.socketID}`).emit('blockStatusUpdate')
+        }
+
+    })
 
 
 

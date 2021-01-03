@@ -1,26 +1,32 @@
 <template>
     <div class="container">
-        <div class="jumbotron">
+        <div v-if="!productSelected" class="jumbotron">
             <h1>{{ title }}</h1>
         </div>
-        <prod-list v-if="isManager" :products="products"></prod-list>
-        <prod-card v-if="isCustomer || isGuest" :products="products"></prod-card>
+        <prod-list v-if="isManager && !updatingProduct" :products="products" @product-delete="deleteProduct" @product-update="updateProduct"></prod-list>
+        <prod-card v-if="(isCustomer || isGuest) && !updatingProduct" :products="products"></prod-card>
+        <prod-creation v-if="updatingProduct" :product="productSelected" @back="cancelUpdate" @success="updateSuccess"></prod-creation>
+
     </div>
 </template>
 
 <script>
 import ProductListComponent from "./ProductList"
 import ProductCardComponent from "./ProductCard"
+import ProductCreation from "../Manager/ProductCreation";
 
 export default {
     components: {
         'prod-list': ProductListComponent,
-        'prod-card': ProductCardComponent
+        'prod-card': ProductCardComponent,
+        'prod-creation': ProductCreation
     },
     data: function () {
         return {
             title: 'Menu',
-            products: []
+            products: [],
+            updatingProduct: false,
+            productSelected: null
         }
     },
     methods: {
@@ -29,6 +35,23 @@ export default {
                 .then(response => {
                     this.products = response.data.data
                 })
+        },
+        deleteProduct: function (id){
+            axios.delete('api/deleteProduct/'+id ).then(resp=>{
+                this.getProducts()
+            })
+        },
+        updateProduct: function (data){
+            this.productSelected = data;
+            this.updatingProduct = true;
+        },
+        cancelUpdate: function (){
+            this.productSelected = null;
+            this.updatingProduct = false;
+        },
+        updateSuccess: function (){
+            this.getProducts();
+            this.cancelUpdate();
         }
     },
     computed: {

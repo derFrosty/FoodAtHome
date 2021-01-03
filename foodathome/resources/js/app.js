@@ -16,7 +16,6 @@ import VueRouter from "vue-router";
 import App from './App.vue';
 import Vuex from 'vuex'
 import Vuetify from 'vuetify'
-import 'vuetify/dist/vuetify.css'
 import Toasted from 'vue-toasted';
 import Notifications from 'vue-notification'
 
@@ -30,7 +29,11 @@ import UserProfileComponent from "./User/Profile";
 import UserChangePasswordComponent from "./User/ChangePassword";
 import ShoppingCartComponent from "./User/ShoppingCart";
 import DeliveryManDashboardComponent from "./deliveryman/DeliveryManDashboard";
+
+import CreateProduct from "./Manager/ProductCreation";
+
 import CookDashboardComponent from "./Dashboard/CookDashboard";
+
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 
 Vue.use(BootstrapVue)
@@ -58,9 +61,13 @@ const routes = [
     {path: '/profile', component: UserProfileComponent},
     {path: '/profile/changepassword', component: UserChangePasswordComponent},
     {path: '/shoppingcart', component: ShoppingCartComponent},
+
+    {path: '/create/product', component: CreateProduct},
+
     {path: '/dashboard/cook', component: CookDashboardComponent},
     {path: '/shoppingcart', component: ShoppingCartComponent},
     {path: '/dashboard/deliveries', component: DeliveryManDashboardComponent}
+
 ]
 
 const router = new VueRouter({

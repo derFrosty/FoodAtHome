@@ -12,7 +12,7 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <li v-if="isCustomer || isGuest " class="nav-item">
+                    <li v-if="isCustomer || isGuest || isManager " class="nav-item">
                         <router-link class="nav-link" to="/products">Products</router-link>
                     </li>
                     <li v-if="isDeliveryMan" class="nav-item">
@@ -26,6 +26,13 @@
                         <div class="dropdown-menu">
                             <router-link class="dropdown-item" to="/my_orders">My Orders</router-link>
                             <router-link class="dropdown-item" to="/order_history">Order History</router-link>
+                        </div>
+                    </li>
+                    <li v-if="isManager" class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown">Manager</a>
+                        <div class="dropdown-menu">
+                            <router-link class="dropdown-item" to="/create/product">Create Product</router-link>
+<!--                            <router-link class="dropdown-item" to="/order_history">Order History</router-link>-->
                         </div>
                     </li>
                 </ul>

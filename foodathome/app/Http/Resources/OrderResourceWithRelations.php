@@ -38,6 +38,7 @@ class OrderResourceWithRelations extends JsonResource
         ];
     }
 
+
     public function status_func($status){
         switch ($status) {
             case "H" : return "Holding";

@@ -49,6 +49,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('order_history', [OrderController::class, 'orderHistory']);
 
+    Route::get('active_orders', [OrderController::class, 'activeOrders']);
+
     Route::get('checkorder/{order_id}', [ShoppingCartController::class, 'checkOrderCook']);
 
     Route::get('getReadyOrders', [OrderController::class, 'getReadyOrders']);
@@ -64,6 +66,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('addProduct', [ProductController::class, 'addProduct']);
 
     Route::put('orderPrepared', [OrderController::class, 'orderPrepared']);
+
+    Route::put('cancelOrder/{order_id}', [OrderController::class, 'orderCancel']);
 
     Route::post('updateProduct', [ProductController::class, 'updateProduct']);
 

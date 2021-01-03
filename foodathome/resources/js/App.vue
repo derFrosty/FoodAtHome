@@ -32,7 +32,7 @@
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown">Manager</a>
                         <div class="dropdown-menu">
                             <router-link class="dropdown-item" to="/create/product">Create Product</router-link>
-<!--                            <router-link class="dropdown-item" to="/order_history">Order History</router-link>-->
+                            <router-link class="dropdown-item" to="/cancel/order">Cancel Order</router-link>
                         </div>
                     </li>
                 </ul>

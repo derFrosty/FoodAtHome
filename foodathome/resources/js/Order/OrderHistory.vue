@@ -11,6 +11,7 @@
     import OrderListComponent from "./OrderList";
 
     export default {
+        name: "OrderHistory",
         components:{
             'order-list': OrderListComponent
         },

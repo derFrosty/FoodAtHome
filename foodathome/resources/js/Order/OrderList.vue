@@ -9,6 +9,10 @@
                 :items-per-page="5"
                 @click:row="(item, slot) => slot.expand(!slot.isExpanded)"
             >
+
+                <template v-if="call" v-slot:item.button_cancel="{ headers, item }">
+                    <button type="button" class="btn btn-danger btn-sm" @click="cancelOrder(item)">Cancel Order</button>
+                </template>
                 <template v-slot:expanded-item="{ headers, item }">
                     <td :colspan="headers.length" class="container">
                         <div class="row">
@@ -18,7 +22,6 @@
                         </div>
                     </td>
                 </template>
-
             </v-data-table>
         </v-app>
     </div>
@@ -26,7 +29,8 @@
 
 <script>
     export default {
-        props: ['orders'],
+        name: "OrderList",
+        props: ['orders', 'call'],
         data: function () {
             return {
                 tableHeaders: [
@@ -39,11 +43,22 @@
                     { text: 'Status', value: 'status' },
                     { text: 'Notes', value: 'notes' },
                     { text: 'Total Price', value: 'total_price' },
-                    { text: 'Date', value: 'date' }
+                    { text: 'Date', value: 'date' },
+                    { text: '', value: 'button_cancel' }
                 ],
             }
         },
         methods: {
+            cancelOrder(order) {
+                axios.put('api/cancelOrder/' + order.id)
+                    .then(response => {
+                        this.$toasted.success('Order canceled',
+                            {
+                                duration: 2000,
+                                position: 'bottom-center'
+                            });
+                    })
+            }
         }
     };
 </script>

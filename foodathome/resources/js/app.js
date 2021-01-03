@@ -1,3 +1,5 @@
+import CancelOrder from "./Manager/CancelOrder";
+
 require('./bootstrap');
 
 window.Vue = require('vue');
@@ -63,6 +65,7 @@ const routes = [
     {path: '/shoppingcart', component: ShoppingCartComponent},
 
     {path: '/create/product', component: CreateProduct},
+    {path: '/cancel/order', component: CancelOrder},
 
     {path: '/dashboard/cook', component: CookDashboardComponent},
     {path: '/shoppingcart', component: ShoppingCartComponent},

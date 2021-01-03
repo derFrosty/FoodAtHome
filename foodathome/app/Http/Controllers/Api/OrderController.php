@@ -65,6 +65,21 @@ class OrderController extends Controller
         }
     }
 
+    public function activeOrders(Request $request)
+    {
+        if (Auth::user()->type != 'EM') {
+            abort(403);
+        }
+
+        if ($request->has('page')) {
+            return OrderResourceWithRelations::collection(
+                Order::whereIn('status', ['H', 'P', 'R', 'T'])->paginate(5));
+        } else {
+            return OrderResourceWithRelations::collection(
+                Order::whereIn('status', ['H', 'P', 'R', 'T'])->get());
+        }
+    }
+
     public function getProducts($idOrder)
     {
         $order_items = Order::findOrFail($idOrder)->order_items;
@@ -135,6 +150,18 @@ class OrderController extends Controller
             ['msg' => 'Successfully prepared order.', 'order' => $order['id'], 'hasOrder' => $checkIfHasOrder],
             200
         );
+    }
+
+    public function orderCancel($idOrder){
+        if (Auth::user()->type != 'EM') {
+            abort(403);
+        }
+
+        $order = Order::findOrFail($idOrder);
+
+        $order->status = 'C';
+
+        $order->save();
     }
 }
 

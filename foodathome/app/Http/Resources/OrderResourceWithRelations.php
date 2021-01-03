@@ -18,11 +18,11 @@ class OrderResourceWithRelations extends JsonResource
     {
         return [
             'id'   => $this->id,
-            'status' => $this->status_complete($this->status),
+            'status' => $this->status_func($this->status),
             'customer' => $this->customer,
             'customer_details' => $this->customer->customer,
-            'notes' => $this->notes,
-            'total_price' => $this->total_price,
+            'notes' => $this->notes_func($this->notes),
+            'total_price' => $this->totalPrice_func($this->total_price),
             'date' => $this->date,
             'prepared_by' => $this->cook,
             'opened_at' => $this->opened_at,
@@ -38,14 +38,24 @@ class OrderResourceWithRelations extends JsonResource
         ];
     }
 
-    public function status_complete($status){
-        switch ($status){
-            case "D": {
-                return "delivered";
-            }
+
+    public function status_func($status){
+        switch ($status) {
+            case "H" : return "Holding";
+            case "P" : return "Preparing";
+            case "R" : return "Ready";
+            case "T" : return "In transit";
+            case "D" : return "Delivered";
+            case "C" : return "Cancelled";
+            default : return "Other";
         }
+    }
 
-        return $status;
+    public function notes_func($notes){
+        return ($notes == null ? "No notes" : $notes);
+    }
 
+    public function totalPrice_func($totalPrice){
+        return $totalPrice . "€";
     }
 }

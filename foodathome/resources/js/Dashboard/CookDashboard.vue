@@ -22,6 +22,10 @@
                         <img style="display:block;" width="auto" height="65" :src="imgSource(data.row.photo_url)">
                     </template>
                 </v-client-table>
+
+                <div align="right">
+                    <button type="button" class="btn btn-success" @click="orderPrepared">Order Prepared</button>
+                </div>
             </div>
         </div>
         <div v-else>
@@ -60,14 +64,42 @@ export default {
         },
         imgSource: function (url) {
             return "storage/products/" + url;
+        },
+        orderPrepared: function () {
+            let order = {
+                'id': this.preparingOrder.order.id,
+                'status': this.preparingOrder.order.status
+            }
+
+            axios.put('api/orderPrepared', order)
+                .then(response => {
+
+                    if (response.data.hasOrder < 1){
+                        this.preparingOrder = [];
+                        this.isPreparingOrder = false;
+                    }else{
+                        this.checkAndGetPreparingOrders();
+                    }
+
+                    this.$forceUpdate();
+
+                })
         }
     },
     mounted() {
         this.checkAndGetPreparingOrders();
     },
     sockets: {
-        new_order(payload){
+        new_order(payload) {
             this.checkAndGetPreparingOrders();
+            //nova order recebida para este cook!
+            this.$notify({
+                title: 'New order!',
+                type: 'success',
+                text: 'You have something to cook!',
+                duration: 7500,
+                speed: 500
+            });
         }
     }
 }

@@ -113,9 +113,16 @@ export default {
             })
         },
         cancelOrder(order) {
-            axios.put('api/cancelOrder/' + order.id)
+           axios.put('api/cancelOrder/' + order.id)
                 .then(response => {
                     this.reload();
+
+                    if(order.status === 'In transit'){
+                        this.$socket.emit('order_canceled', order.delivered_by);
+                    }
+                    if(order.status === 'Preparing'){
+                        this.$socket.emit('order_canceled', order.prepared_by.id);
+                    }
                     this.$toasted.success('Order canceled',
                         {
                             duration: 2000,

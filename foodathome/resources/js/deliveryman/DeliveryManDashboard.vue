@@ -43,7 +43,7 @@ export default {
         },
         assignOrder: function (order_id){
             axios.put('/api/deliverorder', {"order_id": order_id}).then(resp=>{
-                this.$socket.emit('order_picked');
+                this.$socket.emit('order_update');
                 this.my_order = resp.data.order[0];
                 this.availability = null;
                 this.$notify({
@@ -59,7 +59,7 @@ export default {
         },
         deliveredOrder: function (){
             axios.put('/api/orderDelivered').then(resp=>{
-                this.$socket.emit('order_delivered');
+                this.$socket.emit('order_update');
                 this.startup();
 
             })

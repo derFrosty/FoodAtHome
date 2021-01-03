@@ -115,7 +115,7 @@ export default {
                             //socket
                             this.$socket.emit('order_placed_on_online_cook', resp.data.order_cook_id)
                         }else{
-                            this.$socket.emit('new_order_placed');
+                            this.$socket.emit('order_update');
                         }
 
                     })

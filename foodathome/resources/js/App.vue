@@ -31,6 +31,13 @@
                             <router-link class="dropdown-item" to="/order_history">Order History</router-link>
                         </div>
                     </li>
+                    <li v-if="isManager" class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown">Manager</a>
+                        <div class="dropdown-menu">
+                            <router-link class="dropdown-item" to="/create/product">Create Product</router-link>
+<!--                            <router-link class="dropdown-item" to="/order_history">Order History</router-link>-->
+                        </div>
+                    </li>
                 </ul>
                 <ul class="navbar-nav mr-auto">
                     <!--    mr-auto para que o próximo vá para a direita.      -->

@@ -1,18 +1,25 @@
 <template>
-    <orders-ready-for-delivery v-if="availability" :orders="orders_ready" @order-selected="assignOrder">
-    </orders-ready-for-delivery>
-    <order-to-deliver v-else :order="my_order" @order-delivered="deliveredOrder">
-    </order-to-deliver>
+    <div>
+        <div class="jumbotron">
+            <h1>{{ title }}</h1>
+        </div>
+        <orders-ready-for-delivery v-if="availability" :orders="orders_ready" @order-selected="assignOrder">
+        </orders-ready-for-delivery>
+        <order-to-deliver v-else :order="my_order" @order-delivered="deliveredOrder">
+        </order-to-deliver>
+    </div>
 </template>
 
 <script>
 import OrdersReadyForDelivery from "./OrdersReadyForDelivery";
 import OrderToDeliver from "./OrderToDeliver";
+
 export default {
     name: "DeliveryManDashboard",
     components: {OrderToDeliver, OrdersReadyForDelivery},
     data: function (){
         return {
+            title: 'Deliveryman Dashboard',
             orders_ready: [],
             my_order: null,
             availability: null

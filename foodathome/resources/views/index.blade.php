@@ -7,10 +7,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Food@Home</title>
     <!-- Latest compiled and minified CSS & JS -->
+    <link rel="stylesheet" href="https://unpkg.com/vuetify/dist/vuetify.min.css">
     <link rel="stylesheet" href="{{ URL::asset('css/app.css') }}">
 
 </head>
-<body>
+<body class="overflow-hidden">
 <div class="container" id="app">
 </div>
 <script src="js/app.js"></script>

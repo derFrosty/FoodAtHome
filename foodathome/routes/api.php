@@ -61,10 +61,18 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::put('orderDelivered', [OrderController::class, 'orderDelivered']);
 
+    Route::post('addProduct', [ProductController::class, 'addProduct']);
+
     Route::put('orderPrepared', [OrderController::class, 'orderPrepared']);
 
     Route::get('users', [UserApiController::class, 'index']);
+
+    Route::post('updateProduct', [ProductController::class, 'updateProduct']);
+
+    Route::delete('deleteProduct/{product_id}', [ProductController::class, 'deleteProduct']);
 });
+
+Route::get('types', [ProductController::class, 'getTypes']);
 
 Route::get('getproducts/{order_id}', [OrderController::class, 'getProducts']);
 

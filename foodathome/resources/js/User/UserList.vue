@@ -61,6 +61,8 @@ export default {
             axios.post('api/changeBlockStatus', {'id': rowData.row.id})
             .then(response => {
                 this.users[rowData.index-1].blocked = response.data.blocked
+                //emit changeBlockedStatus
+                this.$socket.emit('changeBlockedStatus', this.users[rowData.index-1])
             })
         }
     },

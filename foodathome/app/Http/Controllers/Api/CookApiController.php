@@ -21,9 +21,19 @@ class CookApiController extends Controller
         }
 
         //null == cook is preparing something
-        if (!$user['available_at'] && $user['logged_at']){
+        if (!$user['available_at']){
 
             $order = Order::Where('prepared_by', $user['id'])->Where('status', 'P')->first();
+
+            if(!$order){
+                return response()->json(
+                    [
+                        'msg' => 'false',
+                        'preparing_order' => []
+                    ],
+                    200
+                );
+            }
 
             $order_items = Order_Item::Where('order_id',$order['id'])->get();
 

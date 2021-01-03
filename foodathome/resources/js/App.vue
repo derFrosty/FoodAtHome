@@ -18,6 +18,9 @@
                     <li v-if="isDeliveryMan" class="nav-item">
                         <router-link class="nav-link" to="/dashboard/deliveries">Dashboard</router-link>
                     </li>
+                    <li v-if="isCook" class="nav-item">
+                        <router-link class="nav-link" to="/dashboard/cook">Dashboard</router-link>
+                    </li>
                     <li v-if="isCustomer" class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown">Orders</a>
                         <div class="dropdown-menu">
@@ -120,6 +123,9 @@ export default {
         },
         isGuest: function (){
             return this.$store.state.user == null
+        },
+        isCook: function (){
+            return this.$store.state.user && this.$store.state.user.type === 'EC'
         }
     },
     sockets: {

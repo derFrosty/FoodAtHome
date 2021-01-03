@@ -92,6 +92,14 @@ export default {
     sockets: {
         new_order(payload) {
             this.checkAndGetPreparingOrders();
+            //nova order recebida para este cook!
+            this.$notify({
+                title: 'New order!',
+                type: 'success',
+                text: 'You have something to cook!',
+                duration: 7500,
+                speed: 500
+            });
         }
     }
 }

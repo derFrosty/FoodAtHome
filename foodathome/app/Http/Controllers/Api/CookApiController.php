@@ -25,6 +25,16 @@ class CookApiController extends Controller
 
             $order = Order::Where('prepared_by', $user['id'])->Where('status', 'P')->first();
 
+            if(!$order){
+                return response()->json(
+                    [
+                        'msg' => 'false',
+                        'preparing_order' => []
+                    ],
+                    200
+                );
+            }
+
             $order_items = Order_Item::Where('order_id',$order['id'])->get();
 
             $customer = User::find($order['customer_id']);

@@ -25,6 +25,7 @@ class OrderObserver
             $cook->save();
             $order->prepared_by = $cook->id;
             $order->status = 'P';
+            $order->current_status_at = Carbon::now()->toDateTimeString();
             $order->save();
         }
 
@@ -101,6 +102,7 @@ class OrderObserver
                 $cook->save();
                 $ordersOnHold->prepared_by = $cook->id;
                 $ordersOnHold->status = 'P';
+                $ordersOnHold->current_status_at = Carbon::now()->toDateTimeString();
                 $ordersOnHold->save();
             }
         }

@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\Order;
 use App\Models\User;
+use Carbon\Carbon;
 
 class UserObserver
 {

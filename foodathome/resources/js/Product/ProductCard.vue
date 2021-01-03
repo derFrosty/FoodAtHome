@@ -15,7 +15,7 @@
                     <p class="card-text d-inline">{{ item.price }}€</p>
                     <p class="card-text d-inline" style="margin-left: 10px" v-if="checkQuantityInShoppingCart(item) !== -1">x{{checkQuantityInShoppingCart(item)}}</p>
                     <br>
-                    <a v-if="isLoggedIn" @click="$store.commit('addProductToShoppingCart', item)" class="btn btn-primary">Add to cart</a>
+                    <a v-if="isCustomer" @click="$store.commit('addProductToShoppingCart', item)" class="btn btn-primary">Add to cart</a>
                 </div>
             </div>
         </div>
@@ -35,8 +35,7 @@ export default {
                 {value: 'dessert', text: 'Dessert'},
             ],
             typeSelected: 'all products',
-            textFilter: '',
-            isLoggedIn: false
+            textFilter: ''
         };
     },
     methods: {
@@ -84,11 +83,11 @@ export default {
                 return false
             })
         },
+        isCustomer: function () {
+            return this.$store.state.user && this.$store.state.user.type == 'C'
+        }
     },
     mounted() {
-        if(this.$store.state.user){
-            this.isLoggedIn = true
-        }
     }
 }
 </script>

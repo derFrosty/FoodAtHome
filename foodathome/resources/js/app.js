@@ -30,6 +30,7 @@ import UserProfileComponent from "./User/Profile";
 import UserChangePasswordComponent from "./User/ChangePassword";
 import ShoppingCartComponent from "./User/ShoppingCart";
 import DeliveryManDashboardComponent from "./deliveryman/DeliveryManDashboard";
+import CookDashboardComponent from "./Dashboard/CookDashboard";
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 
 Vue.use(BootstrapVue)
@@ -56,6 +57,8 @@ const routes = [
     {path: '/products', component: ProductComponent},
     {path: '/profile', component: UserProfileComponent},
     {path: '/profile/changepassword', component: UserChangePasswordComponent},
+    {path: '/shoppingcart', component: ShoppingCartComponent},
+    {path: '/dashboard/cook', component: CookDashboardComponent},
     {path: '/shoppingcart', component: ShoppingCartComponent},
     {path: '/dashboard/deliveries', component: DeliveryManDashboardComponent}
 ]
@@ -151,7 +154,6 @@ new Vue({
     render: h => h(App),
     router,
     store,
-    vuetify: new Vuetify(),
     beforeCreate() {
         this.$store.commit('loadUserIfRemembered')
     },

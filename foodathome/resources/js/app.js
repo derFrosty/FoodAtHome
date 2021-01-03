@@ -31,6 +31,7 @@ import UserChangePasswordComponent from "./User/ChangePassword";
 import ShoppingCartComponent from "./User/ShoppingCart";
 import DeliveryManDashboardComponent from "./deliveryman/DeliveryManDashboard";
 import CookDashboardComponent from "./Dashboard/CookDashboard";
+import UserListComponent from "./User/UserList";
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 
 Vue.use(BootstrapVue)
@@ -60,7 +61,8 @@ const routes = [
     {path: '/shoppingcart', component: ShoppingCartComponent},
     {path: '/dashboard/cook', component: CookDashboardComponent},
     {path: '/shoppingcart', component: ShoppingCartComponent},
-    {path: '/dashboard/deliveries', component: DeliveryManDashboardComponent}
+    {path: '/dashboard/deliveries', component: DeliveryManDashboardComponent},
+    {path: '/users', component: UserListComponent}
 ]
 
 const router = new VueRouter({

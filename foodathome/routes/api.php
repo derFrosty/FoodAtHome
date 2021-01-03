@@ -64,6 +64,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('addProduct', [ProductController::class, 'addProduct']);
 
     Route::put('orderPrepared', [OrderController::class, 'orderPrepared']);
+
+    Route::post('updateProduct', [ProductController::class, 'updateProduct']);
+
+    Route::delete('deleteProduct/{product_id}', [ProductController::class, 'deleteProduct']);
 });
 
 Route::get('types', [ProductController::class, 'getTypes']);

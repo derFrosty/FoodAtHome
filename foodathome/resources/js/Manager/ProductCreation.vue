@@ -1,7 +1,8 @@
 <template>
     <div class="container">
         <div class="jumbotron">
-            <h1>{{ title }}</h1>
+            <h1 v-if="!product">{{ title }}</h1>
+            <h1 v-else>Product update</h1>
         </div>
         <form>
             <div class="form-group row">
@@ -62,11 +63,20 @@
             </div>
 
             <div class="form-group row mb-0">
-                <div class="col-md-6 offset-md-4">
+                <div v-if="!product" class="col-md-6 offset-md-4">
                     <button type="submit" class="btn btn-primary" @click.prevent="submitProduct">
-                        <div>Create Product</div>
+                        Create Product
                     </button>
 
+                </div>
+                <div v-else class="col-md-6 offset-md-4">
+                    <button type="submit" class="btn btn-primary" @click.prevent="submitProduct">
+                        <div>Update Product</div>
+                    </button>
+
+                    <button type="submit" class="btn btn-secondary w-25" @click.prevent="back">
+                        Back
+                    </button>
                 </div>
             </div>
 
@@ -76,10 +86,12 @@
 
 <script>
 export default {
-name: "ProductCreation",
+    name: "ProductCreation",
+    props: ['product'],
     data() {
         return{
             inputForm: {
+                id: null,
                 name: '',
                 type: '',
                 description: '',
@@ -89,8 +101,6 @@ name: "ProductCreation",
             errors: [],
             title: 'Product Creation',
             types: []
-
-
         }
     },
     methods: {
@@ -103,21 +113,43 @@ name: "ProductCreation",
         pictureChanged: function (event){
             this.inputForm.photo_url = event.target.files[0]
         },
+        back: function (){
+            this.$emit('back')
+        },
         submitProduct: function (){
+            this.errors = [];
             const data = new FormData()
+
+            console.log('inputForm->')
+            console.log(this.inputForm)
 
             data.append('name', this.inputForm.name)
             data.append('type', this.inputForm.type)
             data.append('description', this.inputForm.description)
-            data.append('photo_url', this.inputForm.photo_url)
+            if(this.inputForm.photo_url !== "" && this.inputForm.photo_url != null){
+                data.append('photo_url', this.inputForm.photo_url)
+            }
+
             data.append('price', this.inputForm.price)
 
-            axios.post("/api/addProduct", data).then(response => {
-                console.log("success!?")
+            if(this.product == null){
+                axios.post("/api/addProduct", data).then(response => {
+                    console.log("success POST!?")
 
-            }).catch(error => {
-                this.errors = error.response.data.errors
-            })
+                }).catch(error => {
+                    this.errors = error.response.data.errors
+                })
+            }else{
+                data.append('id', this.product.id)
+
+                //update do produto não pode ser put por causa da foto
+                axios.post("/api/updateProduct", data).then(resp => {
+                    this.$emit('success')
+                }).catch(error => {
+                    this.errors = error.response.data.errors
+                })
+            }
+
 
 
         },
@@ -129,6 +161,12 @@ name: "ProductCreation",
     },
     created() {
         this.getTypes();
+        if(this.product){
+            this.inputForm.name = this.product.name;
+            this.inputForm.type = this.product.type;
+            this.inputForm.description = this.product.description;
+            this.inputForm.price = this.product.price;
+        }
     }
 }
 </script>

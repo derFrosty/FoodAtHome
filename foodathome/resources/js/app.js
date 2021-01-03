@@ -161,6 +161,7 @@ new Vue({
     render: h => h(App),
     router,
     store,
+    vuetify: new Vuetify(),
     beforeCreate() {
         this.$store.commit('loadUserIfRemembered')
     },

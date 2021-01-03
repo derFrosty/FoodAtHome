@@ -18,7 +18,7 @@ class OrderResourceWithRelations extends JsonResource
     {
         return [
             'id'   => $this->id,
-            'status' => $this->status,
+            'status' => $this->status_complete($this->status),
             'customer' => $this->customer,
             'customer_details' => $this->customer->customer,
             'notes' => $this->notes,
@@ -36,5 +36,16 @@ class OrderResourceWithRelations extends JsonResource
             'updated_at' => $this->updated_at,
             'order_items' => Order_ItemResource::collection($this->order_items)
         ];
+    }
+
+    public function status_complete($status){
+        switch ($status){
+            case "D": {
+                return "delivered";
+            }
+        }
+
+        return $status;
+
     }
 }

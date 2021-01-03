@@ -12,7 +12,7 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <li v-if="isCustomer || isGuest " class="nav-item">
+                    <li v-if="isCustomer || isGuest || isManager " class="nav-item">
                         <router-link class="nav-link" to="/products">Products</router-link>
                     </li>
                     <li v-if="isDeliveryMan" class="nav-item">

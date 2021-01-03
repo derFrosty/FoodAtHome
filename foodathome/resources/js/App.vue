@@ -12,11 +12,14 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
+                    <li v-if="isCustomer || isGuest " class="nav-item">
                         <router-link class="nav-link" to="/products">Products</router-link>
                     </li>
                     <li v-if="isDeliveryMan" class="nav-item">
                         <router-link class="nav-link" to="/dashboard/deliveries">Dashboard</router-link>
+                    </li>
+                    <li v-if="isCook" class="nav-item">
+                        <router-link class="nav-link" to="/dashboard/cook">Dashboard</router-link>
                     </li>
                     <li v-if="isCustomer" class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown">Orders</a>
@@ -123,10 +126,13 @@ export default {
             return false
         },
         isManager: function (){
-            if (this.$store.state.user)
-                return this.$store.state.user.type === 'EM'
-
-            return false
+            return this.$store.state.user && this.$store.state.user.type === 'EM'
+        },
+        isGuest: function (){
+            return this.$store.state.user == null
+        },
+        isCook: function (){
+            return this.$store.state.user && this.$store.state.user.type === 'EC'
         }
     },
     sockets: {

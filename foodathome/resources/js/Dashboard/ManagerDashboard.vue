@@ -118,7 +118,7 @@ export default {
                     this.reload();
 
                     if(order.status === 'In transit'){
-                        this.$socket.emit('order_canceled', order.delivered_by);
+                        this.$socket.emit('order_canceled', order.delivered_by.id);
                     }
                     if(order.status === 'Preparing'){
                         this.$socket.emit('order_canceled', order.prepared_by.id);

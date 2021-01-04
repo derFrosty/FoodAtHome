@@ -1,5 +1,3 @@
-import ManagerDashboard from "./Dashboard/ManagerDashboard";
-
 require('./bootstrap');
 
 window.Vue = require('vue');
@@ -35,6 +33,7 @@ import DeliveryManDashboardComponent from "./deliveryman/DeliveryManDashboard";
 import CreateProduct from "./Manager/ProductCreation";
 import CookDashboardComponent from "./Dashboard/CookDashboard";
 import UserListComponent from "./User/UserList";
+import ManagerDashboard from "./Dashboard/ManagerDashboard";
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 
 Vue.use(BootstrapVue)

@@ -16,7 +16,6 @@ export default {
     components: {OrderToDeliver, OrdersReadyForDelivery},
     data: function (){
         return {
-            title: 'Deliveryman Dashboard',
             orders_ready: [],
             my_order: null,
             availability: null
@@ -72,6 +71,22 @@ export default {
     mounted() {
         this.startup()
 
+    },
+    sockets:{
+        order_canceled(payload){
+            this.startup();
+
+            console.log("order cancelada!")
+
+            this.$notify({
+                title: 'Order Canceled!',
+                type: 'error',
+                text: 'Your order has been canceled...',
+                duration: 7500,
+                speed: 500
+            });
+
+        }
     }
 }
 </script>

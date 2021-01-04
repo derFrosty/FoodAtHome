@@ -77,6 +77,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::put('cancelOrder/{order_id}', [OrderController::class, 'orderCancel']);
 
+    Route::post('changeBlockStatus', [UserApiController::class, 'blockOrUnblockUser']);
 });
 
 Route::get('types', [ProductController::class, 'getTypes']);

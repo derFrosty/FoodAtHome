@@ -154,6 +154,16 @@ export default {
                 duration: 7500,
                 speed: 500
             });
+        },
+        blockStatusUpdate(){
+            this.$notify({
+                title: 'FORCE DISCONNECT',
+                type: 'error',
+                text: 'You\'ll be disconnected in a few moments because your account was blocked',
+                duration: 10000,
+                speed: 500
+            });
+            this.logout();
         }
 
     }

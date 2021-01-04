@@ -12,7 +12,8 @@
             </template>
             <template v-slot:options="data">
                 <b-button variant="success">Update</b-button>
-                <b-button variant="warning">Block</b-button>
+                <b-button v-if="$store.state.user && data.row.id != $store.state.user.id"
+                          variant="warning" @click="changeBlockStatus(data)">{{ data.row.blocked == 0 ? 'Block' : 'Unblock' }}</b-button>
                 <b-button variant="danger">Delete</b-button>
             </template>
         </v-client-table>
@@ -54,10 +55,35 @@ export default {
         },
         imgSource: function (url) {
             return url != null ? "storage/fotos/" + url : "storage/fotos/template.png";
+        },
+        changeBlockStatus: function (rowData){
+
+            axios.post('api/changeBlockStatus', {'id': rowData.row.id})
+            .then(response => {
+                this.users[rowData.index-1].blocked = response.data.blocked
+                //emit changeBlockedStatus
+                this.$socket.emit('changeBlockedStatus', this.users[rowData.index-1])
+            })
         }
     },
     mounted() {
         this.getAllUsers()
+    },
+    sockets: {
+        updateUserList (payload){
+
+            for (let i = 0; i < this.users.length; i++) {
+                //console.log(this.users[i])
+                if (this.users[i].id == payload.id){
+
+                    this.users[i].blocked = payload.blocked
+
+                    this.$forceUpdate()
+                    break
+                }
+            }
+
+        }
     }
 }
 </script>

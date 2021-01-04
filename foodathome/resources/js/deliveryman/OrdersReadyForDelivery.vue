@@ -1,5 +1,8 @@
 <template>
 	<div>
+        <div class="jumbotron">
+            <h1>{{ title }}</h1>
+        </div>
 		<v-app v-if="orders.length > 0" id="inspire">
 			<v-data-table
 				:headers="tableHeaders"
@@ -9,7 +12,9 @@
 				hide-default-footer
 				@click:row="(item, slot) => slot.expand(!slot.isExpanded)"
 			>
-
+                <template v-slot:item.take_order="{ item }">
+                    <button type="button" class="btn btn-success" @click="deliver(item.id)">Deliver</button>
+                </template>
 
 				<template v-slot:expanded-item="{ headers, item }">
 					<td :colspan="headers.length" class="container">
@@ -22,9 +27,6 @@
 							</div>
 							<div class="col-md-2">
 								<strong>Notes</strong>: <p v-if="item.notes">{{ item.notes }}</p><p v-else>No notes have been attached</p>
-							</div>
-							<div class="col-xl-1">
-								<button type="button" class="btn btn-success pb-1 pt-1 mt-3 mb-1" @click="deliver(item.id)">Deliver</button>
 							</div>
 
 						</div>
@@ -55,7 +57,8 @@ export default {
 				},
 				{ text: 'Ready for (minutes)', value: 'time_elapsed_since_status' },
 				{ text: 'Prepared in (seconds)', value: 'preparation_time' },
-				{ text: 'Address', value: 'customer.customer.address' }
+				{ text: 'Address', value: 'customer.customer.address' },
+                { text: '', value: 'take_order' }
 			],
 		}
 	},

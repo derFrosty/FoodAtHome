@@ -70,32 +70,28 @@ export default {
                 axios.post('/api/login', this.loginInfo).then(response => {
                     axios.get('/api/user').then(response => {
                         //console.log(response.data.customer.nif);
+
                         this.$store.commit('setUser', response.data)
                         localStorage.setItem('user', JSON.stringify(response.data))
-
-                        switch (true) {
-                            case this.isManager() || this.isCustomer():
-                                this.$router.push('/products')
-                                break
-                            case this.isCook():
-                                this.$router.push('/dashboard/cook')
-                                break;
-                            case this.isDeliveryMan():
-                                this.$router.push('/dashboard/deliveries')
-                                break;
-                            default:
-                                this.$router.push('/')
-                        }
-
                         axios.put('/api/updateLoggedAt', {
                             "user_id": this.$store.state.user.id,
                             "logged": 1
-                        }).then(resp => {
-                            axios.put('/api/updateAvailability', {
-                                "user_id": this.$store.state.user.id,
-                                "availability": 1
-                            })
+                        }).then(resp=>{
+                            switch (true) {
+                                case this.isManager() || this.isCustomer():
+                                    this.$router.push('/products')
+                                    break
+                                case this.isCook():
+                                    this.$router.push('/dashboard/cook')
+                                    break;
+                                case this.isDeliveryMan():
+                                    this.$router.push('/dashboard/deliveries')
+                                    break;
+                                default:
+                                    this.$router.push('/')
+                            }
                         })
+
                     });
                 }).catch(error => {
                     this.error = error.response.data.error

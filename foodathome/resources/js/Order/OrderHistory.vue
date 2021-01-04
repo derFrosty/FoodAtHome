@@ -22,7 +22,7 @@
         },
         methods: {
             getOrders: function () {
-                axios.get('api/order_history')
+                axios.get('/api/order_history')
                     .then(response => {
                         this.orders = response.data.data
                     })

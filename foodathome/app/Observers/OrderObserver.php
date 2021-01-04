@@ -88,26 +88,6 @@ class OrderObserver
         $order->current_status_at = Carbon::now();
         $order->saveQuietly();
 
-
-        //Acabado é sempre libertado ou um deliveryman ou um cook...
-        //há orders onhold?
-        $ordersOnHold = Order::Where('status', 'H')->first();
-
-        //se sim vamos tentar arranjar um cook (o mesmo é feito no update do user quando um cook fica online)
-        if($ordersOnHold){
-            $cook = User::Where('type', 'EC')->Where('logged_at', '!=', 'null')->Where('available_at', '!=', 'null')->first();
-
-            if($cook){
-                $cook->available_at = null;
-                $cook->save();
-                $ordersOnHold->prepared_by = $cook->id;
-                $ordersOnHold->status = 'P';
-                $ordersOnHold->current_status_at = Carbon::now()->toDateTimeString();
-                $ordersOnHold->save();
-            }
-        }
-
-
     }
 
     /**

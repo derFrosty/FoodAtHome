@@ -68,6 +68,22 @@ export default {
     },
     mounted() {
         this.getAllUsers()
+    },
+    sockets: {
+        updateUserList (payload){
+
+            for (let i = 0; i < this.users.length; i++) {
+                //console.log(this.users[i])
+                if (this.users[i].id == payload.id){
+
+                    this.users[i].blocked = payload.blocked
+
+                    this.$forceUpdate()
+                    break
+                }
+            }
+
+        }
     }
 }
 </script>

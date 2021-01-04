@@ -95,6 +95,8 @@ io.on('connection', function (socket) {
             io.to(`${session.socketID}`).emit('blockStatusUpdate')
         }
 
+        //if another manager is logged
+        socket.broadcast.to('EM').emit('updateUserList', user);
     })
 
 

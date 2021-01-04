@@ -110,14 +110,16 @@ export default {
                         });
                     this.$forceUpdate();
                     this.products = []
-
                     axios.get('/api/checkorder/'+response.data.order_id).then(resp => {
                         if(resp.data.order_cook_id){
                             //socket
                             this.$socket.emit('order_placed_on_online_cook', resp.data.order_cook_id)
+                        }else{
+                            this.$socket.emit('order_update');
                         }
 
                     })
+
                 }
             })
             .catch( resposnse => {

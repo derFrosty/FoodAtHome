@@ -8,6 +8,7 @@ use App\Http\Requests\RegisterValidationForm;
 use App\Http\Requests\UpdatePasswordValidationForm;
 use App\Http\Requests\UpdateUserValidationForm;
 use App\Http\Requests\UserToBlockUnblockRequest;
+use App\Http\Resources\WorkersResource;
 use App\Http\Resources\UserResource;
 use App\Models\Order;
 use App\Models\User;
@@ -31,59 +32,6 @@ class UserApiController extends Controller
         return UserResource::Collection(User::all());
     }
 
-    public function updateAvailability(Request $request)
-    {
-
-        $request_filter = $request->only('user_id', 'availability');
-
-        $user_id = $request_filter["user_id"];
-        $availability = $request_filter["availability"];
-
-        $user = User::findOrFail($user_id);
-
-        switch ($user->type){
-            case 'C':{
-                return response()->json(
-                    ['msg' => 'User is not worker.'],
-                    200
-                );
-            }
-            case 'EC': {
-                $preparing = Order::Where('prepared_by', $user_id)->Where('status', 'P')->count();
-                if($preparing > 0){ //user not available
-                    return response()->json(
-                        ['msg' => 'User is cooking cannot be updated!'],
-                        200
-                    );
-                }
-                break;
-            }
-            case 'ED': {
-                $preparing = Order::Where('delivered_by', $user_id)->Where('status', 'T')->count();
-                if($preparing > 0){ //user not available
-                    return response()->json(
-                        ['msg' => 'User is in transit cannot be updated!'],
-                        200
-                    );
-                }
-                break;
-            }
-        }
-
-
-        if($availability == 0){
-            $user->available_at = null;
-        }else{
-            $user->available_at = Carbon::now();
-        }
-
-        $user->save();
-
-        return response()->json(
-            ['msg' => 'availability updated with success.'],
-            200
-        );
-    }
 
     public function updateLoggedAt(Request $request)
     {
@@ -202,5 +150,9 @@ class UserApiController extends Controller
           200
         );
 
+    }
+
+    public function getWorkers(){ // except managers and customers
+        return WorkersResource::collection(User::WhereNotIn('type', ['C', 'EM'])->get());
     }
 }

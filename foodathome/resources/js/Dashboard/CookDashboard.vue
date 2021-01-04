@@ -83,15 +83,33 @@ export default {
                     }
 
                     this.$forceUpdate();
+                    this.$socket.emit('order_update');
 
                 })
         }
     },
-    mounted() {
+    created() {
         this.checkAndGetPreparingOrders();
     },
     sockets: {
         new_order(payload) {
+            this.checkAndGetPreparingOrders();
+        },
+        order_canceled(payload){
+            this.preparingOrder = [];
+            this.isPreparingOrder = false;
+            console.log("lista vazia e is preparing a false")
+
+            this.$notify({
+                title: 'Order Canceled!',
+                type: 'error',
+                text: 'Your order has been canceled...',
+                duration: 7500,
+                speed: 500
+            });
+
+            console.log("preparing and check...")
+
             this.checkAndGetPreparingOrders();
         }
     }

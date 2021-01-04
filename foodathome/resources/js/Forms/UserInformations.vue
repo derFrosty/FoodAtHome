@@ -86,11 +86,11 @@
         <div class="form-group row">
             <label for="user-photo" class="col-md-4 col-form-label text-md-right">Avatar</label>
 
-            <div v-if="!$store.state.user.photo_url" class="col-md-6">
-                <input id="user-photo" class="" type="file" @change="pictureChanged" accept="image/x-png,image/jpg,image/jpeg">
+            <div v-if="$store.state.user && $store.state.user.photo_url" class="col-md-6">
+                <button type="button" class="btn btn-danger btn-sm" @click="removePic">X</button>Remove avatar
             </div>
             <div v-else class="col-md-6">
-                <button type="button" class="btn btn-danger btn-sm" @click="removePic">X</button>Remove avatar
+                <input id="user-photo" class="" type="file" @change="pictureChanged" accept="image/x-png,image/jpg,image/jpeg">
             </div>
 
         </div>

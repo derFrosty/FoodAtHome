@@ -3,8 +3,10 @@
 namespace App\Observers;
 
 use App\Models\Order;
+use App\Models\Product;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class UserObserver
 {
@@ -28,23 +30,40 @@ class UserObserver
     public function updated(User $user) // pode também ocorrer quando é feito um update do user por isso vamos à mesma verificar se existe mesmo um cook available
     {
         switch ($user->type){
-            case 'EC': { // caso seja um cook, vamos verificar se há encomendas onhold
 
-                //há orders onhold?
-                $ordersOnHold = Order::Where('status', 'H')->first();
+            case 'EC': {
 
-                //se sim vamos tentar arranjar um cook
-                if($ordersOnHold){
-                    $cook = User::Where('type', 'EC')->Where('logged_at', '!=', 'null')->Where('available_at', '!=', 'null')->first();
+                $order = Order::Where('prepared_by', $user->id)->Where('status', 'P')->count();
 
-                    if($cook){
-                        $cook->available_at = null;
-                        $cook->save();
-                        $ordersOnHold->prepared_by = $cook->id;
-                        $ordersOnHold->status = 'P';
-                        $ordersOnHold->save();
+                if($order == 0){
+                    $user->available_at = Carbon::now();
+                    $user->saveQuietly();
+                }
+
+                if($user->available_at){
+                    $order = Order::orderBy('id', 'ASC')->Where('status', 'H')->first();
+
+                    if($order){
+                        $user->available_at = null;
+                        $user->saveQuietly();
+                        $order->status = 'P';
+                        $order->prepared_by = $user->id;
+                        $order->save();
                     }
                 }
+
+
+                break;
+            }
+            case 'ED': {
+                $order = Order::Where('prepared_by', $user->id)->Where('status', 'T')->count();
+                if($order > 0){
+                    $user->available_at = null;
+                }else{
+                    $user->available_at = Carbon::now();
+                }
+
+                $user->saveQuietly();
 
                 break;
             }

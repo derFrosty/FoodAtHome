@@ -25,6 +25,7 @@ class OrderResourceWithRelations extends JsonResource
             'total_price' => $this->totalPrice_func($this->total_price),
             'date' => $this->date,
             'prepared_by' => $this->cook,
+            'delivered_by' => $this->deliverer,
             'opened_at' => $this->opened_at,
             'current_status_at' => $this->current_status_at,
             'time_elapsed_since_status' => Carbon::parse($this->current_status_at)->diffInMinutes(Carbon::now(), false),
@@ -34,12 +35,13 @@ class OrderResourceWithRelations extends JsonResource
             'total_time' => $this->total_time,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'order_items' => Order_ItemResource::collection($this->order_items)
+            'order_items' => Order_ItemResource::collection($this->order_items),
+            'handler' => $this->handledby($this->status, $this->cook, $this->deliverer, $this->customer)
         ];
     }
 
 
-    public function status_func($status){
+    private function status_func($status){
         switch ($status) {
             case "H" : return "Holding";
             case "P" : return "Preparing";
@@ -51,11 +53,24 @@ class OrderResourceWithRelations extends JsonResource
         }
     }
 
-    public function notes_func($notes){
+    private function notes_func($notes){
         return ($notes == null ? "No notes" : $notes);
     }
 
-    public function totalPrice_func($totalPrice){
+    private function totalPrice_func($totalPrice){
         return $totalPrice . "€";
+    }
+
+    private function handledby($status, $cook, $deliverer, $customer)
+    {
+        switch ($status) {
+            case "H" : return "No one";
+            case "P" : return "(".$cook->id.") " . $cook->name;
+            case "R" : return "Waiting for deliveryman";
+            case "T" : return "(".$deliverer->id.") ".$deliverer->name;
+            case "D" : return $customer->name;
+            case "C" : return "Unknown";
+            default : return "Unknown status";
+        }
     }
 }

@@ -34,8 +34,8 @@
                     <li v-if="isManager" class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown">Manager</a>
                         <div class="dropdown-menu">
+                            <router-link class="dropdown-item" to="/manager/dashboard">Dashboard</router-link>
                             <router-link class="dropdown-item" to="/create/product">Create Product</router-link>
-<!--                            <router-link class="dropdown-item" to="/order_history">Order History</router-link>-->
                         </div>
                     </li>
                 </ul>
@@ -90,13 +90,13 @@ export default {
         logout: function () {
             let user_id = this.$store.state.user.id
             //remove user availability
-            axios.put('/api/updateLoggedAt', {"user_id": user_id, "logged": 0}).then(resp => {
-                axios.put('/api/updateAvailability', {"user_id": user_id, "availability": 0})
-            })
+            axios.put('/api/updateLoggedAt', {"user_id": user_id, "logged": 0})
             //remove from local storage
             localStorage.removeItem('user')
             //remove from vuex
             this.$store.commit('logoutUser')
+            //send socket
+            this.$socket.emit('user_logged_out');
             //show front page
             this.$router.push('/')
         }

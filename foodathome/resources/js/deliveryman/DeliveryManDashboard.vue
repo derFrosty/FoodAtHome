@@ -1,8 +1,5 @@
 <template>
     <div>
-        <div class="jumbotron">
-            <h1>{{ title }}</h1>
-        </div>
         <orders-ready-for-delivery v-if="availability" :orders="orders_ready" @order-selected="assignOrder">
         </orders-ready-for-delivery>
         <order-to-deliver v-else :order="my_order" @order-delivered="deliveredOrder">
@@ -19,7 +16,6 @@ export default {
     components: {OrderToDeliver, OrdersReadyForDelivery},
     data: function (){
         return {
-            title: 'Deliveryman Dashboard',
             orders_ready: [],
             my_order: null,
             availability: null
@@ -46,7 +42,7 @@ export default {
         },
         assignOrder: function (order_id){
             axios.put('/api/deliverorder', {"order_id": order_id}).then(resp=>{
-
+                this.$socket.emit('order_update');
                 this.my_order = resp.data.order[0];
                 this.availability = null;
                 this.$notify({
@@ -62,7 +58,7 @@ export default {
         },
         deliveredOrder: function (){
             axios.put('/api/orderDelivered').then(resp=>{
-                console.log("order delivered!");
+                this.$socket.emit('order_update');
                 this.startup();
 
             })
@@ -75,6 +71,22 @@ export default {
     mounted() {
         this.startup()
 
+    },
+    sockets:{
+        order_canceled(payload){
+            this.startup();
+
+            console.log("order cancelada!")
+
+            this.$notify({
+                title: 'Order Canceled!',
+                type: 'error',
+                text: 'Your order has been canceled...',
+                duration: 7500,
+                speed: 500
+            });
+
+        }
     }
 }
 </script>

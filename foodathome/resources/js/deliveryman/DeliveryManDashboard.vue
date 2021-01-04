@@ -31,8 +31,6 @@ export default {
                     })
                 }else{
                     axios.get('/api/currently_delivering').then(resp => {
-                        console.log("currently delivering")
-                        console.dir(resp.data.data[0])
                         this.my_order = resp.data.data[0]
                     })
                 }
@@ -43,6 +41,7 @@ export default {
         assignOrder: function (order_id){
             axios.put('/api/deliverorder', {"order_id": order_id}).then(resp=>{
                 this.$socket.emit('order_update');
+                this.$socket.emit('order_picked_delivery');
                 this.my_order = resp.data.order[0];
                 this.availability = null;
                 this.$notify({
@@ -76,8 +75,6 @@ export default {
         order_canceled(payload){
             this.startup();
 
-            console.log("order cancelada!")
-
             this.$notify({
                 title: 'Order Canceled!',
                 type: 'error',
@@ -86,6 +83,11 @@ export default {
                 speed: 500
             });
 
+        },
+        order_picked(){
+            axios.get('/api/getReadyOrders').then(resp => {
+                this.orders_ready = resp.data.data;
+            })
         }
     }
 }

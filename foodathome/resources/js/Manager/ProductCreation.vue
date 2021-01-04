@@ -134,7 +134,7 @@ export default {
 
             if(this.product == null){
                 axios.post("/api/addProduct", data).then(response => {
-                    console.log("success POST!?")
+                    this.$router.push('/products')
 
                 }).catch(error => {
                     this.errors = error.response.data.errors

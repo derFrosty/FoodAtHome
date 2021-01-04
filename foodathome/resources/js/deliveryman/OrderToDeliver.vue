@@ -72,7 +72,7 @@ export default {
     },
     methods:{
         delivered: function (){
-            this.$emit('order_update')
+            this.$emit('order-delivered')
         }
     }
 }

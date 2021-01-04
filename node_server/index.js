@@ -26,6 +26,10 @@ io.on('connection', function (socket) {
         io.to("EM").emit('update_incoming')
     })
 
+    socket.on('order_picked_delivery', () =>{ //order_ready
+        io.to("ED").emit('order_picked')
+    })
+
 
     socket.on('order_canceled', (id_para_notificar) =>{
 

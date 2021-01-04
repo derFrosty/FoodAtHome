@@ -8,7 +8,7 @@
 
                     <div class="card-body">
 
-                        <UserInformations @user-done="register" :errors="errors"></UserInformations>
+                        <UserInformations @user-done="register" :errors="errors" :imageSizeError="imageSizeError"></UserInformations>
 
                     </div>
 
@@ -27,7 +27,8 @@ export default {
     },
     data() {
         return {
-            errors: []
+            errors: [],
+            imageSizeError: ""
         }
     },
     methods: {
@@ -52,8 +53,13 @@ export default {
                 });
 
             }).catch(error => {
-                console.dir(error)
+                console.dir(error.response.statusText)
                 this.errors = error.response.data.errors
+                this.imageSizeError = ""
+                if(error.response.statusText === "Request Entity Too Large"){
+                    this.imageSizeError = "Image is too big"
+                }
+
             });
         }
     }

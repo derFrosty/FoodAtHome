@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container pl-10 pr-10">
         <p>Filter by type of dish</p>
         <b-form-select v-model="typeSelected" :options="typeOfProducts"></b-form-select>
         <p style="margin-top: 10px">Filter by name of dish</p>

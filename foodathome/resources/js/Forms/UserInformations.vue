@@ -90,7 +90,8 @@
                 <button type="button" class="btn btn-danger btn-sm" @click="removePic">X</button>Remove avatar
             </div>
             <div v-else class="col-md-6">
-                <input id="user-photo" class="" type="file" @change="pictureChanged" accept="image/x-png,image/jpg,image/jpeg">
+                <input id="user-photo" name="password" type="file" @change="pictureChanged" accept="image/x-png,image/jpg,image/jpeg">
+                <strong v-if="imageSizeError != ''" class="text-danger" style='font-size: 80%; font-family: Nunito, sans-serif;'>{{imageSizeError}}</strong>
             </div>
 
         </div>
@@ -98,7 +99,7 @@
         <div class="form-group row mb-0">
             <div class="col-md-6 offset-md-4">
                 <router-link v-if="$store.state.user" class="btn btn-secondary" to="/profile/changepassword">Change password</router-link>
-                <button type="submit" class="btn btn-primary" v-on:click.prevent="returnData">
+                <button type="submit" class="btn btn-primary" v-on:click.prevent="returnData" >
                     <div>{{ $store.state.user ? 'Update Information': 'Register'}}</div>
                 </button>
 
@@ -112,7 +113,7 @@
 <script>
 export default {
     name: "UserInformations",
-    props: ['errors'],
+    props: ['errors', 'imageSizeError'],
     data() {
         return{
             inputForm: {
@@ -131,9 +132,17 @@ export default {
     },
     methods: {
         hasError: function(fieldName) {
+            if(this.errors === undefined){
+                return false;
+            }
+
             return fieldName in this.errors
         },
         getErrorMessage: function(fieldName) {
+            if(this.errors === undefined){
+                return "";
+            }
+
             return this.errors[fieldName]
         },
         returnData: function (){
@@ -168,7 +177,6 @@ export default {
                 this.inputForm.photo = null
                 this.$store.commit('setUser', response.data.user)
                 localStorage.setItem('user', JSON.stringify(response.data.user))
-                console.log(response)
                 this.errors = []
             }).catch(error=>{
                 this.errors = error.response.data.errors

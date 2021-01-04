@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container" style="padding-left: 15%; padding-right: 15%">
         <div v-if="!productSelected" class="jumbotron">
             <h1>{{ title }}</h1>
         </div>

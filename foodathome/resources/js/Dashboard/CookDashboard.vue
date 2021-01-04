@@ -8,6 +8,7 @@
                 <h2>Preparing Order:</h2>
                 <br>
                 <h3>Order: {{ this.preparingOrder.order.id }}</h3>
+                <h3>Customer's Id: {{ this.preparingOrder.customer.id }}</h3>
                 <h3>Customer's Name: {{ this.preparingOrder.customer.name }}</h3>
                 <br>
                 <h4>Started preparation at: {{ this.preparingOrder.order.current_status_at }}</h4>
@@ -54,7 +55,8 @@ export default {
     },
     methods: {
         checkAndGetPreparingOrders: function () {
-            axios.get('api/cookdashboard')
+            console.log("checking!")
+            axios.get('/api/cookdashboard')
                 .then(response => {
                     if (response.data.msg == "true") {
                         this.isPreparingOrder = true;
@@ -89,6 +91,7 @@ export default {
         }
     },
     created() {
+        console.log("creating!")
         this.checkAndGetPreparingOrders();
     },
     sockets: {

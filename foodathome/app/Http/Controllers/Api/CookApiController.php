@@ -20,10 +20,13 @@ class CookApiController extends Controller
             abort(403);
         }
 
+
         //null == cook is preparing something
         if (!$user['available_at']){
 
-            $order = Order::Where('prepared_by', $user['id'])->Where('status', 'P')->first();
+            $order = Order::Where('prepared_by', $user->id)->Where('status', 'P')->first();
+
+
 
             if(!$order){
                 return response()->json(

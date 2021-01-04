@@ -53,7 +53,6 @@ export default {
                 });
 
             }).catch(error => {
-                console.dir(error.response.statusText)
                 this.errors = error.response.data.errors
                 this.imageSizeError = ""
                 if(error.response.statusText === "Request Entity Too Large"){

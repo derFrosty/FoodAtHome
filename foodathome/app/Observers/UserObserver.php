@@ -33,12 +33,16 @@ class UserObserver
 
             case 'EC': {
 
-                $order = Order::Where('prepared_by', $user->id)->Where('status', 'P')->count();
+                $hasOrder = Order::Where('prepared_by', $user->id)->Where('status', 'P')->first();
 
-                if($order == 0){
+                if(!$hasOrder){
                     $user->available_at = Carbon::now();
-                    $user->saveQuietly();
+
+                }else{
+                    $user->available_at = null;
                 }
+
+                $user->saveQuietly();
 
                 if($user->available_at){
                     $order = Order::orderBy('id', 'ASC')->Where('status', 'H')->first();
